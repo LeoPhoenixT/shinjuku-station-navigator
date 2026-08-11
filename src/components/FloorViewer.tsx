@@ -168,6 +168,8 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
   } = navigation;
   const routeHaloPathRef = useRef<SVGPathElement>(null);
   const routePathRef = useRef<SVGPathElement>(null);
+  const transitionHaloPathRef = useRef<SVGPathElement>(null);
+  const transitionPathRef = useRef<SVGPathElement>(null);
   const orbitControlsRef = useRef<OrbitControlsImpl>(null);
   const visibleNetworkState = useMemo(() => {
     const nodes = new Map(routingGraph.nodes.map((node) => [node.id, node]));
@@ -204,11 +206,11 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
       <FitMapCamera bounds={cameraBounds} datasetBounds={data.floor.statistics.bounds} revision={cameraRevision} stacked={stackedFloors} orientation={cameraOrientation} zoomMultiplier={zoomMultiplier} />
       <CameraHeadingReporter onHeadingChange={setCameraHeading} />
       <MapScene activeFloor={activeFloor} floorViewMode={floorViewMode} routeFloorIds={routeFloorIds} visibleFloors={visibleFloors} floor={data.floor} officialNetwork={data.network} routingGraph={routingGraph} twsiGraph={twsiGraph} places={data.places.places} translations={data.translations} facilityMarkerCandidates={facilityMarkerCandidates} route={planner.route} startId={planner.startId} destinationId={planner.destinationId} highlightedRouteEdgeIds={highlightedEdgeIds} debug={debug} showAllSourceLinks={showAllSourceLinks} showOfficialNetwork={showOfficialNetwork} showOfficialNodes={showOfficialNodes} showTwsi={showTwsi} showFacilities={showFacilities} enabledFacilityCategories={enabledFacilityCategories} showGateLabels={showFacilities && enabledFacilityCategories.has(GATE_CATEGORY_CODE)} showStructuralDetails={showStructuralDetails} onFacilityRouteAction={selectFacilityRouteAction} />
-      <RouteScreenOverlay route={planner.route} visibleFloors={visibleFloors} floor={data.floor} haloPathRef={routeHaloPathRef} routePathRef={routePathRef} />
+      <RouteScreenOverlay route={planner.route} visibleFloors={visibleFloors} floor={data.floor} routingGraph={routingGraph} haloPathRef={routeHaloPathRef} routePathRef={routePathRef} transitionHaloPathRef={transitionHaloPathRef} transitionPathRef={transitionPathRef} />
       <OrbitControls ref={orbitControlsRef} key={`${cameraRevision}:${visibleFloors.join(',')}:${activeFloor}`} makeDefault target={[cameraCenter.x, cameraCenter.y, cameraCenter.z]} enableRotate={rotationEnabled} zoomSpeed={0.55} minZoom={0.2} maxZoom={24} maxPolarAngle={MAX_CAMERA_POLAR_ANGLE} touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_PAN }} />
       <MapTouchControls controlsRef={orbitControlsRef} rotationEnabled={rotationEnabled} />
     </Canvas>
-    <svg className="route-screen-overlay" aria-hidden="true"><path ref={routeHaloPathRef} className="route-screen-halo" /><path ref={routePathRef} className="route-screen-line" /></svg>
+    <svg className="route-screen-overlay" aria-hidden="true"><path ref={routeHaloPathRef} className="route-screen-halo" /><path ref={transitionHaloPathRef} className="route-screen-transition-halo" /><path ref={routePathRef} className="route-screen-line" /><path ref={transitionPathRef} className="route-screen-transition-line" /></svg>
     <ViewerControls
       floorIds={floorIds} visibleFloors={visibleFloors} routeFloorIds={routeFloorIds} activeFloor={activeFloor} floorViewMode={floorViewMode} selectFloor={selectFloor} showStack={showStack} showRouteFloors={showRouteFloors} toggleCustomFloor={toggleCustomFloor}
       debug={debug} setDebug={setDebug} showAllSourceLinks={showAllSourceLinks} setShowAllSourceLinks={setShowAllSourceLinks} places={data.places.places} translations={data.translations} startId={planner.startId} destinationId={planner.destinationId}

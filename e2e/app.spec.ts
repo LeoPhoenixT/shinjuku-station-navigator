@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 
 const START_ID = 'gate:59da841748574ff1bdc9408b504e3b85';
 const DESTINATION_ID = 'gate:a628691805db44e2b65d427271a8bc24';
+const MULTI_FLOOR_START_ID = 'facility:phase7b:1.JR新宿駅改札/B1/JrSin_B1_Facility:a6544518cd5640398cfb2a58e8d47f8d';
+const MULTI_FLOOR_DESTINATION_ID = 'connector:6e09f033cda0472cb754fef74c313d83:0';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -41,6 +43,22 @@ test('restores route and profile state from the URL', async ({ page }) => {
   await expect(page.getByRole('combobox', { name: 'Search start place' })).toHaveValue(/Central Gate/);
   await expect(page.getByRole('combobox', { name: 'Search destination place' })).toHaveValue(/Central West Gate/);
   await expect(page.getByRole('combobox', { name: 'Route profile' })).toHaveValue('shortest');
+});
+
+test('projects floor transitions as an unbroken green screen-space route', async ({ page }) => {
+  test.skip(test.info().project.name !== 'desktop-chromium', 'Desktop multi-floor route rendering.');
+  const params = new URLSearchParams({
+    start: MULTI_FLOOR_START_ID,
+    destination: MULTI_FLOOR_DESTINATION_ID,
+    profile: 'shortest',
+  });
+  await page.goto(`/?${params.toString()}`);
+
+  const transition = page.locator('.route-screen-transition-line');
+  await expect(transition).toHaveAttribute('d', /M.+L/);
+  await expect.poll(() => transition.evaluate((path) => (path as SVGPathElement).getTotalLength())).toBeGreaterThan(0);
+  await expect(transition).toHaveCSS('stroke', 'rgb(34, 197, 94)');
+  await expect(page.locator('.route-transition-marker')).toHaveCSS('transform', /matrix/);
 });
 
 test('keeps primary map controls usable on a mobile viewport', async ({ page }) => {

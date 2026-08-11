@@ -57,6 +57,8 @@ button, summary { -webkit-tap-highlight-color: transparent; }
 .route-screen-overlay path { fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 .route-screen-halo { stroke: #020617; stroke-width: 10; }
 .route-screen-line { stroke: #fb923c; stroke-width: 6; }
+.route-screen-transition-halo { stroke: #020617; stroke-width: 11; }
+.route-screen-transition-line { stroke: #22c55e; stroke-width: 7; }
 .planner-card, .floor-rail, .camera-toolbar, .route-sheet {
   backdrop-filter: blur(18px);
   background: rgba(5, 10, 21, 0.91);
@@ -411,7 +413,7 @@ button, summary { -webkit-tap-highlight-color: transparent; }
 .facility-route-actions { display: flex; gap: 0.35rem; margin-top: 0.25rem; }
 .facility-route-actions button { background: #172033; border: 1px solid #52627a; border-radius: 0.35rem; color: #f8fafc; cursor: pointer; font-size: 0.65rem; min-height: 2rem; padding: 0.3rem 0.45rem; }
 .facility-route-actions button:last-child { background: #c2410c; border-color: #fb923c; color: #fff7ed; }
-.route-transition-marker { background: rgba(5, 10, 21, 0.96); border: 2px solid #22c55e; border-radius: 999px; color: #dcfce7; display: block; font-size: 0.68rem; font-weight: 850; padding: 0.3rem 0.5rem; pointer-events: none; white-space: nowrap; }
+.route-transition-marker { background: rgba(5, 10, 21, 0.96); border: 2px solid #22c55e; border-radius: 999px; color: #dcfce7; display: block; font-size: 0.68rem; font-weight: 850; padding: 0.3rem 0.5rem; pointer-events: none; transform: translateX(calc(50% + 0.5rem)); white-space: nowrap; }
 .route-transition-marker.transition-elevator { border-color: #38bdf8; color: #e0f2fe; }
 .route-transition-marker.transition-escalator { border-color: #a78bfa; color: #ede9fe; }
 .route-transition-marker.transition-stairs { border-color: #fbbf24; color: #fef3c7; }

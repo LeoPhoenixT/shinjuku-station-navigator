@@ -59,6 +59,13 @@ describe('route line geometry', () => {
     expect(routeTransitionPolylines(multiFloorRoute, transitionGraph, ['B2', 'B1'], true)).toEqual([[[1, stackedB2Y, 0], [1, stackedB1Y, 0]]]);
   });
 
+  it('joins transition endpoints exactly to the adjacent same-floor route lines', () => {
+    const routeLines = routePolylines(multiFloorRoute, ['B2', 'B1'], true);
+    const [transition] = routeTransitionPolylines(multiFloorRoute, transitionGraph, ['B2', 'B1'], true);
+    expect(transition[0]).toEqual(routeLines[0].at(-1));
+    expect(transition.at(-1)).toEqual(routeLines[1][0]);
+  });
+
   it('builds independent GPU segments without bridging separate polylines', () => {
     expect(routeLineSegmentPositions([[[0, 0, 0], [1, 0, 0]], [[10, 0, 0], [11, 0, 0]]], 2)).toEqual([
       0, 2, 0, 1, 2, 0,
