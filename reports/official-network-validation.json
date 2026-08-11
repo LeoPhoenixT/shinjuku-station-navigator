@@ -1,0 +1,22 @@
+{
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "input": "public/data/processed/jr-shinjuku-ticket-gates-b1-official-network.json",
+  "valid": true,
+  "issues": [],
+  "summary": {
+    "nodeCount": 1982,
+    "edgeCount": 2541,
+    "invalidReferenceCount": 0,
+    "duplicateNodeCount": 0,
+    "duplicateEdgeCount": 0,
+    "endpointMisalignmentCount": 0,
+    "floorAssignmentErrorCount": 0,
+    "crossFloorLinkCount": 253,
+    "unvalidatedCrossFloorLinkCount": 0,
+    "connectedComponentCount": 1,
+    "isolatedNodeCount": 0,
+    "boundaryLinkCount": 0,
+    "maximumEndpointOffsetMeters": 0,
+    "maximumDistanceDifferenceMeters": 15.001
+  }
+}

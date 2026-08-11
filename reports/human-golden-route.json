@@ -1,0 +1,88 @@
+{
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "algorithm": "astar",
+  "profile": "shortest",
+  "start": {
+    "placeId": "gate:b9bd2f7edf4e444994e061cdd552af2a",
+    "name": "西口地下改札",
+    "sourceFacility": "6.小田急新宿駅_小田急エース",
+    "nodeId": "2c08d723e5284c0c8a3ce62beeddd551",
+    "attachmentDistanceMeters": 2.758,
+    "attachmentConfidence": "high"
+  },
+  "destination": {
+    "placeId": "gate:a628691805db44e2b65d427271a8bc24",
+    "name": "中央西改札",
+    "sourceFacility": "3.JR新宿駅",
+    "nodeId": "fc042f06927a42f1baa8564be2dfa0e5",
+    "attachmentDistanceMeters": 8.843,
+    "attachmentConfidence": "medium"
+  },
+  "route": {
+    "nodeIds": [
+      "2c08d723e5284c0c8a3ce62beeddd551",
+      "0d8c7c2fe19d4eae9a2eab756228728d",
+      "98f6e89a1721488483da80457955d235",
+      "fc042f06927a42f1baa8564be2dfa0e5"
+    ],
+    "edgeIds": [
+      "74c799b0f59247af82131c30b44060b3",
+      "e1383e0598c84081860c7648bb61b82f",
+      "eca7838699c843f6bd4599d70f6ba472"
+    ],
+    "networkDistanceMeters": 30.1,
+    "accessDistanceMeters": 11.601,
+    "totalJourneyDistanceMeters": 41.701
+  },
+  "expandedCoverageFixture": {
+    "fromPlaceId": "gate:b9bd2f7edf4e444994e061cdd552af2a",
+    "fromName": "西口地下改札",
+    "toPlaceId": "gate:7be0b976ae3546a79da40da5ec159516",
+    "toName": "中央東改札",
+    "networkDistanceMeters": 306.805
+  },
+  "multiFloorFixture": {
+    "fromPlaceId": "facility:phase7b:1.JR新宿駅改札/B1/JrSin_B1_Facility:a6544518cd5640398cfb2a58e8d47f8d",
+    "toPlaceId": "connector:6e09f033cda0472cb754fef74c313d83:0",
+    "floors": [
+      "B1",
+      "0"
+    ],
+    "connectorEdgeIds": [
+      "6e09f033cda0472cb754fef74c313d83"
+    ],
+    "connectorKinds": [
+      "elevator"
+    ],
+    "networkDistanceMeters": 34.373
+  },
+  "facilityFixtures": [
+    {
+      "placeId": "facility:phase7b:14.バスタ新宿/3/Basuta_3_Facility:16ead878a34c4883b9d47273f985b1c1",
+      "name": "トイレ（男性）",
+      "category": "toilet",
+      "sourceCategoryCode": "F001",
+      "floorId": "3",
+      "attachmentDistanceMeters": 2.803,
+      "totalJourneyDistanceMeters": 556.389
+    },
+    {
+      "placeId": "facility:phase7b:14.バスタ新宿/4/Basuta_4_Facility:7d52f21da4834a8294cbde9525a7571c",
+      "name": "受付・案内所",
+      "category": "information",
+      "sourceCategoryCode": "F018",
+      "floorId": "4",
+      "attachmentDistanceMeters": 1.99,
+      "totalJourneyDistanceMeters": 602.189
+    },
+    {
+      "placeId": "facility:phase7b:14.バスタ新宿/4/Basuta_4_Facility:46ff30501f984f5fa2193628a6430252",
+      "name": "コインロッカー 1",
+      "category": "locker",
+      "sourceCategoryCode": "F031",
+      "floorId": "4",
+      "attachmentDistanceMeters": 2.243,
+      "totalJourneyDistanceMeters": 607.801
+    }
+  ]
+}

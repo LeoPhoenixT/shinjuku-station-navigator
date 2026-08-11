@@ -1,0 +1,3691 @@
+{
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "sourceRoot": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）",
+  "officialNetwork": {
+    "nodeCount": 1982,
+    "linkCount": 2541,
+    "nodeFields": {
+      "in_out": {
+        "recordCount": 1982,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 3,
+        "values": [
+          {
+            "value": "3",
+            "count": 1479
+          },
+          {
+            "value": "1",
+            "count": 411
+          },
+          {
+            "value": "2",
+            "count": 92
+          }
+        ]
+      },
+      "lat": {
+        "recordCount": 1982,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 1981,
+        "sample": [
+          35.6884053105,
+          35.68715872336,
+          35.68745359336,
+          35.68746814858,
+          35.68747556153,
+          35.68749010437,
+          35.68750994869,
+          35.68752579127,
+          35.68753726919,
+          35.68754302976,
+          35.68756037844,
+          35.68756709899
+        ]
+      },
+      "link1_id": {
+        "recordCount": 1982,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 1786,
+        "sample": [
+          "02d0512fe15e4a6885abb2d29d1474d3",
+          "04947025805e453f9c9e4fc2ba2021ed",
+          "062901beaad94ea3a3a2c4a7800ef850",
+          "078bdc47109b4388b6ab67e93ef49d0f",
+          "083a73d277fb4988825076ec719a8a31",
+          "086fc48c6c6a43caa18794f350edb0be",
+          "09326c21d9f94f82978583c6a1d1f614",
+          "09704b7d899d4ba08c377e56e3c28257",
+          "0d5de49a0efb450180d1efa0e52ad9cf",
+          "0e7435bc5a84457eb0468d452670b50a",
+          "0ec4a398773d4c92b8e624c5277a3933",
+          "0f79577300334f3690745e33bcf250ba"
+        ]
+      },
+      "link2_id": {
+        "recordCount": 1982,
+        "nullCount": 276,
+        "nullRate": 0.139253,
+        "distinctCount": 1460,
+        "sample": [
+          "008ecb38badb41138f3b2ecb00fd0cb8",
+          "00dd97bea8894ee5a77767a6cccddd9d",
+          "00e4b1a415534f7cabd89413a9b61fe9",
+          "017b7febf24d4deabe53066a9393cc20",
+          "01fde08b3cee41069060b97ee60a9522",
+          "062f34fdd62640d9909c1e779624641d",
+          "0766fd7618134d639f9d7d1634933dcd",
+          "08369df0900143adb2ae12493d31fe66",
+          "087ce38879014677bce0b46146f24e5a",
+          "09ed2c91dd3347e2af738f3b74cd7bf8",
+          "0a6bf551781848ffa14973067e043a1c",
+          "0b02956864fa40478cea3b011f3c1192"
+        ]
+      },
+      "link3_id": {
+        "recordCount": 1982,
+        "nullCount": 999,
+        "nullRate": 0.504036,
+        "distinctCount": 918,
+        "sample": [
+          "05fa96f32bab48efb7f71a0f04e18873",
+          "097b0e5bdb264bbab60b3becac47e396",
+          "0d3c26356ec24958a13e486ad5701de8",
+          "1062b351a8454e6aa6693cb13676492f",
+          "18fe3d8e5b744ac49e8bae5f337c5e0e",
+          "1feb33397a11423294295282a7a404bf",
+          "25a5c56e3c5149dfb628a312a7519882",
+          "25eaea2b47a248d8ba7a57b6fe67acb7",
+          "32dbf3a971da433db8f642820227e9e2",
+          "3515452240474a2a87533d629c600d54",
+          "38c5fc516d1b4b7394be0506c41b2012",
+          "3a1b20532da642089f4dd6630b2d9e85"
+        ]
+      },
+      "link4_id": {
+        "recordCount": 1982,
+        "nullCount": 1666,
+        "nullRate": 0.840565,
+        "distinctCount": 301,
+        "sample": [
+          "04742a3a2a5d4c5ab20cb759782b4cb4",
+          "0a839d1966fa4943a887e276108be917",
+          "40a6310958f543959b147723384cc284",
+          "55b973693bb0463581c84ba278817600",
+          "848db12943cb434880ab2ec8b6f0a062",
+          "8c653fa78ebc488c9baade0e28a4a85f",
+          "9661777882d0432b86a49510189b5085",
+          "c88ca4712f7f4042a4a080c0af0fa21e",
+          "cbe4f4b5c7da4331bf5b4304dc421b8c",
+          "ccc4f6295f2b4a3286c40f9af18dd9ce",
+          "cede44f17dbe431a81d9323b70bbfee2",
+          "dbc54b1594c6401c94c0087a084c1e1b"
+        ]
+      },
+      "link5_id": {
+        "recordCount": 1982,
+        "nullCount": 1906,
+        "nullRate": 0.961655,
+        "distinctCount": 74,
+        "sample": [
+          "ecf54e60ce2a409c8f6943fe558aff16",
+          "fd1aa6f590ca4a21a7655aea1ed557f9",
+          "020b878344c8428cb21240169bdd4230",
+          "081417ba92664fe6bfc8b50d4e22e6b3",
+          "0976272a95dc42128d434143084266b9",
+          "0bdcc923ccab4c83a3d4d695c0e81357",
+          "0ca39e86d6644ad2a6b1890871acb8f7",
+          "12f6f22ae9b2414c92a85b1b9733a57b",
+          "16e66d6198674e19afd767328689c4a0",
+          "1e090b7cbe404635b4995041218ff950",
+          "1f3f5cbb42594d959290a6ab49671b3a",
+          "2a762b4eb4d9461e9e8d40b49b62341c"
+        ]
+      },
+      "link6_id": {
+        "recordCount": 1982,
+        "nullCount": 1965,
+        "nullRate": 0.991423,
+        "distinctCount": 16,
+        "values": [
+          {
+            "value": "ba974e255df248be87b129b0d0ff1b99",
+            "count": 2
+          },
+          {
+            "value": "081417ba92664fe6bfc8b50d4e22e6b3",
+            "count": 1
+          },
+          {
+            "value": "29ef5ea208ae457ca264a5ec92604b4d",
+            "count": 1
+          },
+          {
+            "value": "4a328e15d1d34b949a60184e41069e48",
+            "count": 1
+          },
+          {
+            "value": "4d1e7c7d14ea4b71b694bc1706c5c90f",
+            "count": 1
+          },
+          {
+            "value": "544a948bc00149298e5b5933c502b112",
+            "count": 1
+          },
+          {
+            "value": "74be4bed26434b30ad578b3d13774416",
+            "count": 1
+          },
+          {
+            "value": "a571a5b3e86d44739be2207e2f2d874b",
+            "count": 1
+          },
+          {
+            "value": "bcf81c39d15f47f48ac75d6187fb96d9",
+            "count": 1
+          },
+          {
+            "value": "c3027384eb2a4967bc0f9e10921dbe43",
+            "count": 1
+          },
+          {
+            "value": "c7ee52c1134e47cbad5be573cb5c7f99",
+            "count": 1
+          },
+          {
+            "value": "d91928c1794246f198bbff1af0dc7ed0",
+            "count": 1
+          },
+          {
+            "value": "da54534ac4774d11982c77b777e87e0b",
+            "count": 1
+          },
+          {
+            "value": "e67596257ad146c99c629269cce0520b",
+            "count": 1
+          },
+          {
+            "value": "ec71d33c07f244718abaff5b476675c9",
+            "count": 1
+          },
+          {
+            "value": "fde8dddad964416ea702c9d096f002fc",
+            "count": 1
+          }
+        ]
+      },
+      "link7_id": {
+        "recordCount": 1982,
+        "nullCount": 1980,
+        "nullRate": 0.998991,
+        "distinctCount": 2,
+        "values": [
+          {
+            "value": "71d1fd2fbdee479e8d0f5c5065078898",
+            "count": 1
+          },
+          {
+            "value": "721425a1aebd4daabf153daa34d4abcc",
+            "count": 1
+          }
+        ]
+      },
+      "link8_id": {
+        "recordCount": 1982,
+        "nullCount": 1981,
+        "nullRate": 0.999495,
+        "distinctCount": 1,
+        "values": [
+          {
+            "value": "817c63a3a3314df6b96c0443ae7884ab",
+            "count": 1
+          }
+        ]
+      },
+      "lon": {
+        "recordCount": 1982,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 1980,
+        "sample": [
+          139.70125735036,
+          139.70125780219,
+          139.69642642924,
+          139.69648366814,
+          139.69651045853,
+          139.69651066237,
+          139.69655741288,
+          139.6965591463,
+          139.69658034665,
+          139.69659532626,
+          139.69661794881,
+          139.6966346951
+        ]
+      },
+      "node_id": {
+        "recordCount": 1982,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 1982,
+        "sample": [
+          "000502f29ee34df2a7e1700ff685a1ec",
+          "005b297c2a34454fa54aeee02f9dd315",
+          "0098e434253940449ae76fe2c4ed5fc6",
+          "010192ae147e43daa2ddc212adcba041",
+          "010f626711774334ad02468b89db9d68",
+          "011a4293968b407fb6e9ac4d595f12b5",
+          "011d18e4cb484f59998b0d13b8657658",
+          "01219d3add0e477ea70f69ef7d00e0d8",
+          "014a59ecb0b24577a60471692a4b619b",
+          "0183a70006de48c791c397f0824218e8",
+          "0186b63ce3c74a89ac4dcfae4980ac34",
+          "01e728615f1444dbb4f41dbf638bb637"
+        ]
+      },
+      "ordinal": {
+        "recordCount": 1982,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 14,
+        "values": [
+          {
+            "value": 0,
+            "count": 480
+          },
+          {
+            "value": -1,
+            "count": 469
+          },
+          {
+            "value": -2,
+            "count": 325
+          },
+          {
+            "value": 2,
+            "count": 272
+          },
+          {
+            "value": 4,
+            "count": 146
+          },
+          {
+            "value": 1,
+            "count": 102
+          },
+          {
+            "value": 3,
+            "count": 102
+          },
+          {
+            "value": -3,
+            "count": 42
+          },
+          {
+            "value": -2.5,
+            "count": 15
+          },
+          {
+            "value": -1.5,
+            "count": 12
+          },
+          {
+            "value": -0.5,
+            "count": 9
+          },
+          {
+            "value": 1.5,
+            "count": 4
+          },
+          {
+            "value": 2.5,
+            "count": 2
+          },
+          {
+            "value": 4.5,
+            "count": 2
+          }
+        ]
+      }
+    },
+    "linkFields": {
+      "brail_tile": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 1,
+        "values": [
+          {
+            "value": "99",
+            "count": 2541
+          }
+        ]
+      },
+      "direction": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 2,
+        "values": [
+          {
+            "value": "1",
+            "count": 2470
+          },
+          {
+            "value": "2",
+            "count": 71
+          }
+        ]
+      },
+      "distance": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 443,
+        "sample": [
+          0,
+          4.5,
+          3,
+          3.4,
+          6.8,
+          7.6,
+          2.1,
+          2.9,
+          3.7,
+          3.8,
+          4.3,
+          4.8
+        ]
+      },
+      "elevator": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 4,
+        "values": [
+          {
+            "value": "1",
+            "count": 2462
+          },
+          {
+            "value": "3",
+            "count": 46
+          },
+          {
+            "value": "2",
+            "count": 29
+          },
+          {
+            "value": "99",
+            "count": 4
+          }
+        ]
+      },
+      "end_id": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 1344,
+        "sample": [
+          "0b9a3f2445444cbf974f98392ba6e7a7",
+          "26ba9d511a2b41ff9bfca00cdffd4385",
+          "36fcc8b238d64bc3975776d199103a5c",
+          "a0b52ff1123445a582fae9ff4804a33f",
+          "2651d127fc04494da6582f2cd4aef16d",
+          "26a61a0a4e7c4b4d8eb9bb2e7d3b4115",
+          "28be01ad4abe45ac92afe10d62d47bd7",
+          "34acbc3c765c400795663c26b6ffffb2",
+          "3ab13e76f84d4be7a349dd5d2d680757",
+          "5d8115faa5784e7c9acbc03d66e3c3af",
+          "5e1d6ca1398c42aba2f7311b3dbaefc4",
+          "69c8c79dac5d4239aa18a6c4e4045f6d"
+        ]
+      },
+      "lev_diff": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 2,
+        "values": [
+          {
+            "value": "1",
+            "count": 2537
+          },
+          {
+            "value": "2",
+            "count": 4
+          }
+        ]
+      },
+      "link_id": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 2541,
+        "sample": [
+          "00001fddbfb54d58a6825f29824380a2",
+          "0027b9392ef04ca188d401056083cac7",
+          "0036c98023cc4489bf5dc444dd38f9db",
+          "004bba87602e4f478d2841e3ec68e91c",
+          "006a3a699a054aab9c7cf95ee5ff58ce",
+          "007bede7859c45a0ab14bbaf14280f18",
+          "008ecb38badb41138f3b2ecb00fd0cb8",
+          "00bf0b8436714f3e8b3d12788e92c1c0",
+          "00dd97bea8894ee5a77767a6cccddd9d",
+          "00e4b1a415534f7cabd89413a9b61fe9",
+          "010314d1b38341b7bca4cb6dbdbbf3e4",
+          "010cdabc7ac641fab0ab53cd00853f86"
+        ]
+      },
+      "roof": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 2,
+        "values": [
+          {
+            "value": "2",
+            "count": 1772
+          },
+          {
+            "value": "1",
+            "count": 769
+          }
+        ]
+      },
+      "route_type": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 4,
+        "values": [
+          {
+            "value": "1",
+            "count": 2194
+          },
+          {
+            "value": "6",
+            "count": 195
+          },
+          {
+            "value": "4",
+            "count": 79
+          },
+          {
+            "value": "5",
+            "count": 73
+          }
+        ]
+      },
+      "rt_struct": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 2,
+        "values": [
+          {
+            "value": "7",
+            "count": 1933
+          },
+          {
+            "value": "99",
+            "count": 608
+          }
+        ]
+      },
+      "start_id": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 1353,
+        "sample": [
+          "d1a3573f3bb8452f96179376cbf4169d",
+          "1316f5c56abd4ec7857cc2cbdd13906f",
+          "770743156e2946caaa72f354ca4c4876",
+          "1aabaa637d3b4452b433f1a29f59fa72",
+          "308915903611480fa225ca51cdc3931f",
+          "4a3400a5594f4a30ad82e10aaced40bd",
+          "5c3c1e934770438a97ef247b6059d35d",
+          "65c32354b6894c91a9621629e58366f4",
+          "6b99892d950041ed9615ccfa2e92ebef",
+          "7dd6a781b3994fbdb18d31c35ea8d95e",
+          "9db2a85bccc342abb7d95fd21b5ec47e",
+          "cd517eb7560a4448bbbcd0bc9b4163ac"
+        ]
+      },
+      "tfc_s_type": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 1,
+        "values": [
+          {
+            "value": "99",
+            "count": 2541
+          }
+        ]
+      },
+      "tfc_signal": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 1,
+        "values": [
+          {
+            "value": "99",
+            "count": 2541
+          }
+        ]
+      },
+      "vtcl_slope": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 2,
+        "values": [
+          {
+            "value": "1",
+            "count": 2473
+          },
+          {
+            "value": "2",
+            "count": 68
+          }
+        ]
+      },
+      "width": {
+        "recordCount": 2541,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 1,
+        "values": [
+          {
+            "value": "3",
+            "count": 2541
+          }
+        ]
+      }
+    }
+  },
+  "visibleLayers": {
+    "Facility": {
+      "groupCount": 44,
+      "featureCount": 639,
+      "category": {
+        "recordCount": 639,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 18,
+        "values": [
+          {
+            "value": "F011",
+            "count": 252
+          },
+          {
+            "value": "F108",
+            "count": 150
+          },
+          {
+            "value": "F013",
+            "count": 84
+          },
+          {
+            "value": "F012",
+            "count": 55
+          },
+          {
+            "value": "F002",
+            "count": 17
+          },
+          {
+            "value": "F001",
+            "count": 15
+          },
+          {
+            "value": "F005",
+            "count": 12
+          },
+          {
+            "value": "F014",
+            "count": 12
+          },
+          {
+            "value": "F017",
+            "count": 12
+          },
+          {
+            "value": "F038",
+            "count": 12
+          },
+          {
+            "value": "F031",
+            "count": 8
+          },
+          {
+            "value": "F101",
+            "count": 3
+          },
+          {
+            "value": "F021",
+            "count": 2
+          },
+          {
+            "value": "F018",
+            "count": 1
+          },
+          {
+            "value": "F020",
+            "count": 1
+          },
+          {
+            "value": "F025",
+            "count": 1
+          },
+          {
+            "value": "F030",
+            "count": 1
+          },
+          {
+            "value": "F107",
+            "count": 1
+          }
+        ]
+      },
+      "name": {
+        "recordCount": 639,
+        "nullCount": 465,
+        "nullRate": 0.7277,
+        "distinctCount": 75,
+        "sample": [
+          "不明",
+          "2",
+          "3",
+          "5",
+          "6",
+          "7",
+          "1",
+          "4",
+          "8",
+          "11",
+          "12",
+          "13"
+        ]
+      }
+    },
+    "Space": {
+      "groupCount": 47,
+      "featureCount": 1153,
+      "category": {
+        "recordCount": 1153,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 20,
+        "values": [
+          {
+            "value": "B019",
+            "count": 342
+          },
+          {
+            "value": "B021",
+            "count": 247
+          },
+          {
+            "value": "B001",
+            "count": 193
+          },
+          {
+            "value": "B023",
+            "count": 128
+          },
+          {
+            "value": "B022",
+            "count": 81
+          },
+          {
+            "value": "B029",
+            "count": 62
+          },
+          {
+            "value": "B005",
+            "count": 22
+          },
+          {
+            "value": "B025",
+            "count": 12
+          },
+          {
+            "value": "B008",
+            "count": 11
+          },
+          {
+            "value": "B018",
+            "count": 11
+          },
+          {
+            "value": "B007",
+            "count": 9
+          },
+          {
+            "value": "B030",
+            "count": 8
+          },
+          {
+            "value": "B011",
+            "count": 7
+          },
+          {
+            "value": "B010",
+            "count": 5
+          },
+          {
+            "value": "B003",
+            "count": 4
+          },
+          {
+            "value": "B006",
+            "count": 4
+          },
+          {
+            "value": "B016",
+            "count": 3
+          },
+          {
+            "value": "B002",
+            "count": 2
+          },
+          {
+            "value": "B004",
+            "count": 1
+          },
+          {
+            "value": "B026",
+            "count": 1
+          }
+        ]
+      },
+      "name": {
+        "recordCount": 1153,
+        "nullCount": 667,
+        "nullRate": 0.578491,
+        "distinctCount": 57,
+        "sample": [
+          "不明",
+          "女子トイレ",
+          "男子トイレ",
+          "トイレ",
+          "トイレ（多目的）",
+          "ESC_K16-1,2,3",
+          "ESC_K17-1,2,3",
+          "EV_K-4",
+          "トイレ（女性用）",
+          "トイレ（男性用）",
+          "1号機",
+          "2号機"
+        ]
+      }
+    },
+    "Fixture": {
+      "groupCount": 17,
+      "featureCount": 608,
+      "category": {
+        "recordCount": 608,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 2,
+        "values": [
+          {
+            "value": "C001",
+            "count": 605
+          },
+          {
+            "value": "C010",
+            "count": 3
+          }
+        ]
+      },
+      "name": {
+        "recordCount": 608,
+        "nullCount": 608,
+        "nullRate": 1,
+        "distinctCount": 0,
+        "values": []
+      }
+    },
+    "Floor": {
+      "groupCount": 48,
+      "featureCount": 200,
+      "category": {
+        "recordCount": 200,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 2,
+        "values": [
+          {
+            "value": "2",
+            "count": 110
+          },
+          {
+            "value": "1",
+            "count": 90
+          }
+        ]
+      },
+      "name": {
+        "recordCount": 200,
+        "nullCount": 0,
+        "nullRate": 0,
+        "distinctCount": 8,
+        "values": [
+          {
+            "value": "グランドレベル",
+            "count": 84
+          },
+          {
+            "value": "2階",
+            "count": 33
+          },
+          {
+            "value": "地下1階",
+            "count": 33
+          },
+          {
+            "value": "地下2階",
+            "count": 22
+          },
+          {
+            "value": "1階",
+            "count": 12
+          },
+          {
+            "value": "3階",
+            "count": 10
+          },
+          {
+            "value": "地下3階",
+            "count": 4
+          },
+          {
+            "value": "4階",
+            "count": 2
+          }
+        ]
+      }
+    },
+    "Opening": {
+      "groupCount": 17,
+      "featureCount": 63,
+      "category": {
+        "recordCount": 63,
+        "nullCount": 63,
+        "nullRate": 1,
+        "distinctCount": 0,
+        "values": []
+      },
+      "name": {
+        "recordCount": 63,
+        "nullCount": 7,
+        "nullRate": 0.111111,
+        "distinctCount": 26,
+        "values": [
+          {
+            "value": "不明",
+            "count": 15
+          },
+          {
+            "value": "西改札",
+            "count": 7
+          },
+          {
+            "value": "東改札",
+            "count": 3
+          },
+          {
+            "value": "バスタ新宿",
+            "count": 2
+          },
+          {
+            "value": "中央東改札",
+            "count": 2
+          },
+          {
+            "value": "京王新線口",
+            "count": 2
+          },
+          {
+            "value": "京王線連絡口",
+            "count": 2
+          },
+          {
+            "value": "京王西口",
+            "count": 2
+          },
+          {
+            "value": "南改札",
+            "count": 2
+          },
+          {
+            "value": "新都心口",
+            "count": 2
+          },
+          {
+            "value": "東南改札",
+            "count": 2
+          },
+          {
+            "value": "JR中央西口",
+            "count": 1
+          },
+          {
+            "value": "ＪＲ新宿駅方面改札",
+            "count": 1
+          },
+          {
+            "value": "ミライナタワー口改札",
+            "count": 1
+          },
+          {
+            "value": "ルミネ口",
+            "count": 1
+          },
+          {
+            "value": "中央改札",
+            "count": 1
+          },
+          {
+            "value": "中央西改札",
+            "count": 1
+          },
+          {
+            "value": "京王百貨店口",
+            "count": 1
+          },
+          {
+            "value": "南札口",
+            "count": 1
+          },
+          {
+            "value": "大江戸線改札B",
+            "count": 1
+          },
+          {
+            "value": "小滝橋通り方面改札",
+            "count": 1
+          },
+          {
+            "value": "広場口",
+            "count": 1
+          },
+          {
+            "value": "新南口改札",
+            "count": 1
+          },
+          {
+            "value": "甲州街道改札",
+            "count": 1
+          },
+          {
+            "value": "西口地上改札",
+            "count": 1
+          },
+          {
+            "value": "西口地下改札",
+            "count": 1
+          }
+        ]
+      }
+    }
+  },
+  "categoryAudit": {
+    "Facility": {
+      "featureCount": 639,
+      "categoryCount": 18,
+      "missingCategoryCount": 0,
+      "missingFloorCount": 0,
+      "unknownCategoryCodes": [],
+      "categories": [
+        {
+          "code": "F001",
+          "known": true,
+          "nameJa": "トイレ（男性）",
+          "nameEn": "Lavatory (Male)",
+          "role": "toilet",
+          "recordCount": 15,
+          "namedCount": 0,
+          "unnamedCount": 15,
+          "geometryTypes": {
+            "Point": 15
+          },
+          "floors": {
+            "2": 1,
+            "3": 1,
+            "4": 2,
+            "B1": 7,
+            "B2": 4
+          },
+          "sourceAreas": {
+            "11.サブナード": 2,
+            "13.西口周辺": 2,
+            "14.バスタ新宿": 3,
+            "2.JR新宿駅新南改札": 1,
+            "4.ルミネ": 1,
+            "5.東京メトロ新宿駅": 2,
+            "6.小田急新宿駅_小田急エース": 2,
+            "7.京王新宿駅_京王モールアネックス": 1,
+            "8.京王モール": 1
+          },
+          "bounds": [
+            139.6974893241791,
+            35.6879848852812,
+            139.7025031045041,
+            35.6939372440034
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Facility.dbf",
+              "sourceRecord": 29,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Facility.dbf",
+              "sourceRecord": 33,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "13.西口周辺/B1/Tokyoto_B1_Facility.dbf",
+              "sourceRecord": 21,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "13.西口周辺/B1/Tokyoto_B1_Facility.dbf",
+              "sourceRecord": 24,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/3/Basuta_3_Facility.dbf",
+              "sourceRecord": 15,
+              "name": null,
+              "floor": "3",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "F002",
+          "known": true,
+          "nameJa": "トイレ（女性）",
+          "nameEn": "Lavatory (Female)",
+          "role": "toilet",
+          "recordCount": 17,
+          "namedCount": 0,
+          "unnamedCount": 17,
+          "geometryTypes": {
+            "Point": 17
+          },
+          "floors": {
+            "2": 1,
+            "3": 1,
+            "4": 2,
+            "B1": 7,
+            "B2": 6
+          },
+          "sourceAreas": {
+            "11.サブナード": 4,
+            "13.西口周辺": 2,
+            "14.バスタ新宿": 3,
+            "2.JR新宿駅新南改札": 1,
+            "4.ルミネ": 1,
+            "5.東京メトロ新宿駅": 2,
+            "6.小田急新宿駅_小田急エース": 2,
+            "7.京王新宿駅_京王モールアネックス": 1,
+            "8.京王モール": 1
+          },
+          "bounds": [
+            139.69746977941895,
+            35.68797693884593,
+            139.7029666388216,
+            35.69391406098126
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Facility.dbf",
+              "sourceRecord": 28,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Facility.dbf",
+              "sourceRecord": 30,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Facility.dbf",
+              "sourceRecord": 31,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Facility.dbf",
+              "sourceRecord": 34,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "13.西口周辺/B1/Tokyoto_B1_Facility.dbf",
+              "sourceRecord": 22,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "13.西口周辺"
+            }
+          ]
+        },
+        {
+          "code": "F005",
+          "known": true,
+          "nameJa": "多機能トイレ",
+          "nameEn": "Multipurpose Lavatory",
+          "role": "multipurpose-toilet",
+          "recordCount": 12,
+          "namedCount": 0,
+          "unnamedCount": 12,
+          "geometryTypes": {
+            "Point": 12
+          },
+          "floors": {
+            "2": 1,
+            "3": 1,
+            "4": 3,
+            "B1": 5,
+            "B2": 2
+          },
+          "sourceAreas": {
+            "11.サブナード": 1,
+            "13.西口周辺": 2,
+            "14.バスタ新宿": 4,
+            "2.JR新宿駅新南改札": 1,
+            "4.ルミネ": 1,
+            "5.東京メトロ新宿駅": 1,
+            "6.小田急新宿駅_小田急エース": 1,
+            "7.京王新宿駅_京王モールアネックス": 1
+          },
+          "bounds": [
+            139.6975121623996,
+            35.68799390942921,
+            139.70168818372957,
+            35.69341954917609
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Facility.dbf",
+              "sourceRecord": 32,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "13.西口周辺/B1/Tokyoto_B1_Facility.dbf",
+              "sourceRecord": 23,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "13.西口周辺/B1/Tokyoto_B1_Facility.dbf",
+              "sourceRecord": 26,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/3/Basuta_3_Facility.dbf",
+              "sourceRecord": 16,
+              "name": null,
+              "floor": "3",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 33,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "F011",
+          "known": true,
+          "nameJa": "階段",
+          "nameEn": "Stairs",
+          "role": "vertical-circulation",
+          "recordCount": 252,
+          "namedCount": 0,
+          "unnamedCount": 252,
+          "geometryTypes": {
+            "Point": 252
+          },
+          "floors": {
+            "0": 71,
+            "1": 11,
+            "2": 15,
+            "3": 1,
+            "4": 1,
+            "2out": 11,
+            "3out": 2,
+            "B1": 73,
+            "B2": 61,
+            "B3": 6
+          },
+          "sourceAreas": {
+            "1.JR新宿駅改札": 8,
+            "10.都営新宿西口駅": 13,
+            "11.サブナード": 59,
+            "12.西武新宿駅": 12,
+            "13.西口周辺": 44,
+            "14.バスタ新宿": 4,
+            "15.NEWoMan": 2,
+            "2.JR新宿駅新南改札": 4,
+            "4.ルミネ": 29,
+            "5.東京メトロ新宿駅": 19,
+            "6.小田急新宿駅_小田急エース": 21,
+            "7.京王新宿駅_京王モールアネックス": 22,
+            "8.京王モール": 14,
+            "9.都営新宿駅": 1
+          },
+          "bounds": [
+            139.69663660976101,
+            35.687453593359805,
+            139.70343942687109,
+            35.69499773117688
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "1.JR新宿駅改札/0/JrSin_0_Facility.dbf",
+              "sourceRecord": 3,
+              "name": null,
+              "floor": "0",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/0/JrSin_0_Facility.dbf",
+              "sourceRecord": 4,
+              "name": null,
+              "floor": "0",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/1/JrSin_1_Facility.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/1/JrSin_1_Facility.dbf",
+              "sourceRecord": 2,
+              "name": null,
+              "floor": "1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/2out/JrSin_2out_Facility.dbf",
+              "sourceRecord": 3,
+              "name": null,
+              "floor": "2out",
+              "sourceArea": "1.JR新宿駅改札"
+            }
+          ]
+        },
+        {
+          "code": "F012",
+          "known": true,
+          "nameJa": "エレベーター",
+          "nameEn": "Elevator",
+          "role": "vertical-circulation",
+          "recordCount": 55,
+          "namedCount": 0,
+          "unnamedCount": 55,
+          "geometryTypes": {
+            "Point": 55
+          },
+          "floors": {
+            "0": 7,
+            "1": 6,
+            "2": 7,
+            "3": 3,
+            "4": 6,
+            "2out": 4,
+            "3out": 2,
+            "B1": 13,
+            "B2": 6,
+            "B3": 1
+          },
+          "sourceAreas": {
+            "1.JR新宿駅改札": 2,
+            "10.都営新宿西口駅": 5,
+            "11.サブナード": 1,
+            "12.西武新宿駅": 2,
+            "13.西口周辺": 8,
+            "14.バスタ新宿": 11,
+            "15.NEWoMan": 2,
+            "2.JR新宿駅新南改札": 6,
+            "4.ルミネ": 4,
+            "5.東京メトロ新宿駅": 4,
+            "6.小田急新宿駅_小田急エース": 4,
+            "7.京王新宿駅_京王モールアネックス": 4,
+            "8.京王モール": 2
+          },
+          "bounds": [
+            139.6978496484338,
+            35.688082049594236,
+            139.7018992073235,
+            35.694400862942324
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "1.JR新宿駅改札/0/JrSin_0_Facility.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "0",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/2out/JrSin_2out_Facility.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "2out",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/0/OedoNisi_0_Facility.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "0",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B1/OedoNisi_B1_Facility.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B1/OedoNisi_B1_Facility.dbf",
+              "sourceRecord": 2,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "10.都営新宿西口駅"
+            }
+          ]
+        },
+        {
+          "code": "F013",
+          "known": true,
+          "nameJa": "エスカレーター",
+          "nameEn": "Escalator",
+          "role": "vertical-circulation",
+          "recordCount": 84,
+          "namedCount": 0,
+          "unnamedCount": 84,
+          "geometryTypes": {
+            "Point": 84
+          },
+          "floors": {
+            "0": 7,
+            "1": 6,
+            "2": 11,
+            "3": 9,
+            "4": 11,
+            "2out": 6,
+            "3out": 4,
+            "B1": 12,
+            "B2": 10,
+            "B3": 8
+          },
+          "sourceAreas": {
+            "1.JR新宿駅改札": 2,
+            "10.都営新宿西口駅": 12,
+            "11.サブナード": 2,
+            "12.西武新宿駅": 2,
+            "13.西口周辺": 4,
+            "14.バスタ新宿": 24,
+            "15.NEWoMan": 3,
+            "2.JR新宿駅新南改札": 11,
+            "4.ルミネ": 7,
+            "5.東京メトロ新宿駅": 4,
+            "6.小田急新宿駅_小田急エース": 9,
+            "7.京王新宿駅_京王モールアネックス": 3,
+            "8.京王モール": 1
+          },
+          "bounds": [
+            139.6966350205667,
+            35.68760719052315,
+            139.7022109703361,
+            35.69472188296823
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "1.JR新宿駅改札/0/JrSin_0_Facility.dbf",
+              "sourceRecord": 2,
+              "name": null,
+              "floor": "0",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/2out/JrSin_2out_Facility.dbf",
+              "sourceRecord": 2,
+              "name": null,
+              "floor": "2out",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/0/OedoNisi_0_Facility.dbf",
+              "sourceRecord": 2,
+              "name": null,
+              "floor": "0",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B2/OedoNisi_B2_Facility.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B2/OedoNisi_B2_Facility.dbf",
+              "sourceRecord": 2,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "10.都営新宿西口駅"
+            }
+          ]
+        },
+        {
+          "code": "F014",
+          "known": true,
+          "nameJa": "スロープ",
+          "nameEn": "Slope",
+          "role": "vertical-circulation",
+          "recordCount": 12,
+          "namedCount": 0,
+          "unnamedCount": 12,
+          "geometryTypes": {
+            "Point": 12
+          },
+          "floors": {
+            "0": 1,
+            "2": 4,
+            "4": 2,
+            "2out": 4,
+            "B1": 1
+          },
+          "sourceAreas": {
+            "12.西武新宿駅": 2,
+            "13.西口周辺": 1,
+            "14.バスタ新宿": 2,
+            "2.JR新宿駅新南改札": 4,
+            "6.小田急新宿駅_小田急エース": 2,
+            "7.京王新宿駅_京王モールアネックス": 1
+          },
+          "bounds": [
+            139.69791934196843,
+            35.68792282406036,
+            139.70099125006905,
+            35.69491632184202
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "12.西武新宿駅/2/SeibuSin_2_Facility.dbf",
+              "sourceRecord": 2,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "12.西武新宿駅"
+            },
+            {
+              "sourceFile": "12.西武新宿駅/2/SeibuSin_2_Facility.dbf",
+              "sourceRecord": 3,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "12.西武新宿駅"
+            },
+            {
+              "sourceFile": "13.西口周辺/2out/Tokyoto_2out_Facility.dbf",
+              "sourceRecord": 4,
+              "name": null,
+              "floor": "2out",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 50,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 51,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "F017",
+          "known": true,
+          "nameJa": "施設出入口",
+          "nameEn": "Entrance",
+          "role": "transport",
+          "recordCount": 12,
+          "namedCount": 11,
+          "unnamedCount": 1,
+          "geometryTypes": {
+            "Point": 12
+          },
+          "floors": {
+            "2": 1,
+            "3": 2,
+            "B1": 7,
+            "B2": 2
+          },
+          "sourceAreas": {
+            "11.サブナード": 2,
+            "14.バスタ新宿": 2,
+            "2.JR新宿駅新南改札": 1,
+            "4.ルミネ": 7
+          },
+          "bounds": [
+            139.69949517084243,
+            35.68820207600028,
+            139.70207407302001,
+            35.69410021664419
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Facility.dbf",
+              "sourceRecord": 1,
+              "name": "不明",
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Facility.dbf",
+              "sourceRecord": 2,
+              "name": "不明",
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/3/Basuta_3_Facility.dbf",
+              "sourceRecord": 1,
+              "name": "0",
+              "floor": "3",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/3/Basuta_3_Facility.dbf",
+              "sourceRecord": 2,
+              "name": "1",
+              "floor": "3",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "2.JR新宿駅新南改札/2/ShinjukuStS_2_Facility.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "2.JR新宿駅新南改札"
+            }
+          ]
+        },
+        {
+          "code": "F018",
+          "known": true,
+          "nameJa": "受付・案内所",
+          "nameEn": "Information",
+          "role": "information",
+          "recordCount": 1,
+          "namedCount": 0,
+          "unnamedCount": 1,
+          "geometryTypes": {
+            "Point": 1
+          },
+          "floors": {
+            "4": 1
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 1
+          },
+          "bounds": [
+            139.70138613439676,
+            35.68844790821338,
+            139.70138613439676,
+            35.68844790821338
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 31,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "F020",
+          "known": true,
+          "nameJa": "待合室",
+          "nameEn": "Waiting Room",
+          "role": "amenity",
+          "recordCount": 1,
+          "namedCount": 0,
+          "unnamedCount": 1,
+          "geometryTypes": {
+            "Point": 1
+          },
+          "floors": {
+            "4": 1
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 1
+          },
+          "bounds": [
+            139.70135563807514,
+            35.68859951004428,
+            139.70135563807514,
+            35.68859951004428
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 56,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "F021",
+          "known": true,
+          "nameJa": "授乳室",
+          "nameEn": "Nursing Room",
+          "role": "amenity",
+          "recordCount": 2,
+          "namedCount": 0,
+          "unnamedCount": 2,
+          "geometryTypes": {
+            "Point": 2
+          },
+          "floors": {
+            "4": 2
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 2
+          },
+          "bounds": [
+            139.7013865891689,
+            35.68832309544279,
+            139.70141276973357,
+            35.68893609813981
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 47,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 48,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "F025",
+          "known": true,
+          "nameJa": "店舗",
+          "nameEn": "Store",
+          "role": "amenity",
+          "recordCount": 1,
+          "namedCount": 1,
+          "unnamedCount": 0,
+          "geometryTypes": {
+            "Point": 1
+          },
+          "floors": {
+            "4": 1
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 1
+          },
+          "bounds": [
+            139.70151134657536,
+            35.68854602815468,
+            139.70151134657536,
+            35.68854602815468
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 49,
+              "name": "ファミリーマート",
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "F030",
+          "known": true,
+          "nameJa": "ATM",
+          "nameEn": "ATM",
+          "role": "service",
+          "recordCount": 1,
+          "namedCount": 0,
+          "unnamedCount": 1,
+          "geometryTypes": {
+            "Point": 1
+          },
+          "floors": {
+            "4": 1
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 1
+          },
+          "bounds": [
+            139.70145481196124,
+            35.688405907356575,
+            139.70145481196124,
+            35.688405907356575
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "F031",
+          "known": true,
+          "nameJa": "コインロッカー",
+          "nameEn": "Coin Lockers",
+          "role": "amenity",
+          "recordCount": 8,
+          "namedCount": 0,
+          "unnamedCount": 8,
+          "geometryTypes": {
+            "Point": 8
+          },
+          "floors": {
+            "4": 8
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 8
+          },
+          "bounds": [
+            139.70153621423762,
+            35.68834189802467,
+            139.70158221635182,
+            35.68838783008772
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 39,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 40,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 41,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 42,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 43,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "F038",
+          "known": true,
+          "nameJa": "バス停留所",
+          "nameEn": "Bus Stop",
+          "role": "transport",
+          "recordCount": 12,
+          "namedCount": 12,
+          "unnamedCount": 0,
+          "geometryTypes": {
+            "Point": 12
+          },
+          "floors": {
+            "4": 12
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 12
+          },
+          "bounds": [
+            139.70033648761054,
+            35.688258893632145,
+            139.70128271194363,
+            35.68886076342005
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 2,
+              "name": "A1",
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 3,
+              "name": "C8",
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 4,
+              "name": "B5",
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 5,
+              "name": "C9",
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 6,
+              "name": "D11",
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "F101",
+          "known": true,
+          "nameJa": "きっぷ売り場",
+          "nameEn": "Ticket Office",
+          "role": "service",
+          "recordCount": 3,
+          "namedCount": 0,
+          "unnamedCount": 3,
+          "geometryTypes": {
+            "Point": 3
+          },
+          "floors": {
+            "4": 3
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 3
+          },
+          "bounds": [
+            139.70139433613517,
+            35.688546040211385,
+            139.7014551898016,
+            35.68878641297811
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 53,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 54,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Facility.dbf",
+              "sourceRecord": 55,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "F107",
+          "known": true,
+          "nameJa": "売店／キオスク",
+          "nameEn": "Kiosk",
+          "role": "amenity",
+          "recordCount": 1,
+          "namedCount": 0,
+          "unnamedCount": 1,
+          "geometryTypes": {
+            "Point": 1
+          },
+          "floors": {
+            "B2": 1
+          },
+          "sourceAreas": {
+            "5.東京メトロ新宿駅": 1
+          },
+          "bounds": [
+            139.6996733531229,
+            35.6919849267671,
+            139.6996733531229,
+            35.6919849267671
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "5.東京メトロ新宿駅/B2/MaruSin_B2_Facility.dbf",
+              "sourceRecord": 21,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "5.東京メトロ新宿駅"
+            }
+          ]
+        },
+        {
+          "code": "F108",
+          "known": true,
+          "nameJa": "出口",
+          "nameEn": "Exit",
+          "role": "transport",
+          "recordCount": 150,
+          "namedCount": 150,
+          "unnamedCount": 0,
+          "geometryTypes": {
+            "Point": 150
+          },
+          "floors": {
+            "0": 58,
+            "1": 1,
+            "B1": 44,
+            "B2": 46,
+            "B3": 1
+          },
+          "sourceAreas": {
+            "10.都営新宿西口駅": 7,
+            "11.サブナード": 44,
+            "13.西口周辺": 30,
+            "4.ルミネ": 11,
+            "5.東京メトロ新宿駅": 23,
+            "6.小田急新宿駅_小田急エース": 10,
+            "7.京王新宿駅_京王モールアネックス": 12,
+            "8.京王モール": 12,
+            "9.都営新宿駅": 1
+          },
+          "bounds": [
+            139.69659532625758,
+            35.68744090681827,
+            139.7033642393717,
+            35.694198795478016
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "10.都営新宿西口駅/0/OedoNisi_0_Facility.dbf",
+              "sourceRecord": 3,
+              "name": "D2",
+              "floor": "0",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/0/OedoNisi_0_Facility.dbf",
+              "sourceRecord": 4,
+              "name": "D5",
+              "floor": "0",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B1/OedoNisi_B1_Facility.dbf",
+              "sourceRecord": 3,
+              "name": "D2",
+              "floor": "B1",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B2/OedoNisi_B2_Facility.dbf",
+              "sourceRecord": 4,
+              "name": "D4",
+              "floor": "B2",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B2/OedoNisi_B2_Facility.dbf",
+              "sourceRecord": 5,
+              "name": "D3",
+              "floor": "B2",
+              "sourceArea": "10.都営新宿西口駅"
+            }
+          ]
+        }
+      ]
+    },
+    "Space": {
+      "featureCount": 1153,
+      "categoryCount": 20,
+      "missingCategoryCount": 0,
+      "missingFloorCount": 0,
+      "unknownCategoryCodes": [],
+      "categories": [
+        {
+          "code": "B001",
+          "known": true,
+          "nameJa": "商業施設",
+          "nameEn": "Retail Store",
+          "role": "room",
+          "recordCount": 193,
+          "namedCount": 0,
+          "unnamedCount": 193,
+          "geometryTypes": {
+            "Polygon": 193
+          },
+          "floors": {
+            "2": 19,
+            "B1": 57,
+            "B2": 114,
+            "B3": 3
+          },
+          "sourceAreas": {
+            "1.JR新宿駅改札": 3,
+            "10.都営新宿西口駅": 3,
+            "11.サブナード": 99,
+            "12.西武新宿駅": 3,
+            "13.西口周辺": 1,
+            "2.JR新宿駅新南改札": 8,
+            "3.JR新宿駅": 4,
+            "4.ルミネ": 4,
+            "5.東京メトロ新宿駅": 15,
+            "6.小田急新宿駅_小田急エース": 10,
+            "7.京王新宿駅_京王モールアネックス": 19,
+            "8.京王モール": 24
+          },
+          "bounds": [
+            139.69716910952985,
+            35.68779627862666,
+            139.70374041327295,
+            35.69510634430713
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "1.JR新宿駅改札/2/JrSin_2_Space.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/B1/JrSin_B1_Space.dbf",
+              "sourceRecord": 8,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/B1/JrSin_B1_Space.dbf",
+              "sourceRecord": 9,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B3/OedoNisi_B3_Space.dbf",
+              "sourceRecord": 21,
+              "name": null,
+              "floor": "B3",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B3/OedoNisi_B3_Space.dbf",
+              "sourceRecord": 31,
+              "name": null,
+              "floor": "B3",
+              "sourceArea": "10.都営新宿西口駅"
+            }
+          ]
+        },
+        {
+          "code": "B002",
+          "known": true,
+          "nameJa": "事務所",
+          "nameEn": "Office",
+          "role": "room",
+          "recordCount": 2,
+          "namedCount": 0,
+          "unnamedCount": 2,
+          "geometryTypes": {
+            "Polygon": 2
+          },
+          "floors": {
+            "B1": 1,
+            "B2": 1
+          },
+          "sourceAreas": {
+            "11.サブナード": 1,
+            "8.京王モール": 1
+          },
+          "bounds": [
+            139.69885595229354,
+            35.68924571214388,
+            139.70023121691472,
+            35.69402411168709
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Space.dbf",
+              "sourceRecord": 53,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "8.京王モール/B1/KeioTika_B1_Space.dbf",
+              "sourceRecord": 34,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "8.京王モール"
+            }
+          ]
+        },
+        {
+          "code": "B003",
+          "known": true,
+          "nameJa": "公的施設",
+          "nameEn": "Public Facility",
+          "role": "room",
+          "recordCount": 4,
+          "namedCount": 0,
+          "unnamedCount": 4,
+          "geometryTypes": {
+            "Polygon": 4
+          },
+          "floors": {
+            "B1": 2,
+            "B2": 2
+          },
+          "sourceAreas": {
+            "10.都営新宿西口駅": 1,
+            "13.西口周辺": 2,
+            "5.東京メトロ新宿駅": 1
+          },
+          "bounds": [
+            139.6989602525665,
+            35.69157040888043,
+            139.70096056024352,
+            35.69246005487769
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "10.都営新宿西口駅/B2/OedoNisi_B2_Space.dbf",
+              "sourceRecord": 11,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "13.西口周辺/B1/Tokyoto_B1_Space.dbf",
+              "sourceRecord": 24,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "13.西口周辺/B1/Tokyoto_B1_Space.dbf",
+              "sourceRecord": 29,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "5.東京メトロ新宿駅/B2/MaruSin_B2_Space.dbf",
+              "sourceRecord": 11,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "5.東京メトロ新宿駅"
+            }
+          ]
+        },
+        {
+          "code": "B004",
+          "known": true,
+          "nameJa": "待合室・休憩所",
+          "nameEn": "Waiting Room",
+          "role": "room",
+          "recordCount": 1,
+          "namedCount": 1,
+          "unnamedCount": 0,
+          "geometryTypes": {
+            "Polygon": 1
+          },
+          "floors": {
+            "4": 1
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 1
+          },
+          "bounds": [
+            139.70123669672404,
+            35.68832929616304,
+            139.70160003818754,
+            35.68893862999443
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Space.dbf",
+              "sourceRecord": 57,
+              "name": "高速バス関連施設待合室",
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "B005",
+          "known": true,
+          "nameJa": "きっぷ売り場",
+          "nameEn": "Tickets",
+          "role": "service",
+          "recordCount": 22,
+          "namedCount": 0,
+          "unnamedCount": 22,
+          "geometryTypes": {
+            "Polygon": 22
+          },
+          "floors": {
+            "2": 5,
+            "4": 3,
+            "B1": 10,
+            "B2": 1,
+            "B3": 3
+          },
+          "sourceAreas": {
+            "1.JR新宿駅改札": 2,
+            "10.都営新宿西口駅": 3,
+            "12.西武新宿駅": 1,
+            "14.バスタ新宿": 3,
+            "2.JR新宿駅新南改札": 3,
+            "4.ルミネ": 1,
+            "5.東京メトロ新宿駅": 1,
+            "6.小田急新宿駅_小田急エース": 2,
+            "7.京王新宿駅_京王モールアネックス": 5,
+            "9.都営新宿駅": 1
+          },
+          "bounds": [
+            139.69684989922183,
+            35.68757249636152,
+            139.70150095789793,
+            35.69475997041223
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "1.JR新宿駅改札/B1/JrSin_B1_Space.dbf",
+              "sourceRecord": 2,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/B1/JrSin_B1_Space.dbf",
+              "sourceRecord": 10,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B3/OedoNisi_B3_Space.dbf",
+              "sourceRecord": 14,
+              "name": null,
+              "floor": "B3",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B3/OedoNisi_B3_Space.dbf",
+              "sourceRecord": 15,
+              "name": null,
+              "floor": "B3",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B3/OedoNisi_B3_Space.dbf",
+              "sourceRecord": 28,
+              "name": null,
+              "floor": "B3",
+              "sourceArea": "10.都営新宿西口駅"
+            }
+          ]
+        },
+        {
+          "code": "B006",
+          "known": true,
+          "nameJa": "受付・案内",
+          "nameEn": "Information",
+          "role": "information",
+          "recordCount": 4,
+          "namedCount": 0,
+          "unnamedCount": 4,
+          "geometryTypes": {
+            "Polygon": 4
+          },
+          "floors": {
+            "2": 2,
+            "3": 1,
+            "B1": 1
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 1,
+            "2.JR新宿駅新南改札": 2,
+            "7.京王新宿駅_京王モールアネックス": 1
+          },
+          "bounds": [
+            139.69910171697705,
+            35.68807051872498,
+            139.70088110602717,
+            35.69024786937963
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/3/Basuta_3_Space.dbf",
+              "sourceRecord": 52,
+              "name": null,
+              "floor": "3",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "2.JR新宿駅新南改札/2/ShinjukuStS_2_Space.dbf",
+              "sourceRecord": 18,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "2.JR新宿駅新南改札"
+            },
+            {
+              "sourceFile": "2.JR新宿駅新南改札/2/ShinjukuStS_2_Space.dbf",
+              "sourceRecord": 27,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "2.JR新宿駅新南改札"
+            },
+            {
+              "sourceFile": "7.京王新宿駅_京王モールアネックス/B1/KeioSin_B1_Space.dbf",
+              "sourceRecord": 39,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "7.京王新宿駅_京王モールアネックス"
+            }
+          ]
+        },
+        {
+          "code": "B007",
+          "known": true,
+          "nameJa": "トイレ（男性用）",
+          "nameEn": "Lavatory (Male)",
+          "role": "toilet",
+          "recordCount": 9,
+          "namedCount": 9,
+          "unnamedCount": 0,
+          "geometryTypes": {
+            "Polygon": 9
+          },
+          "floors": {
+            "3": 1,
+            "4": 2,
+            "B1": 2,
+            "B2": 4
+          },
+          "sourceAreas": {
+            "11.サブナード": 2,
+            "14.バスタ新宿": 3,
+            "5.東京メトロ新宿駅": 2,
+            "6.小田急新宿駅_小田急エース": 1,
+            "8.京王モール": 1
+          },
+          "bounds": [
+            139.69869624156254,
+            35.68817128577225,
+            139.70253555628892,
+            35.694007267770914
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Space.dbf",
+              "sourceRecord": 26,
+              "name": "男子トイレ",
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Space.dbf",
+              "sourceRecord": 86,
+              "name": "男子トイレ",
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/3/Basuta_3_Space.dbf",
+              "sourceRecord": 47,
+              "name": "トイレ（男性用）",
+              "floor": "3",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Space.dbf",
+              "sourceRecord": 15,
+              "name": "トイレ（男性用）",
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Space.dbf",
+              "sourceRecord": 19,
+              "name": "トイレ（男性用）",
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "B008",
+          "known": true,
+          "nameJa": "トイレ（女性用）",
+          "nameEn": "Lavatory (Female)",
+          "role": "toilet",
+          "recordCount": 11,
+          "namedCount": 11,
+          "unnamedCount": 0,
+          "geometryTypes": {
+            "Polygon": 11
+          },
+          "floors": {
+            "3": 1,
+            "4": 2,
+            "B1": 2,
+            "B2": 6
+          },
+          "sourceAreas": {
+            "11.サブナード": 4,
+            "14.バスタ新宿": 3,
+            "5.東京メトロ新宿駅": 2,
+            "6.小田急新宿駅_小田急エース": 1,
+            "8.京王モール": 1
+          },
+          "bounds": [
+            139.6986439183224,
+            35.6881295760968,
+            139.7029983723446,
+            35.69398067612974
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Space.dbf",
+              "sourceRecord": 55,
+              "name": "女子トイレ",
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Space.dbf",
+              "sourceRecord": 94,
+              "name": "女子トイレ",
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Space.dbf",
+              "sourceRecord": 103,
+              "name": "女子トイレ",
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Space.dbf",
+              "sourceRecord": 134,
+              "name": "女子トイレ",
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/3/Basuta_3_Space.dbf",
+              "sourceRecord": 35,
+              "name": "トイレ（女性用）",
+              "floor": "3",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "B010",
+          "known": true,
+          "nameJa": "トイレ（男女不明）",
+          "nameEn": "Lavatory (Unspecified)",
+          "role": "toilet",
+          "recordCount": 5,
+          "namedCount": 5,
+          "unnamedCount": 0,
+          "geometryTypes": {
+            "Polygon": 5
+          },
+          "floors": {
+            "B1": 5
+          },
+          "sourceAreas": {
+            "13.西口周辺": 2,
+            "4.ルミネ": 1,
+            "6.小田急新宿駅_小田急エース": 1,
+            "7.京王新宿駅_京王モールアネックス": 1
+          },
+          "bounds": [
+            139.697441149528,
+            35.687903926335906,
+            139.7018098445469,
+            35.692131441690755
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "13.西口周辺/B1/Tokyoto_B1_Space.dbf",
+              "sourceRecord": 5,
+              "name": "トイレ",
+              "floor": "B1",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "13.西口周辺/B1/Tokyoto_B1_Space.dbf",
+              "sourceRecord": 28,
+              "name": "新宿西口地下第二公衆便所",
+              "floor": "B1",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "4.ルミネ/B1/Lumine_B1_Space.dbf",
+              "sourceRecord": 21,
+              "name": "トイレ",
+              "floor": "B1",
+              "sourceArea": "4.ルミネ"
+            },
+            {
+              "sourceFile": "6.小田急新宿駅_小田急エース/B1/OdaSin_B1_Space.dbf",
+              "sourceRecord": 20,
+              "name": "トイレ",
+              "floor": "B1",
+              "sourceArea": "6.小田急新宿駅_小田急エース"
+            },
+            {
+              "sourceFile": "7.京王新宿駅_京王モールアネックス/B1/KeioSin_B1_Space.dbf",
+              "sourceRecord": 9,
+              "name": "トイレ",
+              "floor": "B1",
+              "sourceArea": "7.京王新宿駅_京王モールアネックス"
+            }
+          ]
+        },
+        {
+          "code": "B011",
+          "known": true,
+          "nameJa": "多機能トイレ",
+          "nameEn": "Multipurpose Lavatory",
+          "role": "multipurpose-toilet",
+          "recordCount": 7,
+          "namedCount": 7,
+          "unnamedCount": 0,
+          "geometryTypes": {
+            "Polygon": 7
+          },
+          "floors": {
+            "3": 1,
+            "4": 3,
+            "B1": 1,
+            "B2": 2
+          },
+          "sourceAreas": {
+            "11.サブナード": 1,
+            "13.西口周辺": 1,
+            "14.バスタ新宿": 4,
+            "5.東京メトロ新宿駅": 1
+          },
+          "bounds": [
+            139.69942022313737,
+            35.68815171393191,
+            139.70146465535905,
+            35.69342882866851
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "11.サブナード/B2/Subunade_B2_Space.dbf",
+              "sourceRecord": 9,
+              "name": "多目的トイレ",
+              "floor": "B2",
+              "sourceArea": "11.サブナード"
+            },
+            {
+              "sourceFile": "13.西口周辺/B1/Tokyoto_B1_Space.dbf",
+              "sourceRecord": 16,
+              "name": "多目的トイレ",
+              "floor": "B1",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/3/Basuta_3_Space.dbf",
+              "sourceRecord": 49,
+              "name": "トイレ（多目的）",
+              "floor": "3",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Space.dbf",
+              "sourceRecord": 42,
+              "name": "トイレ（多目的）",
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Space.dbf",
+              "sourceRecord": 50,
+              "name": "トイレ（多目的）",
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "B016",
+          "known": true,
+          "nameJa": "授乳室",
+          "nameEn": "Baby-feeding Room, Nursing Room",
+          "role": "amenity",
+          "recordCount": 3,
+          "namedCount": 0,
+          "unnamedCount": 3,
+          "geometryTypes": {
+            "Polygon": 3
+          },
+          "floors": {
+            "3": 1,
+            "4": 2
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 3
+          },
+          "bounds": [
+            139.70035695411153,
+            35.68818420450399,
+            139.70143164307845,
+            35.6889466308633
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/3/Basuta_3_Space.dbf",
+              "sourceRecord": 16,
+              "name": null,
+              "floor": "3",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Space.dbf",
+              "sourceRecord": 35,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Space.dbf",
+              "sourceRecord": 58,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "B018",
+          "known": true,
+          "nameJa": "駅事務室",
+          "nameEn": "Station Office",
+          "role": "service",
+          "recordCount": 11,
+          "namedCount": 0,
+          "unnamedCount": 11,
+          "geometryTypes": {
+            "Polygon": 11
+          },
+          "floors": {
+            "2": 7,
+            "B1": 2,
+            "B2": 1,
+            "B3": 1
+          },
+          "sourceAreas": {
+            "10.都営新宿西口駅": 1,
+            "12.西武新宿駅": 2,
+            "2.JR新宿駅新南改札": 2,
+            "3.JR新宿駅": 3,
+            "5.東京メトロ新宿駅": 1,
+            "6.小田急新宿駅_小田急エース": 1,
+            "7.京王新宿駅_京王モールアネックス": 1
+          },
+          "bounds": [
+            139.69890572830835,
+            35.688351510668916,
+            139.70147877343297,
+            35.695160517713184
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "10.都営新宿西口駅/B3/OedoNisi_B3_Space.dbf",
+              "sourceRecord": 29,
+              "name": null,
+              "floor": "B3",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "12.西武新宿駅/2/SeibuSin_2_Space.dbf",
+              "sourceRecord": 2,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "12.西武新宿駅"
+            },
+            {
+              "sourceFile": "12.西武新宿駅/2/SeibuSin_2_Space.dbf",
+              "sourceRecord": 17,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "12.西武新宿駅"
+            },
+            {
+              "sourceFile": "2.JR新宿駅新南改札/2/ShinjukuStS_2_Space.dbf",
+              "sourceRecord": 6,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "2.JR新宿駅新南改札"
+            },
+            {
+              "sourceFile": "2.JR新宿駅新南改札/2/ShinjukuStS_2_Space.dbf",
+              "sourceRecord": 22,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "2.JR新宿駅新南改札"
+            }
+          ]
+        },
+        {
+          "code": "B019",
+          "known": true,
+          "nameJa": "その他部屋の範囲",
+          "nameEn": "Other Room",
+          "role": "room",
+          "recordCount": 342,
+          "namedCount": 0,
+          "unnamedCount": 342,
+          "geometryTypes": {
+            "Polygon": 342
+          },
+          "floors": {
+            "0": 1,
+            "1": 8,
+            "2": 37,
+            "3": 32,
+            "4": 26,
+            "2out": 10,
+            "3out": 8,
+            "4out": 7,
+            "B1": 79,
+            "B2": 124,
+            "B3": 10
+          },
+          "sourceAreas": {
+            "1.JR新宿駅改札": 5,
+            "10.都営新宿西口駅": 22,
+            "11.サブナード": 60,
+            "12.西武新宿駅": 31,
+            "13.西口周辺": 19,
+            "14.バスタ新宿": 73,
+            "2.JR新宿駅新南改札": 14,
+            "4.ルミネ": 21,
+            "5.東京メトロ新宿駅": 49,
+            "6.小田急新宿駅_小田急エース": 18,
+            "7.京王新宿駅_京王モールアネックス": 28,
+            "9.都営新宿駅": 2
+          },
+          "bounds": [
+            139.69656956783035,
+            35.687433600926845,
+            139.70347893822418,
+            35.695016731978995
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "1.JR新宿駅改札/B1/JrSin_B1_Space.dbf",
+              "sourceRecord": 4,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/B1/JrSin_B1_Space.dbf",
+              "sourceRecord": 5,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/B1/JrSin_B1_Space.dbf",
+              "sourceRecord": 11,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/B1/JrSin_B1_Space.dbf",
+              "sourceRecord": 12,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/B1/JrSin_B1_Space.dbf",
+              "sourceRecord": 13,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "1.JR新宿駅改札"
+            }
+          ]
+        },
+        {
+          "code": "B021",
+          "known": true,
+          "nameJa": "階段の範囲",
+          "nameEn": "Stairs",
+          "role": "vertical-circulation",
+          "recordCount": 247,
+          "namedCount": 246,
+          "unnamedCount": 1,
+          "geometryTypes": {
+            "Polygon": 247
+          },
+          "floors": {
+            "0": 71,
+            "1": 11,
+            "2": 16,
+            "3": 1,
+            "4": 1,
+            "2out": 11,
+            "3out": 2,
+            "B1": 69,
+            "B2": 59,
+            "B3": 6
+          },
+          "sourceAreas": {
+            "1.JR新宿駅改札": 8,
+            "10.都営新宿西口駅": 12,
+            "11.サブナード": 60,
+            "12.西武新宿駅": 13,
+            "13.西口周辺": 42,
+            "14.バスタ新宿": 4,
+            "15.NEWoMan": 2,
+            "2.JR新宿駅新南改札": 4,
+            "4.ルミネ": 28,
+            "5.東京メトロ新宿駅": 18,
+            "6.小田急新宿駅_小田急エース": 19,
+            "7.京王新宿駅_京王モールアネックス": 22,
+            "8.京王モール": 14,
+            "9.都営新宿駅": 1
+          },
+          "bounds": [
+            139.6965854414458,
+            35.68739578858993,
+            139.703460023521,
+            35.69501066789504
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "1.JR新宿駅改札/0/JrSin_0_Space.dbf",
+              "sourceRecord": 1,
+              "name": "不明",
+              "floor": "0",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/0/JrSin_0_Space.dbf",
+              "sourceRecord": 4,
+              "name": "不明",
+              "floor": "0",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/1/JrSin_1_Space.dbf",
+              "sourceRecord": 1,
+              "name": "不明",
+              "floor": "1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/1/JrSin_1_Space.dbf",
+              "sourceRecord": 2,
+              "name": "不明",
+              "floor": "1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/2out/JrSin_2out_Space.dbf",
+              "sourceRecord": 2,
+              "name": "不明",
+              "floor": "2out",
+              "sourceArea": "1.JR新宿駅改札"
+            }
+          ]
+        },
+        {
+          "code": "B022",
+          "known": true,
+          "nameJa": "エレベーターの範囲",
+          "nameEn": "Elevator",
+          "role": "vertical-circulation",
+          "recordCount": 81,
+          "namedCount": 80,
+          "unnamedCount": 1,
+          "geometryTypes": {
+            "Polygon": 81
+          },
+          "floors": {
+            "0": 8,
+            "1": 14,
+            "2": 8,
+            "3": 4,
+            "4": 6,
+            "2out": 4,
+            "3out": 2,
+            "B1": 26,
+            "B2": 8,
+            "B3": 1
+          },
+          "sourceAreas": {
+            "1.JR新宿駅改札": 2,
+            "10.都営新宿西口駅": 4,
+            "11.サブナード": 1,
+            "12.西武新宿駅": 4,
+            "13.西口周辺": 8,
+            "14.バスタ新宿": 12,
+            "15.NEWoMan": 2,
+            "2.JR新宿駅新南改札": 6,
+            "4.ルミネ": 11,
+            "5.東京メトロ新宿駅": 7,
+            "6.小田急新宿駅_小田急エース": 14,
+            "7.京王新宿駅_京王モールアネックス": 8,
+            "8.京王モール": 2
+          },
+          "bounds": [
+            139.6978158206034,
+            35.68806396565418,
+            139.70195085754528,
+            35.694417603845366
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "1.JR新宿駅改札/0/JrSin_0_Space.dbf",
+              "sourceRecord": 2,
+              "name": "不明",
+              "floor": "0",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/2out/JrSin_2out_Space.dbf",
+              "sourceRecord": 4,
+              "name": "不明",
+              "floor": "2out",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/0/OedoNisi_0_Space.dbf",
+              "sourceRecord": 2,
+              "name": "不明",
+              "floor": "0",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B1/OedoNisi_B1_Space.dbf",
+              "sourceRecord": 1,
+              "name": "不明",
+              "floor": "B1",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B1/OedoNisi_B1_Space.dbf",
+              "sourceRecord": 2,
+              "name": "不明",
+              "floor": "B1",
+              "sourceArea": "10.都営新宿西口駅"
+            }
+          ]
+        },
+        {
+          "code": "B023",
+          "known": true,
+          "nameJa": "エスカレーターの範囲",
+          "nameEn": "Escalator",
+          "role": "vertical-circulation",
+          "recordCount": 128,
+          "namedCount": 126,
+          "unnamedCount": 2,
+          "geometryTypes": {
+            "Polygon": 128
+          },
+          "floors": {
+            "0": 11,
+            "1": 14,
+            "2": 16,
+            "3": 9,
+            "4": 11,
+            "2out": 10,
+            "3out": 4,
+            "B1": 21,
+            "B2": 19,
+            "B3": 13
+          },
+          "sourceAreas": {
+            "1.JR新宿駅改札": 4,
+            "10.都営新宿西口駅": 23,
+            "11.サブナード": 4,
+            "12.西武新宿駅": 4,
+            "13.西口周辺": 8,
+            "14.バスタ新宿": 24,
+            "15.NEWoMan": 4,
+            "2.JR新宿駅新南改札": 11,
+            "4.ルミネ": 15,
+            "5.東京メトロ新宿駅": 6,
+            "6.小田急新宿駅_小田急エース": 17,
+            "7.京王新宿駅_京王モールアネックス": 5,
+            "8.京王モール": 3
+          },
+          "bounds": [
+            139.69657502936087,
+            35.687575519111775,
+            139.70247188442784,
+            35.69491456694511
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "1.JR新宿駅改札/0/JrSin_0_Space.dbf",
+              "sourceRecord": 3,
+              "name": "不明",
+              "floor": "0",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/0/JrSin_0_Space.dbf",
+              "sourceRecord": 5,
+              "name": "不明",
+              "floor": "0",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/2out/JrSin_2out_Space.dbf",
+              "sourceRecord": 1,
+              "name": "不明",
+              "floor": "2out",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/2out/JrSin_2out_Space.dbf",
+              "sourceRecord": 3,
+              "name": "不明",
+              "floor": "2out",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/0/OedoNisi_0_Space.dbf",
+              "sourceRecord": 3,
+              "name": "不明",
+              "floor": "0",
+              "sourceArea": "10.都営新宿西口駅"
+            }
+          ]
+        },
+        {
+          "code": "B025",
+          "known": true,
+          "nameJa": "スロープの範囲",
+          "nameEn": "Slope",
+          "role": "vertical-circulation",
+          "recordCount": 12,
+          "namedCount": 1,
+          "unnamedCount": 11,
+          "geometryTypes": {
+            "Polygon": 12
+          },
+          "floors": {
+            "0": 1,
+            "2": 4,
+            "4": 2,
+            "2out": 4,
+            "B1": 1
+          },
+          "sourceAreas": {
+            "12.西武新宿駅": 2,
+            "13.西口周辺": 1,
+            "14.バスタ新宿": 2,
+            "2.JR新宿駅新南改札": 4,
+            "6.小田急新宿駅_小田急エース": 2,
+            "7.京王新宿駅_京王モールアネックス": 1
+          },
+          "bounds": [
+            139.6979074145903,
+            35.68791299773672,
+            139.70102674975618,
+            35.694998317735035
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "12.西武新宿駅/2/SeibuSin_2_Space.dbf",
+              "sourceRecord": 16,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "12.西武新宿駅"
+            },
+            {
+              "sourceFile": "12.西武新宿駅/2/SeibuSin_2_Space.dbf",
+              "sourceRecord": 25,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "12.西武新宿駅"
+            },
+            {
+              "sourceFile": "13.西口周辺/2out/Tokyoto_2out_Space.dbf",
+              "sourceRecord": 7,
+              "name": null,
+              "floor": "2out",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Space.dbf",
+              "sourceRecord": 33,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/4/Basuta_4_Space.dbf",
+              "sourceRecord": 59,
+              "name": null,
+              "floor": "4",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "B026",
+          "known": true,
+          "nameJa": "非公開の範囲",
+          "nameEn": "Non-Public",
+          "role": "restricted",
+          "recordCount": 1,
+          "namedCount": 0,
+          "unnamedCount": 1,
+          "geometryTypes": {
+            "Polygon": 1
+          },
+          "floors": {
+            "4out": 1
+          },
+          "sourceAreas": {
+            "14.バスタ新宿": 1
+          },
+          "bounds": [
+            139.7010583386043,
+            35.688457570661434,
+            139.70116820339172,
+            35.688803629267206
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "14.バスタ新宿/4out/Basuta_4out_Space.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "4out",
+              "sourceArea": "14.バスタ新宿"
+            }
+          ]
+        },
+        {
+          "code": "B029",
+          "known": true,
+          "nameJa": "通路／コンコース",
+          "nameEn": "Walkway",
+          "role": "circulation",
+          "recordCount": 62,
+          "namedCount": 0,
+          "unnamedCount": 62,
+          "geometryTypes": {
+            "Polygon": 62
+          },
+          "floors": {
+            "1": 6,
+            "2": 9,
+            "3": 3,
+            "4": 2,
+            "2out": 1,
+            "B1": 30,
+            "B2": 6,
+            "B3": 5
+          },
+          "sourceAreas": {
+            "1.JR新宿駅改札": 3,
+            "10.都営新宿西口駅": 8,
+            "11.サブナード": 2,
+            "12.西武新宿駅": 4,
+            "13.西口周辺": 1,
+            "14.バスタ新宿": 5,
+            "2.JR新宿駅新南改札": 3,
+            "4.ルミネ": 10,
+            "5.東京メトロ新宿駅": 3,
+            "6.小田急新宿駅_小田急エース": 8,
+            "7.京王新宿駅_京王モールアネックス": 8,
+            "8.京王モール": 6,
+            "9.都営新宿駅": 1
+          },
+          "bounds": [
+            139.6965251166971,
+            35.68745106632726,
+            139.7036212142409,
+            35.695079367398
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "1.JR新宿駅改札/2/JrSin_2_Space.dbf",
+              "sourceRecord": 2,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/B1/JrSin_B1_Space.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "1.JR新宿駅改札/B1/JrSin_B1_Space.dbf",
+              "sourceRecord": 7,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B1/OedoNisi_B1_Space.dbf",
+              "sourceRecord": 3,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B1/OedoNisi_B1_Space.dbf",
+              "sourceRecord": 4,
+              "name": null,
+              "floor": "B1",
+              "sourceArea": "10.都営新宿西口駅"
+            }
+          ]
+        },
+        {
+          "code": "B030",
+          "known": true,
+          "nameJa": "ペデストリアンデッキ",
+          "nameEn": "Pedestrian Deck",
+          "role": "circulation",
+          "recordCount": 8,
+          "namedCount": 0,
+          "unnamedCount": 8,
+          "geometryTypes": {
+            "Polygon": 8
+          },
+          "floors": {
+            "2out": 7,
+            "3out": 1
+          },
+          "sourceAreas": {
+            "1.JR新宿駅改札": 1,
+            "13.西口周辺": 2,
+            "14.バスタ新宿": 1,
+            "2.JR新宿駅新南改札": 4
+          },
+          "bounds": [
+            139.69677972777873,
+            35.687791665879274,
+            139.70180409394902,
+            35.69276734999283
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "1.JR新宿駅改札/2out/JrSin_2out_Space.dbf",
+              "sourceRecord": 5,
+              "name": null,
+              "floor": "2out",
+              "sourceArea": "1.JR新宿駅改札"
+            },
+            {
+              "sourceFile": "13.西口周辺/2out/Tokyoto_2out_Space.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "2out",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "13.西口周辺/2out/Tokyoto_2out_Space.dbf",
+              "sourceRecord": 9,
+              "name": null,
+              "floor": "2out",
+              "sourceArea": "13.西口周辺"
+            },
+            {
+              "sourceFile": "14.バスタ新宿/3out/Basuta_3out_Space.dbf",
+              "sourceRecord": 14,
+              "name": null,
+              "floor": "3out",
+              "sourceArea": "14.バスタ新宿"
+            },
+            {
+              "sourceFile": "2.JR新宿駅新南改札/2out/ShinjukuStS_2out_Space.dbf",
+              "sourceRecord": 4,
+              "name": null,
+              "floor": "2out",
+              "sourceArea": "2.JR新宿駅新南改札"
+            }
+          ]
+        }
+      ]
+    },
+    "Fixture": {
+      "featureCount": 608,
+      "categoryCount": 2,
+      "missingCategoryCount": 0,
+      "missingFloorCount": 0,
+      "unknownCategoryCodes": [],
+      "categories": [
+        {
+          "code": "C001",
+          "known": true,
+          "nameJa": "柱",
+          "nameEn": "Column",
+          "role": "structure",
+          "recordCount": 605,
+          "namedCount": 0,
+          "unnamedCount": 605,
+          "geometryTypes": {
+            "Polygon": 605
+          },
+          "floors": {
+            "2": 33,
+            "3": 88,
+            "4": 100,
+            "2out": 10,
+            "3out": 9,
+            "4out": 5,
+            "B1": 154,
+            "B2": 189,
+            "B3": 17
+          },
+          "sourceAreas": {
+            "10.都営新宿西口駅": 55,
+            "11.サブナード": 23,
+            "12.西武新宿駅": 29,
+            "13.西口周辺": 92,
+            "14.バスタ新宿": 202,
+            "2.JR新宿駅新南改札": 28,
+            "5.東京メトロ新宿駅": 114,
+            "6.小田急新宿駅_小田急エース": 2,
+            "7.京王新宿駅_京王モールアネックス": 58,
+            "8.京王モール": 2
+          },
+          "bounds": [
+            139.69667143456465,
+            35.687539685309645,
+            139.70270277065865,
+            35.694966051476584
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "10.都営新宿西口駅/B2/OedoNisi_B2_Fixture.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B2/OedoNisi_B2_Fixture.dbf",
+              "sourceRecord": 2,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B2/OedoNisi_B2_Fixture.dbf",
+              "sourceRecord": 3,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B2/OedoNisi_B2_Fixture.dbf",
+              "sourceRecord": 4,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "10.都営新宿西口駅"
+            },
+            {
+              "sourceFile": "10.都営新宿西口駅/B2/OedoNisi_B2_Fixture.dbf",
+              "sourceRecord": 5,
+              "name": null,
+              "floor": "B2",
+              "sourceArea": "10.都営新宿西口駅"
+            }
+          ]
+        },
+        {
+          "code": "C010",
+          "known": true,
+          "nameJa": "パーテーション・間仕切壁",
+          "nameEn": "Wall",
+          "role": "structure",
+          "recordCount": 3,
+          "namedCount": 0,
+          "unnamedCount": 3,
+          "geometryTypes": {
+            "Polygon": 3
+          },
+          "floors": {
+            "0": 1,
+            "2": 2
+          },
+          "sourceAreas": {
+            "12.西武新宿駅": 3
+          },
+          "bounds": [
+            139.7000976849091,
+            35.694146440539036,
+            139.70028103651296,
+            35.6944200769075
+          ],
+          "malformedRecordCount": 0,
+          "examples": [
+            {
+              "sourceFile": "12.西武新宿駅/0/SeibuSin_0_Fixture.dbf",
+              "sourceRecord": 1,
+              "name": null,
+              "floor": "0",
+              "sourceArea": "12.西武新宿駅"
+            },
+            {
+              "sourceFile": "12.西武新宿駅/2/SeibuSin_2_Fixture.dbf",
+              "sourceRecord": 3,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "12.西武新宿駅"
+            },
+            {
+              "sourceFile": "12.西武新宿駅/2/SeibuSin_2_Fixture.dbf",
+              "sourceRecord": 13,
+              "name": null,
+              "floor": "2",
+              "sourceArea": "12.西武新宿駅"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "interpretationStatus": {
+    "node_id": {
+      "status": "structural",
+      "note": "Stable source node identifier."
+    },
+    "link_id": {
+      "status": "structural",
+      "note": "Stable source link identifier."
+    },
+    "start_id": {
+      "status": "structural",
+      "note": "Source reference to the start node."
+    },
+    "end_id": {
+      "status": "structural",
+      "note": "Source reference to the end node."
+    },
+    "distance": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "Link length in metres, recorded to one decimal place; geometry agreement still requires dataset validation."
+    },
+    "ordinal": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "Floor/vertical order; outdoor ground is 0, indoor floors use ordered integers, and intermediate levels use decimals."
+    },
+    "in_out": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "1 outside a facility, 2 facility boundary, 3 inside a facility."
+    },
+    "rt_struct": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "1 separated sidewalk, 2 unseparated, 3 crossing, 4 unmarked crossing, 5 underground passage, 6 pedestrian bridge, 7 indoor passage, 8 other, 99 unknown."
+    },
+    "route_type": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "1 none, 2 moving walkway, 3 railway crossing, 4 elevator, 5 escalator, 6 stairs, 7 ramp, 99 unknown."
+    },
+    "direction": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "1 both, 2 start-to-end, 3 end-to-start, 99 unknown."
+    },
+    "width": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "1 under 1m, 2 from 1m to under 2m, 3 from 2m to under 3m, 4 at least 3m, 99 unknown."
+    },
+    "vtcl_slope": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "1 at most 5%, 2 over 5% rising start-to-end, 3 over 5% falling start-to-end, 99 unknown."
+    },
+    "lev_diff": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "1 at most 2cm, 2 over 2cm, 99 unknown."
+    },
+    "brail_tile": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "1 tactile guidance absent, 2 present, 99 unknown."
+    },
+    "elevator": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "1 none, 2 not accessibility-equipped, 3 wheelchair-equipped, 4 visually-impaired-equipped, 5 both, 99 unknown."
+    },
+    "roof": {
+      "status": "confirmed-2018-mlit-spec",
+      "note": "1 absent, 2 present, 99 unknown."
+    }
+  }
+}

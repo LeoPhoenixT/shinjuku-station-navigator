@@ -1,0 +1,555 @@
+{
+  "schemaVersion": 1,
+  "places": [
+    {
+      "id": "gate:59da841748574ff1bdc9408b504e3b85",
+      "ja": "中央改札",
+      "en": "Central Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "gate:a628691805db44e2b65d427271a8bc24",
+      "ja": "中央西改札",
+      "en": "Central West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "gate:97b92ae4da874c559b83015afe5a5760",
+      "ja": "JR中央西口",
+      "en": "JR Central West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:9d0c94b1dc224b43ba3752b68f3ad10e",
+      "ja": "バスタ新宿",
+      "en": "Shinjuku Expressway Bus Terminal",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.shinjuku-busterminal.co.jp/en/"
+    },
+    {
+      "id": "gate:b154996072f74ace877fbea68ec5374d",
+      "ja": "バスタ新宿",
+      "en": "Shinjuku Expressway Bus Terminal",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.shinjuku-busterminal.co.jp/en/"
+    },
+    {
+      "id": "gate:8a1f8e088a814f729282a459b5db40d1",
+      "ja": "ミライナタワー口改札",
+      "en": "MIRAINA TOWER Gate",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Miraina Tower Gate"
+      ],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:a99751303e8b4e4cb3749b4319d75777",
+      "ja": "ルミネ口",
+      "en": "Lumine Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:2de9de27fba84182894eff84d95661ec",
+      "ja": "京王新線口",
+      "en": "Keiō New Line Gate",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Keio New Line Gate"
+      ],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:4cfa3ca6050343efb45afbefd1ab61c6",
+      "ja": "京王新線口",
+      "en": "Keiō New Line Gate",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Keio New Line Gate"
+      ],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:888778a634fe4750b69b3d898e1c8fb5",
+      "ja": "京王西口",
+      "en": "Keio West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:b41e1995deac49bb9c9bcf103c97e1bd",
+      "ja": "京王西口",
+      "en": "Keio West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:39af3487f9094308b27294312a810360",
+      "ja": "京王百貨店口",
+      "en": "Keio Department Store Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:8d3dc24aebe44c2396997dd6e3a54621",
+      "ja": "広場口",
+      "en": "Hiroba Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:ee35e1bdfcf0476fa848e9ca356b6667",
+      "ja": "甲州街道改札",
+      "en": "Kōshū-kaidō Gate",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Koshu-kaido Gate"
+      ],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:ba728b74a336498c9fd315898fe8a40c",
+      "ja": "新都心口",
+      "en": "Shintoshin Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:ba7702fcb51d4b2394d6aa77c83e6380",
+      "ja": "新都心口",
+      "en": "Shintoshin Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:72f9fa71dc3a46aeb6bbdde2cbd409cc",
+      "ja": "新南口改札",
+      "en": "New South Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:073f68bdeacd4cbfb84edf2c5af25f59",
+      "ja": "西改札",
+      "en": "West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.tokyometro.jp/lang_en/station/shinjuku/accessibility/index.html"
+    },
+    {
+      "id": "gate:28e4244fffc54d69b600d7d4d64f2a1e",
+      "ja": "西改札",
+      "en": "West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:987143aae7814d658f6e9bd87eac83cb",
+      "ja": "西改札",
+      "en": "West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.tokyometro.jp/lang_en/station/shinjuku/accessibility/index.html"
+    },
+    {
+      "id": "gate:b161d890fd094676b7fb0ea2c46123f2",
+      "ja": "西改札",
+      "en": "West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.tokyometro.jp/lang_en/station/shinjuku/accessibility/index.html"
+    },
+    {
+      "id": "gate:d7921734cd9e407d8e817dca3e477802",
+      "ja": "西改札",
+      "en": "West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.tokyometro.jp/lang_en/station/shinjuku/accessibility/index.html"
+    },
+    {
+      "id": "gate:f7ec73273c3e45c3835bff65f7c5cbfd",
+      "ja": "西改札",
+      "en": "West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:fcd6daa20e1f44259a7ed458e328b61f",
+      "ja": "西改札",
+      "en": "West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.tokyometro.jp/lang_en/station/shinjuku/accessibility/index.html"
+    },
+    {
+      "id": "gate:b9bd2f7edf4e444994e061cdd552af2a",
+      "ja": "西口地下改札",
+      "en": "Odakyū West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Odakyu West Gate"
+      ],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:25a8f8b9270a46c2b5d89edae24090e6",
+      "ja": "西口地上改札",
+      "en": "Odakyū West Gate",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Odakyu West Gate"
+      ],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:ab153fadbd4947469c1685275cb74622",
+      "ja": "大江戸線改札B",
+      "en": "Ōedo Line Gate B",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Oedo Line Gate B"
+      ],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:7be0b976ae3546a79da40da5ec159516",
+      "ja": "中央東改札",
+      "en": "Central East Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:fb611b1f7af24e518744b448f9657036",
+      "ja": "中央東改札",
+      "en": "Central East Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:5b65a4b8660c4821bdb1fc6c1a9aa9bb",
+      "ja": "東改札",
+      "en": "East Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:a1ab520391ac4317b0b77f5e47774cad",
+      "ja": "東改札",
+      "en": "East Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.tokyometro.jp/lang_en/station/shinjuku/accessibility/index.html"
+    },
+    {
+      "id": "gate:d31f36f1150f4b589b7a620b6de9cda9",
+      "ja": "東改札",
+      "en": "East Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.tokyometro.jp/lang_en/station/shinjuku/accessibility/index.html"
+    },
+    {
+      "id": "gate:08a0d506192a4c1e9e4a3ae532366aaa",
+      "ja": "東南改札",
+      "en": "South East Gate",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Southeast Gate"
+      ],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:7ddd0753b79a412e94d800329ef1805f",
+      "ja": "東南改札",
+      "en": "South East Gate",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Southeast Gate"
+      ],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:32398ada7f054ed8a8e8f503b361e610",
+      "ja": "南改札",
+      "en": "South Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "gate:b590f8783d3d4459905fc077cf0c08e2",
+      "ja": "南改札",
+      "en": "South Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf"
+    },
+    {
+      "id": "connector:6e09f033cda0472cb754fef74c313d83:0",
+      "ja": "地上階エレベーター接続点",
+      "en": "Street-level Elevator Connection Point",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Ground-level Elevator Connection",
+        "Ground-level elevator landing"
+      ],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "facility:phase7b:7.京王新宿駅_京王モールアネックス/B1/KeioSin_B1_Facility:72dff2f161b14d72bdebd39050f6d842",
+      "ja": "安田口",
+      "en": "Yasuda Exit",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Yasuda Gate"
+      ],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "gate:241abb334bc84dccb82ad5eae8254670",
+      "ja": "ＪＲ新宿駅方面改札",
+      "en": "JR Shinjuku Sta. District Gate",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "JR Shinjuku Station District Gate"
+      ],
+      "status": "reviewed",
+      "source": "https://www.toshiseibi.metro.tokyo.lg.jp/documents/d/toshiseibi/pdf_kiban_shinjuku_terminal_pdf_shinjuku_terminal_1_110"
+    },
+    {
+      "id": "gate:51d62720f8bf4fd5879b70c2c9db5408",
+      "ja": "南札口",
+      "en": "Odakyū South Gate",
+      "aliasesJa": [
+        "南口改札"
+      ],
+      "aliasesEn": [
+        "Odakyu South Gate",
+        "South Gate"
+      ],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "gate:6359b61774eb4abfb111b2c4bb455df0",
+      "ja": "小滝橋通り方面改札",
+      "en": "Otakibashi-dori (Ave.) District Gate",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Kotakibashi-dori District Gate",
+        "Kotakibashi Avenue District Gate"
+      ],
+      "status": "reviewed",
+      "source": "https://www.toshiseibi.metro.tokyo.lg.jp/documents/d/toshiseibi/pdf_kiban_shinjuku_terminal_pdf_shinjuku_terminal_1_110"
+    },
+    {
+      "id": "gate:c376a65546bc45e1adbe2db7404c484d",
+      "ja": "京王線連絡口",
+      "en": "Keio Line Transfer Gate",
+      "aliasesJa": [],
+      "aliasesEn": [
+        "Transfer to Keio Line"
+      ],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    }
+  ],
+  "areas": [
+    {
+      "id": "1.JR新宿駅改札",
+      "ja": "JR新宿駅改札",
+      "en": "JR Shinjuku Station Ticket Gates",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "10.都営新宿西口駅",
+      "ja": "都営新宿西口駅",
+      "en": "Toei Shinjuku-nishiguchi Station",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "11.サブナード",
+      "ja": "サブナード",
+      "en": "Shinjuku Subnade",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "12.西武新宿駅",
+      "ja": "西武新宿駅",
+      "en": "Seibu-Shinjuku Station",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "13.西口周辺",
+      "ja": "西口周辺",
+      "en": "West Exit Area",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "14.バスタ新宿",
+      "ja": "バスタ新宿",
+      "en": "Shinjuku Expressway Bus Terminal",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "15.NEWoMan",
+      "ja": "NEWoMan",
+      "en": "NEWoMan",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "2.JR新宿駅新南改札",
+      "ja": "JR新宿駅新南改札",
+      "en": "JR Shinjuku Station New South Gate",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "3.JR新宿駅",
+      "ja": "JR新宿駅",
+      "en": "JR Shinjuku Station",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "4.ルミネ",
+      "ja": "ルミネ",
+      "en": "Lumine",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "5.東京メトロ新宿駅",
+      "ja": "東京メトロ新宿駅",
+      "en": "Tokyo Metro Shinjuku Station",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "6.小田急新宿駅_小田急エース",
+      "ja": "小田急新宿駅・小田急エース",
+      "en": "Odakyu Shinjuku Station / Odakyu Ace",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "7.京王新宿駅_京王モールアネックス",
+      "ja": "京王新宿駅・京王モールアネックス",
+      "en": "Keio Shinjuku Station / Keio Mall Annex",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "8.京王モール",
+      "ja": "京王モール",
+      "en": "Keio Mall",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    },
+    {
+      "id": "9.都営新宿駅",
+      "ja": "都営新宿駅",
+      "en": "Toei Shinjuku Station",
+      "aliasesJa": [],
+      "aliasesEn": [],
+      "status": "reviewed",
+      "source": "human-reviewed-project-translation"
+    }
+  ]
+}
