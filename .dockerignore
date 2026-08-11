@@ -1,0 +1,17 @@
+.git
+.github
+.codex
+.agents
+node_modules
+dist
+dist-scripts
+coverage
+playwright-report
+test-results
+reports
+docs
+e2e
+tests
+shapefile
+shapefile.zip
+*.log

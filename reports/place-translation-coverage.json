@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "summary": {
+    "routablePlaceCount": 583,
+    "publicAreaCount": 15,
+    "reviewedOrSpecificationEnglishPlaceCount": 536,
+    "reviewedOrSpecificationEnglishAreaCount": 15,
+    "pendingJapaneseFallbackPlaceCount": 47,
+    "pendingJapaneseFallbackAreaCount": 0
+  },
+  "coverage": {
+    "routablePlaces": {
+      "covered": 583,
+      "total": 583
+    },
+    "facilityMarkers": {
+      "covered": 464,
+      "total": 464
+    },
+    "permanentLabels": {
+      "covered": 40,
+      "total": 40
+    },
+    "publicAreas": {
+      "covered": 15,
+      "total": 15
+    }
+  },
+  "statusCounts": {
+    "specification": 494,
+    "reviewed": 57,
+    "pending": 47
+  },
+  "sourceCounts": {
+    "human-reviewed-project-translation": 21,
+    "authoritative-japanese-fallback": 47,
+    "MLIT source package 製品仕様書.pdf table 8.3.1": 463,
+    "https://www.tokyometro.jp/lang_en/station/shinjuku/accessibility/index.html": 7,
+    "https://www.keio.co.jp/assets/pdf/global/routes/stations/shinjuku/ksb01_shinjuku.pdf": 25,
+    "https://www.toshiseibi.metro.tokyo.lg.jp/documents/d/toshiseibi/pdf_kiban_shinjuku_terminal_pdf_shinjuku_terminal_1_110": 2,
+    "https://www.shinjuku-busterminal.co.jp/en/": 2,
+    "MLIT source package 製品仕様書.pdf table 8.1.4": 31
+  },
+  "pendingPlaceIds": [
+    "elevator:1126b08c5691410e9387a3521a80e58d",
+    "elevator:1479e42a0a404d169487038338a61914",
+    "elevator:48d929b6cd24439e8aca3f9dd02a5e47",
+    "elevator:5dfc1722b113454ba989f54a1dea214b",
+    "elevator:6844d0c5d6214078a18c48f2d2be7127",
+    "elevator:749b675fd4534c3696391bc8febadec1",
+    "elevator:7f0d9f1eb5a14f158635f156ac821784",
+    "elevator:8e89f5630c63479094516e49513ab3a5",
+    "elevator:bee478b96bc2452ca331c2e152022530",
+    "elevator:e31662a5dc10403bb3e1b7c5d0c3b91b",
+    "elevator:e5ad8839bce5431ca960f8c0e689812c",
+    "elevator:e6b80080d27744b996bba7eca76fcb04",
+    "escalator:094ec5686a324c9fa458c37b271f7bb9",
+    "escalator:13f2725a16ca497081f4d8b40f05c3d3",
+    "escalator:18bfdd8a7de24124b9fe4b34c2a6789b",
+    "escalator:1b9bfcaa04964521bafb809d37941e88",
+    "escalator:21a4ae37e0304cda908b68691473f0f0",
+    "escalator:27299a8d12e1482198c84f51d943c791",
+    "escalator:295f8a70e87440db97cc859b5d8d7c24",
+    "escalator:2e2181b1fb344910819c40382c63340b",
+    "escalator:34f724f7e23e4ff2b98dab40657b1bd2",
+    "escalator:44ca9574899c4232ac90f11ecdb841ce",
+    "escalator:4fb49d2608814638a888fd7f40f6ccd4",
+    "escalator:5e8a251ce1a44422a6284ddfd3bc0624",
+    "escalator:69b4d06e3f7345e2b40b244ffdac5991",
+    "escalator:743d4c98a14c4e48b7920f8d12dec943",
+    "escalator:7e544d0107f74510a45cf7cd3bc4e1c6",
+    "escalator:88dd47eff0ba4ee68a3dc3dc63696b9d",
+    "escalator:8b9162f862e643ef8f5b08a80e5a2828",
+    "escalator:929a5cbdfc1049eca2824cfc2c01f89d",
+    "escalator:9a619b5ef2364f59b0abedd51c68a6ef",
+    "escalator:9f16e741a4a44654a0fe148f8712462e",
+    "escalator:b014c4d89d3c4805bf5c1be19c24e0f0",
+    "escalator:b86504b2903746c0852feb13ccae0418",
+    "escalator:bebc8b175acd4e3590550b6d09f4782f",
+    "escalator:c4a1a05cbaf545a5a48119805499d097",
+    "escalator:c517d8c6db62492eb689274f5a08936e",
+    "escalator:c9d564b327fe4ce8a04509d63d34224d",
+    "escalator:d6a251ea912c467eb7e8f3a69ad89946",
+    "escalator:d97cb23fa0ef407bb63087e68de5aaeb",
+    "escalator:da9cb2d5eb264285b18e70546c16c0de",
+    "escalator:dc83434513304ce0a72dad8d8d668e3c",
+    "escalator:de47c0e97dbb4f45a0df4d4b8962d732",
+    "escalator:f36ac0eb60254f04854084c7a9c41534",
+    "escalator:f5abe527bb3a4cafbb5543d0c61de543",
+    "escalator:fa37d70d700342b8ae3584c2cdb8fde8",
+    "escalator:fee7c5abf0bd4378a5e0aa00e6b0bd86"
+  ],
+  "pendingAreaIds": []
+}

@@ -1,0 +1,1955 @@
+{
+  "datasetName": "MLIT Shinjuku Station area indoor map open data (R2 Shapefile)",
+  "sourceUrl": "https://www.geospatial.jp/ckan/dataset/mlit-indoor-shinjuku-r2",
+  "downloadDate": "2026-07-15",
+  "downloadDateEvidence": "Recorded project acquisition date. Original browser-download metadata was not retained.",
+  "sourceRoot": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）",
+  "importer": {
+    "name": "Deterministic Phase 0-9 pipeline: inspect, profile, import and validate the official network, build the separate reviewed topology overlay, build places and visual maps, and generate golden routes",
+    "version": "0.9.2-reviewed-network-overlay"
+  },
+  "attributionText": "Processed from Shinjuku Station area indoor map open data (R2), Ministry of Land, Infrastructure, Transport and Tourism (MLIT), under the Government Standard Terms of Use. Modified content is not endorsed by MLIT.",
+  "outputFiles": [
+    "reports/dataset-inspection.json",
+    "reports/map-semantics-profile.json",
+    "public/data/processed/jr-shinjuku-ticket-gates-b1-official-network.json",
+    "public/data/processed/shinjuku-reviewed-custom-network.json",
+    "reports/official-network-validation.json",
+    "public/data/processed/shinjuku-b1-named-places.json",
+    "reports/human-golden-route.json",
+    "public/data/processed/jr-shinjuku-ticket-gates-b1.json",
+    "public/data/processed/shinjuku-full-map.json",
+    "reports/phase7-vertical-profile.json",
+    "reports/processed-data-validation.json"
+  ],
+  "files": [
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/0/JrSin_0_Drawing.shp",
+      "checksum": "f6c056a218aa614935d3e796677b081709fceb29cfd8b0ffbb6142749064363c",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/0/JrSin_0_Facility.shp",
+      "checksum": "f0adb05902c6955ac961822e7acd80a3f966e62cb4506507c4624dd099b9f2b7",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/0/JrSin_0_Floor.shp",
+      "checksum": "bf3da1eb8de6cd3190e39ead60ab67fbd837d420a7caa2f233dc0c42b19fb9f9",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/0/JrSin_0_Space.shp",
+      "checksum": "813890f9f97de3312fd4df5c9a8720e9c0dd40e2ca2fbd8393bf24fc8bae5e20",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 5,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/1/JrSin_1_Drawing.shp",
+      "checksum": "9e8aac327726a0b02dd55a0842f1d188b5d079fc86a824d0fc7ee2bbe6161943",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/1/JrSin_1_Facility.shp",
+      "checksum": "0bb9b1fd1950282863f7ee27178ae245f5d887ce1769692816f62a70479b6b88",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/1/JrSin_1_Floor.shp",
+      "checksum": "f9c37b0322796c3c132e9571a8ae970fe2d4d6d4fc10f3fb1a7f1692753af1d7",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/1/JrSin_1_Space.shp",
+      "checksum": "27f88bfb83ace24b185684fd66ae21edb6a03068cfdbec130ad02516e404c3ea",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/2/JrSin_2_Floor.shp",
+      "checksum": "6e46abc4a2e0677bca4d2ea4c863218b65af14c81c46fb71d1803275882a7cbc",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/2/JrSin_2_Space.shp",
+      "checksum": "2d7f6cf08532a6c9a75db654c1ccb311dda5e52ff454c916834130b3bb919292",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/2out/JrSin_2out_Drawing.shp",
+      "checksum": "b338bcd7cfaa38412ed9a7293c9463cc2b3269b01866dc1ddee9fd3c0bcba428",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/2out/JrSin_2out_Facility.shp",
+      "checksum": "a31679d0fd37aec3b1eea473829c6ade3df0b2c4d192626b637e37951093be01",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/2out/JrSin_2out_Floor.shp",
+      "checksum": "c417c60f8c92b908d8913b4f64f5b39b8381f6edcaeeadabfa5b2b26239c8166",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/2out/JrSin_2out_Space.shp",
+      "checksum": "2e1ebeba03dc25c90cbbb9470a02e68bbf25de1cbcbebe4aaaf9f3463e9d8e77",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Drawing.shp",
+      "checksum": "4417f95114b8898cec7d96cd86976405b1dc174d4fcf1478c4722027cdc60078",
+      "detectedTextEncoding": "UTF-8",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 8,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Facility.shp",
+      "checksum": "6847f5b3100dde68e6cdaa04d582fb1602d711e00e073575eeb229255f1ef87a",
+      "detectedTextEncoding": "UTF-8",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Floor.shp",
+      "checksum": "4d647520ab7a2d553da5200534c266c0cd633b5f38c42a09a4685698dbcac2aa",
+      "detectedTextEncoding": "UTF-8",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Opening.shp",
+      "checksum": "4e901ed2defc8575f7dac500b6c15196e585c1ea368b165e15193b644291b932",
+      "detectedTextEncoding": "UTF-8",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Space.shp",
+      "checksum": "b72db490ca7b237600a9903932678b5c8481a7c0894c0f287b384b7016872e49",
+      "detectedTextEncoding": "UTF-8",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 13,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_TWSI_Line.shp",
+      "checksum": "75356bf414c9902d1109471c7cf16f0beaaea53262fbbf6a036cf0159c39fd40",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 15,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_TWSI_Point.shp",
+      "checksum": "54b3f34407858336dbaa805e35c03e0a6b84e5fe781a4a0c44d3c0a76a07f50b",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 12,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/0/OedoNisi_0_Drawing.shp",
+      "checksum": "23967b87bd6ca5b5330c521c95ecc63c505424d6457ffef3ae97b20fd22c0b52",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/0/OedoNisi_0_Facility.shp",
+      "checksum": "bd313eab050bd6a96026b3a25bdea0b0abc762709acd15f98bfc2f9c8f528c91",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 5,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/0/OedoNisi_0_Floor.shp",
+      "checksum": "db9300156d524aa1faeae3726f359db7dbab2d7219fc5821c5e1da589e415ad9",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/0/OedoNisi_0_Space.shp",
+      "checksum": "dff2ed7643cdd3523cb3a6b10efdb3011739660b1b18a1db0735685943e0f2ec",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B1/OedoNisi_B1_Drawing.shp",
+      "checksum": "4d9b5465df04906948c25bdad00866edc782902fc8be07a6ecc7d5f4c5429906",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B1/OedoNisi_B1_Facility.shp",
+      "checksum": "b9b02278dfc77c7e1ce33185687236edadd5d2a62f0894428496307ad698eae5",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B1/OedoNisi_B1_Floor.shp",
+      "checksum": "444c11e0ab5c534ff50f050abd13e47f69fe391ad6439ee38966957b2bbd1886",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B1/OedoNisi_B1_Space.shp",
+      "checksum": "a746baa82a9bc8c6d2edbd08b1dc9e15091d8901fb231d4aabeffeec3798de4d",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B2/OedoNisi_B2_Drawing.shp",
+      "checksum": "872fc2148017069ecf6df24d8b8355ba7cbfb111c46e0facc586ed913d4cba1b",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 24,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B2/OedoNisi_B2_Facility.shp",
+      "checksum": "c611fdce2b66dde1c6307a54330009e2da6f097b32197be473653f2d23a831c2",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 12,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B2/OedoNisi_B2_Fixture.shp",
+      "checksum": "dec9f4d4b41823353058e71d1dc210603fd7eca4bcf26d83f5d8f566cbc1c42c",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 38,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B2/OedoNisi_B2_Floor.shp",
+      "checksum": "d31388f7edd6c29a5994c99afc793d88826686fa7f531eee7826e8e3a184eaf9",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B2/OedoNisi_B2_Space.shp",
+      "checksum": "b79e29664484d9c21e932daac912c2882700d7628f3e222449cb88c719f8ece2",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 25,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B2/OedoNisi_B2_TWSI_Line.shp",
+      "checksum": "b1c48a54e03712bcf59940d5d0137aea48759eff0bdfa6ac7bf3a2afe5fec968",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 9,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B2/OedoNisi_B2_TWSI_Point.shp",
+      "checksum": "83ef2f8caf2d7882e4d7baafd8e45e0966584ad5c4e69eb1cd1b3fdb55c65052",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 13,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B3/OedoNisi_B3_Drawing.shp",
+      "checksum": "e96423c957e2f6779b7cfaf932e1b7931dfb66db8bf80444012ed106b660af35",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 47,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B3/OedoNisi_B3_Facility.shp",
+      "checksum": "69df5c6abcf385978a732b50eb2a8f65f0e6a11b7eff0192ddd800ad25d8c445",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 16,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B3/OedoNisi_B3_Fixture.shp",
+      "checksum": "ceb158b4a9e34967e9c851445534bf54ff4f08f4770c9bb9ce178ab038f4862b",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 17,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B3/OedoNisi_B3_Floor.shp",
+      "checksum": "e14233212ab326ce7a1176a04a258cd0468a293a4ffd4c12a9fad8823fbd1260",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B3/OedoNisi_B3_Opening.shp",
+      "checksum": "e0d4c738aa291200a7951c128a307fac6286b42e88fb37323a7eccdc133f8f2c",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B3/OedoNisi_B3_Space.shp",
+      "checksum": "da919a9fd1240c48f2b9ff2a38449a793436963d5a3130c71f42c438b4280c3c",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 42,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B3/OedoNisi_B3_TWSI_Line.shp",
+      "checksum": "0af1c5cc0f2933e001561f288e05bd6282cef8fa74f6575f70550fb27ff1fab2",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 15,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/10.都営新宿西口駅/B3/OedoNisi_B3_TWSI_Point.shp",
+      "checksum": "fbe6824c98f4fc59935ccfd80c3fbd379ed65c9edce1999bae5d18dd4f86fc00",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 29,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/11.サブナード/0/Subunade_0_Drawing.shp",
+      "checksum": "e9c1d503264c6857a864ceebf346a17c60f5ff1d2cd8b09a05ff6bfcdc1c1ee0",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 67,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/11.サブナード/0/Subunade_0_Facility.shp",
+      "checksum": "0906a998694430d8304537d492df10bcb0915e8a4f0a7fb490fbbe052077f914",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 44,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/11.サブナード/0/Subunade_0_Floor.shp",
+      "checksum": "b4afd3b2bbeab2e294aae2837631fd31590ba682dabf99e6a37c4fa466aef73e",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 22,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/11.サブナード/0/Subunade_0_Space.shp",
+      "checksum": "d54901d484b6a994ec006cae8b0df0c9b3d1c1d8740e4b15d7d79e936beb8416",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 23,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/11.サブナード/B2/Subunade_B2_Drawing.shp",
+      "checksum": "957d2cba5190e7aa2d922b85c760c115177807034f86db049127b3718672c121",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 117,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/11.サブナード/B2/Subunade_B2_Facility.shp",
+      "checksum": "6e4b2e34794ce3838353e9853c69d355108826165063295ffe6f8ff9b3f2b6e4",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 71,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/11.サブナード/B2/Subunade_B2_Fixture.shp",
+      "checksum": "a64c9285804e59cdefc216396bddae29c467f61a06d8eb3c81bf4448fb3c9f25",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 23,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/11.サブナード/B2/Subunade_B2_Floor.shp",
+      "checksum": "ea12dfd1b071c971c400508d246867529c49a2b7e09d14f5c28c7486c6366013",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 5,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/11.サブナード/B2/Subunade_B2_Opening.shp",
+      "checksum": "edfe1eb220c2276a8f569f9a02c9c407dabc819613bdc7aca5387dccc5f44e44",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/11.サブナード/B2/Subunade_B2_Space.shp",
+      "checksum": "7a38077daab5c544dc7470bf5eb6108cfb82827936cdc38d767e6a84701d0ded",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 211,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/0/SeibuSin_0_Drawing.shp",
+      "checksum": "d81a81b45ec1077db809cdd399a6fbdd2016dc37292992afd16f530476bba3b2",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/0/SeibuSin_0_Facility.shp",
+      "checksum": "59474dda1bc72d9ae95cd2d44dccec2a9e704e77550b41ebdaff4bd89c267cc0",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/0/SeibuSin_0_Fixture.shp",
+      "checksum": "ce54d582ba5016043f672e358f0e21e941f62948a8d15e487a6229933b7a5498",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/0/SeibuSin_0_Floor.shp",
+      "checksum": "0c0a13a77f72493acc1ee9336e6678bdddc6c9521b27b39611d22391830a499d",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/0/SeibuSin_0_Space.shp",
+      "checksum": "bf83cf196e03e2a87754d93e089725e13d8700dfa15cdde08ba97d835fd2ccac",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/1/SeibuSin_1_Drawing.shp",
+      "checksum": "4961d13118b64c21e7e502df76a797c2a9b42d76a5ca93d315df844a2f61308f",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/1/SeibuSin_1_Facility.shp",
+      "checksum": "500b625508afbd6840c3b0845cdff1ade9a2348b857cda1f67b759ab70d6aa8e",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/1/SeibuSin_1_Floor.shp",
+      "checksum": "4cd27eff18765db0381f23c6ba5962a10b1fa69de34d0b2d89896205a85fb0d2",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/1/SeibuSin_1_Space.shp",
+      "checksum": "bde02db6f1942ab190813542b592016b759aea823521eed1213e67bdc23d31f9",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 7,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/2/SeibuSin_2_Drawing.shp",
+      "checksum": "36230874411456c216664804ad20eca49765c60facc2a46788232d19394e0cb7",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 31,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/2/SeibuSin_2_Facility.shp",
+      "checksum": "8161a153ad57e798cc83c3674a46165427a855c6a9a49adad3039fcb13b1ca9f",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 11,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/2/SeibuSin_2_Fixture.shp",
+      "checksum": "0aa761ddd3a2d6c9f65f659310ca63c463ea6c12f1b8099ce295ea465b4a0d9d",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 17,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/2/SeibuSin_2_Floor.shp",
+      "checksum": "083c60d5d989d4f056fbae9994b4734528a0a57a54d85c3128a98e5495f2f1c3",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/2/SeibuSin_2_Opening.shp",
+      "checksum": "66b01fdbde97a3554e47c50fcdc68e2fb8233133a49946cb18a82bc8cbe75215",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/2/SeibuSin_2_Space.shp",
+      "checksum": "b6f763f80db76c5fdec2adda4c90b3f0f4fc5b2f2f9b1d668f2c8b98f27358cd",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 49,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/B2/SeibuSin_B2_Drawing.shp",
+      "checksum": "8e708e438e45571d92743d6ff795af3e6dfad6e7448b6824bf665a7f64ec42a9",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 8,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/B2/SeibuSin_B2_Facility.shp",
+      "checksum": "a015d847351631c04156b590d4b8393df7277d3b89e1c37a7ee0dd060726cd02",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/B2/SeibuSin_B2_Fixture.shp",
+      "checksum": "e6153bc5fbc500d454686685d85186b59d03c4064e6b8cdb7e99c8a59956afac",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 14,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/B2/SeibuSin_B2_Floor.shp",
+      "checksum": "0296ba48a808f2c092f05620f5fa44bb1b3a0a40612cf03d7b44c556c2db4c59",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/12.西武新宿駅/B2/SeibuSin_B2_Space.shp",
+      "checksum": "30485477a7b1dce47de9c64f0fccdb69d85b84d8278f6f3781de7d4a7811ceab",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/0/Tokyoto_0_Drawing.shp",
+      "checksum": "6747c47d83829a9b67a6ddb6fece2cb5749aa3863273354967b4a6578e424f81",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 51,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/0/Tokyoto_0_Facility.shp",
+      "checksum": "3573447053fcc3bb6b127ef55b5bee3c754b7a6dbcbb68577c7bfb8dca84c5f6",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 36,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/0/Tokyoto_0_Floor.shp",
+      "checksum": "08ee94d86510fc6dfe9061a62d2f4f9e156e1573f0fd0e3dc668cb050bf4edf4",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 20,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/0/Tokyoto_0_Space.shp",
+      "checksum": "4e4afecdae8cb137057e59e3eed49a705a6e318a33118d472c04b386929240fe",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 24,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/2out/Tokyoto_2out_Drawing.shp",
+      "checksum": "0b219c881d63ed3d94ca1eed19324b88af5c5e7122aab9c8daa42fb057879d6d",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 15,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/2out/Tokyoto_2out_Facility.shp",
+      "checksum": "d9a89ad3f1faf9e79b3ac25b4fa797db54376ceb74527594c58131f8d39a3236",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 9,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/2out/Tokyoto_2out_Floor.shp",
+      "checksum": "fc9fc7c60ae0819435d30b014658cdcdaaf464a5344eb3847b25e0943e2fee3e",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 10,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/2out/Tokyoto_2out_Space.shp",
+      "checksum": "0ee07460a447ce081835bafed109d878026ded0cbac571e3fcdeb9d92188bd94",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 14,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/B1/Tokyoto_B1_Drawing.shp",
+      "checksum": "eee60c31b3d6d3eef20b33c9fd36a6ac5be637874ffd25327fd95ed45d0f3f6f",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 66,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/B1/Tokyoto_B1_Facility.shp",
+      "checksum": "43cb3ab6b59b8910434d48708d14cecc690716928eaf3dab596312c04cc94026",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 48,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/B1/Tokyoto_B1_Fixture.shp",
+      "checksum": "0e22ee94baa29b258ceb4131d131cfeb85b1f9bb60451ad8df94694dd69bd547",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 92,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/B1/Tokyoto_B1_Floor.shp",
+      "checksum": "3cbd3cebb9ec7e9caa4a3c3ebaa3344da8b1acf10bfb2c65a019c8b57cd15440",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/B1/Tokyoto_B1_Space.shp",
+      "checksum": "9a82c6c78155a1ddb1a80c79f10704f458b0596a36f92f407bf0575f9867a1ea",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 49,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/B1/Tokyoto_B1_TWSI_Line.shp",
+      "checksum": "52656b7dfbe798b4011576bab9cc46290adc3fb71f68ad33e296f82fc782a17a",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 52,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/13.西口周辺/B1/Tokyoto_B1_TWSI_Point.shp",
+      "checksum": "9a4138b2b379763008570ba2fdab7eb2096ee125c689b2f1f53b9a8454a75820",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 46,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/3/Basuta_3_Drawing.shp",
+      "checksum": "6b87d412b3d0daa7ba099b1ad8bd9c5ae05fd7d012abf35578a698ea15676257",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 22,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/3/Basuta_3_Facility.shp",
+      "checksum": "999adf6522215567efb57ccf1a5ff98072a21d01503b1ab9fab10453231007f0",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 18,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/3/Basuta_3_Fixture.shp",
+      "checksum": "0b88cfb04d60899843272eb032eef44698ef06059b81de90019ad22169654199",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 88,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/3/Basuta_3_Floor.shp",
+      "checksum": "5b306f56e17cf493e15608267df43a0dfc9670091dad509ea51ff7bb97a482c2",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 5,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/3/Basuta_3_Opening.shp",
+      "checksum": "4a279c82f24b5886e22a13df33ab6635ccd10720614f8fae1285566f2c0e56d8",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/3/Basuta_3_Space.shp",
+      "checksum": "c92a3f36f356e8e61fe2a00f64b8ab2c019264264ee22b12c7e079a2745e150f",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 54,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/3out/Basuta_3out_Drawing.shp",
+      "checksum": "65392dc2fb848a80530b2b1de4c2f29c5cf4c111168cea293a7c0e82d5532e5f",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 25,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/3out/Basuta_3out_Facility.shp",
+      "checksum": "6397121334b4450ee2f8e91310268e52ddb98e3b35c34ddb990f8c88782eed7b",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 8,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/3out/Basuta_3out_Fixture.shp",
+      "checksum": "70b62c421b3a7d980396275fe27099468cc4b294d3449ad98fda4ce18c2fcb86",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 9,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/3out/Basuta_3out_Floor.shp",
+      "checksum": "da0b3000dfad704e9c27e816b70eefa9ab5213cddc868c85c5933bfb5f53e13a",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 5,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/3out/Basuta_3out_Space.shp",
+      "checksum": "27ef6ed877e9d498da08a5e55ab15e63db5fead37717bb2be0e60f0122ff0c2e",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 17,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/4/Basuta_4_Drawing.shp",
+      "checksum": "34c50a4f545afe0bb7fb1181513ba9941baf407fd8b0edc093cf65bc835fc9da",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 19,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/4/Basuta_4_Facility.shp",
+      "checksum": "855214e430b86e877e8924cf373aaa5d7b79b1088db393079b0b7ba18315a07a",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 56,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/4/Basuta_4_Fixture.shp",
+      "checksum": "13d03979c2e368b4c8edaeb0f1364102858a6c879a970f50d827c447002b55e8",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 100,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/4/Basuta_4_Floor.shp",
+      "checksum": "3ac424be36de692cb55b62a2b8bddc6d7db203c406d0e8dbdb9340881781195a",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/4/Basuta_4_Opening.shp",
+      "checksum": "a4129be2f22c12b3cc66ef92929ebd285ad152bea8a1d907c068a741057ae829",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 7,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/4/Basuta_4_Space.shp",
+      "checksum": "14a4c800578c07a5642593b6e32e665e00b4060ade9398a35a6fe9788041e9e4",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 61,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/4out/Basuta_4out_Fixture.shp",
+      "checksum": "7ebaa80e0f5e2c50f92d40a654acf091bbb68d5ab8bc720af84032be40f948de",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 5,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/4out/Basuta_4out_Floor.shp",
+      "checksum": "ab6e4951bddd1335156eca42883152fec14bb5d7b1d84b105d60386cd3d5df2a",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/14.バスタ新宿/4out/Basuta_4out_Space.shp",
+      "checksum": "0d9e17aed6256aeaa5ba8acded4064a10fade3bc4bb1af55f72bb85a77c4038d",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 8,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/15.NEWoMan/0/NEWoMan_0_Drawing.shp",
+      "checksum": "4abd9c3c71c162b08997d00e5baf1dd2769b5d5dc762480b4c37b7ab8c0b4538",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 19,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/15.NEWoMan/0/NEWoMan_0_Facility.shp",
+      "checksum": "e3becaa0ad50f898ca2b84030afea5b92ce96281db7835801a433c878c9740ae",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/15.NEWoMan/0/NEWoMan_0_Floor.shp",
+      "checksum": "9891acbe5e44d6b9abab69e0f3d9ab5166b392c07004a49c741b5d32f5ad842f",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/15.NEWoMan/0/NEWoMan_0_Space.shp",
+      "checksum": "a74acd1d04de85b7ba200f9628fd75baab4c4fb29046453c2dcaca7ff5b0cec7",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/15.NEWoMan/2out/NEWoMan_2out_Drawing.shp",
+      "checksum": "aeb8bbe614e9db68e41a85ee6a57b8ff52493ecd8a173d7bbb9cdf87fb61ef28",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 19,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/15.NEWoMan/2out/NEWoMan_2out_Facility.shp",
+      "checksum": "cec786e9868c0f8a58f0c7ac363e2b53c8c66c88f8afc3395e6ec783ccca18fb",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/15.NEWoMan/2out/NEWoMan_2out_Floor.shp",
+      "checksum": "0474352d84a602bded397c31dbaec96e77aaa7d8877bd914ad43b073d92133e2",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/15.NEWoMan/2out/NEWoMan_2out_Space.shp",
+      "checksum": "49ccd9371418b5032400b9b85ee51aacc83af43a4c434eb496f42deb46556bf5",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/16.other/0/other_0_TWSI_Line.shp",
+      "checksum": "a4a0892ad5d1b996a1bcc2b4ab30152c047ff27540ea17e294900d1ff9c23a0e",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 144,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/16.other/0/other_0_TWSI_Point.shp",
+      "checksum": "a53918706e30d6cb9221469dd2677b9252cddbb913053b19d96cce8fae17daac",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 167,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/16.other/2out/other_2out_TWSI_Line.shp",
+      "checksum": "b3797499a7a55d4f18638a15cc2131417eb85b80d24ec6ac98c7c77328472d71",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 14,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/16.other/2out/other_2out_TWSI_Point.shp",
+      "checksum": "69ea0b97af47c21722f32dae4152f5c46f5c605317c855883ea70595e95d0172",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 10,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/2.JR新宿駅新南改札/2/ShinjukuStS_2_Drawing.shp",
+      "checksum": "ea7a822b966cdb52b59e3c9449257ff60ea7ffc9ff6c3c3f789959b75ec18ff5",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 5,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/2.JR新宿駅新南改札/2/ShinjukuStS_2_Facility.shp",
+      "checksum": "3ea5cfe7a240204470869e1481e07789d4fe7c39b004b09449f1f316c0738c45",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 21,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/2.JR新宿駅新南改札/2/ShinjukuStS_2_Fixture.shp",
+      "checksum": "f09049e95f6f08afbefe462b8c9a5c91f2eedff5298cef497bfd6439d30818a8",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 18,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/2.JR新宿駅新南改札/2/ShinjukuStS_2_Floor.shp",
+      "checksum": "8a54b7d4bd021476f6dd884355a3984c320ac6845aaec9afa9f80756f7671f9a",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/2.JR新宿駅新南改札/2/ShinjukuStS_2_Opening.shp",
+      "checksum": "96af86c71b3ddf336393dbce59208482bdc7102db156b5cd9f3c4f0bbd2f448a",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/2.JR新宿駅新南改札/2/ShinjukuStS_2_Space.shp",
+      "checksum": "63b1586a75939a3310676f6a1947b54c21f0e73b762f545aada408ac52274e2d",
+      "detectedTextEncoding": "UTF-8",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 38,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/2.JR新宿駅新南改札/2out/ShinjukuStS_2out_Drawing.shp",
+      "checksum": "a7cc438bec9cfdcaa351e983e2d90a37f3f1c024be4143c7f11e250849af37ca",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 29,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/2.JR新宿駅新南改札/2out/ShinjukuStS_2out_Facility.shp",
+      "checksum": "0f1509d7151684e4f60e716f28f9949cb2bbe9c100eedca583086afef6d51051",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 8,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/2.JR新宿駅新南改札/2out/ShinjukuStS_2out_Fixture.shp",
+      "checksum": "4c1e1ac3f2b6a0148dd97f66cdae80eb6001d8327b37570b98e3b539acbb063b",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 10,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/2.JR新宿駅新南改札/2out/ShinjukuStS_2out_Floor.shp",
+      "checksum": "3fd29c2e8e51370de288b763d23ef5ab69165af49884694c78cee1fc3a6fe854",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/2.JR新宿駅新南改札/2out/ShinjukuStS_2out_Space.shp",
+      "checksum": "946f4135553ec01c1620981627816da1dc526164b522b1330b896ce4e62a71d8",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 23,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/3.JR新宿駅/2/ShinjukuSt_2_Floor.shp",
+      "checksum": "3e06ebcbabced66bbe4c7bbd199d8fc7408cd2c0edada09b338941badb0cdd0a",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/3.JR新宿駅/2/ShinjukuSt_2_Opening.shp",
+      "checksum": "d967fa1df3cbade2c51c5a675cdbfa87f49cbc2a77f100178880e179a50b2d68",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/3.JR新宿駅/2/ShinjukuSt_2_Space.shp",
+      "checksum": "22adb7d2a2a8f9b3a0b16b3102ce441f823ad989a5ff5b267b1a7d80902784ad",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 7,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/3.JR新宿駅/B1/ShinjukuSt_B1_Floor.shp",
+      "checksum": "3563be56f8d58c568940b32ca1bf319224590edce9283c50a49fb17e382ee685",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/3.JR新宿駅/B1/ShinjukuSt_B1_Opening.shp",
+      "checksum": "14cfbd4ba4645674c69078ecd131e55d7796f7f742f9c3703f73c38ad6d38d25",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/0/Lumine_0_Drawing.shp",
+      "checksum": "5fba431b5a08baec7cca91610daabbe92acab7b6f4fa941fd71dc92ae1b1e82f",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 25,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/0/Lumine_0_Facility.shp",
+      "checksum": "9bc9d789d59f3a01d17773efe96db4ce1b06242233ac374cb09e8a4b6d56a10e",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 14,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/0/Lumine_0_Floor.shp",
+      "checksum": "7de0bc33f4d61068abb9f7e5e0b233ebde037e8387f08d81080031c2bee6963a",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 10,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/0/Lumine_0_Space.shp",
+      "checksum": "b53b95b446bd798a3d70088af9447da99dc678a57d48c3debc0bf6ddcd4e9b62",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 10,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/1/Lumine_1_Drawing.shp",
+      "checksum": "7be8c64aaa1ac6c87795d3a340240882b6c942ab5e5f34a7dbd12cc4ace10e41",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 13,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/1/Lumine_1_Facility.shp",
+      "checksum": "ae6d5e7ba32c8cad85fc7dedd3e5d6dfa321abf14fe89d198f1a45887f0dd454",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 7,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/1/Lumine_1_Floor.shp",
+      "checksum": "6bdd0280d409adb68b8a7d5b0300d6beec130f5c885a08c529cd059e97e36f4b",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/1/Lumine_1_Space.shp",
+      "checksum": "9f98da7a15d37c7fb586767dd6b1ca360f95302fe680778eac4f8578219942c0",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 15,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/2/Lumine_2_Drawing.shp",
+      "checksum": "ca16699bfaabf4b18d01380f92f1cba612dac3be283286a05f5e08f76f54d30c",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 9,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/2/Lumine_2_Facility.shp",
+      "checksum": "d3f5421d2e5d190aad8241ab323362e3506a63b795e91fc658763cc161579812",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/2/Lumine_2_Floor.shp",
+      "checksum": "479cc11b8ce9d146c106bb1384ae6d761e172d20fe0223f56d1d55b1d7cad5b9",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/2/Lumine_2_Space.shp",
+      "checksum": "aaefaa961954fa3123bc4b10be69665f0c3c5c0c707cc17546b565f84151bf96",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 7,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B1/Lumine_B1_Drawing.shp",
+      "checksum": "68bb06caafc7cf076d6f157e9a416f94a4cb47acc05b40662c9d73e7f9fffb86",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 53,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B1/Lumine_B1_Facility.shp",
+      "checksum": "72b784ec3528c1a6b9ae82baf966d723406a0b3f64b5598b43246dea972d97ab",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 36,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B1/Lumine_B1_Floor.shp",
+      "checksum": "d2304bd1a2431dec3af08f607dfc5cf6c63c8e3d595d568f3fcb4b4439ee5763",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B1/Lumine_B1_Opening.shp",
+      "checksum": "e816d3b81fce8016b3c9f1957f259a1c6226cba1e6e100a1e767e8303484f899",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 8,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B1/Lumine_B1_Space.shp",
+      "checksum": "d7a166865a1bc8bb65de220b21474339368ee2d46db983b5fae28d5a3d3734ce",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 56,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B1/Lumine_B1_TWSI_Line.shp",
+      "checksum": "bef9b8f1592281b6f84f9ab254f5dc6275d65a33f79eed1389672b2529015071",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B1/Lumine_B1_TWSI_Point.shp",
+      "checksum": "5c698f80a25f87ff2792fbac06a55d1eccf1e8af41324b9be788c1319fe3101a",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B2/Lumine_B2_Facility.shp",
+      "checksum": "c2e5e220486d97f06b576946a34b6e2e8b6c315eaaaf7379a8927aa4bf63cf39",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B2/Lumine_B2_Floor.shp",
+      "checksum": "d51313fde852df8b6d7d98ed916237f170bf3e08dc6203f9271e3b0e8bb21572",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B2/Lumine_B2_Space.shp",
+      "checksum": "56c1db4e03aded2cb623161cfc5f6797fbc5f806f36db41c50302a08941fd676",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B2/Lumine_B2_TWSI_Line.shp",
+      "checksum": "afbd77589be4bc1e70445e3fd67566bd16c14401624361c767c5dbbc1997d8b8",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/4.ルミネ/B2/Lumine_B2_TWSI_Point.shp",
+      "checksum": "7cf640c45db3611ba917cf755e2b9e1bbe31740dd97be6c0792c92cf042875eb",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/0/MaruSin_0_Drawing.shp",
+      "checksum": "978ebe793b4a201930fa754bd71aca8a1ece8d5f6b048580251e080ea7a1e3d7",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 8,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/0/MaruSin_0_Facility.shp",
+      "checksum": "7fca4e93dabfe2297502624cd77de53048efc95ed3ec7a4259c28d5fb9b8fb81",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/0/MaruSin_0_Floor.shp",
+      "checksum": "c864675c77e28805f3cf5576a9eaee3bd3060df96e78b40e360b67fd60969e7f",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/0/MaruSin_0_Space.shp",
+      "checksum": "746934288f67bb299b51abe2c03a2a34a027401fc885dbb5d140e060c2d1310f",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/1/MaruSin_1_Drawing.shp",
+      "checksum": "52acec62a9dee039a249ac0af87eb11bbb9dffc86c596fd1fc723de37711b10e",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/1/MaruSin_1_Facility.shp",
+      "checksum": "b0b848cc5fe2fdb221ba05ca209e063e95189be7236bc1fbfb19f1246f7e3493",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/1/MaruSin_1_Floor.shp",
+      "checksum": "44b7f1b8d6d109f6fdbb67dc84149c2341c5b76a032e201276c34e6c16799b51",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/1/MaruSin_1_Space.shp",
+      "checksum": "7e83195719be6f7c3ff8f606805d8193f54fa4f1c47a9e12c2cc5f6d9988da75",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/B2/MaruSin_B2_Drawing.shp",
+      "checksum": "b8e831dd8048f90af329b875b1aabb83c7b7ebc265e0ec8f5aad69b899a72f4b",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 63,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/B2/MaruSin_B2_Facility.shp",
+      "checksum": "162dcdc883753658b667a2b7b615668026e9b2aa8ba3557db95b06970bd7b916",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 51,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/B2/MaruSin_B2_Fixture.shp",
+      "checksum": "7efe61d8dab3dec779d0fd7f3af55c10e5a1d2aef31e406cf63f7d1fe74fdb45",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 114,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/B2/MaruSin_B2_Floor.shp",
+      "checksum": "65b61c11bad97a9b5cce098507a8f7ef83a72fc75f63beb07c8760d247295b7d",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 11,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/B2/MaruSin_B2_Opening.shp",
+      "checksum": "0cc18f634b4fa8ab424d862d887526edbc9437baf99ef88ab63bbdd7c1124129",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 7,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/B2/MaruSin_B2_Space.shp",
+      "checksum": "80075ce9f38b62cef5bc3db82dbd14cfde965d7b83ee6df3ee62907eff4d4815",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 102,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/B2/MaruSin_B2_TWSI_Line.shp",
+      "checksum": "bd42d870b36560dbf67d6762d44d85dd58ad6ed96f900ac7c0b1ff19381e22fa",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 35,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/5.東京メトロ新宿駅/B2/MaruSin_B2_TWSI_Point.shp",
+      "checksum": "33f06621e621fde5f5eac09c45cb0b2b9563bdd27b9365cd61b9846596b77724",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 35,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/0/OdaSin_0_Drawing.shp",
+      "checksum": "6d368171ef2aae663fb968137556729238ccbb45a2f0db358c83c11a3c6566e7",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 17,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/0/OdaSin_0_Facility.shp",
+      "checksum": "3aa3b4bf40ab8532e62860a78f4fbc7c3a4754e891d32de8ad33305fbd0ee029",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 10,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/0/OdaSin_0_Floor.shp",
+      "checksum": "5c6c3f140dd0530a1a02f4911e19afc010475e28e1157b61faaaace85c18a422",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 5,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/0/OdaSin_0_Space.shp",
+      "checksum": "113bf4db9561d3e2deac46d7da65ad552efef3e74de044577197e6fcc73abc2a",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/1/OdaSin_1_Drawing.shp",
+      "checksum": "89cff45f15e2f882761cff8493bfe1f500bbcc68576b0582d0edf92ea0d68090",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/1/OdaSin_1_Facility.shp",
+      "checksum": "0fc5c6a50f8a9f2f7f43b8cc394e69675c0d68a018cba85ad970b4c7ff77f4ab",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 8,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/1/OdaSin_1_Floor.shp",
+      "checksum": "fc72f3220b83b63d73bd31636ff4548a61ee0be07c91eb130a01e1bdfae4834c",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/1/OdaSin_1_Opening.shp",
+      "checksum": "6aa3ce9fd1f04c7412cb6189b5d12294a989609b8824a6ec69b48c605ee46e95",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/1/OdaSin_1_Space.shp",
+      "checksum": "75942d20b4be613b3d6f1e31f4989b6bfe6a2ceff2bb8c27148d244c8bf8c366",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 21,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/2/OdaSin_2_Drawing.shp",
+      "checksum": "d4371b8890e0a6909eb240cd893989991a7b23ce520c2f19821da3b989986477",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 9,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/2/OdaSin_2_Facility.shp",
+      "checksum": "e39a78b34e129c7c39b390cbe71128688a6b1f1034ff11d8d23c66b4afa682c2",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/2/OdaSin_2_Floor.shp",
+      "checksum": "22e37788cd3aa1a0187f08f35a34eb37ce96eefc8578aee9019bea8c4ca35084",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/2/OdaSin_2_Opening.shp",
+      "checksum": "6aa127e39342292f0ce92f894786d713377d12a16815e41e2e169436c9bebd62",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/2/OdaSin_2_Space.shp",
+      "checksum": "426c6cfc584df2856e85e98855d68cf76543db7ef0d00525729bcae847ccf740",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 13,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/B1/OdaSin_B1_Drawing.shp",
+      "checksum": "cbed67318748128ec7afc04c6d04795f81a1bfb387cfe36458939eb5b645cf01",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 38,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/B1/OdaSin_B1_Facility.shp",
+      "checksum": "45b067425c4505cce441e3ec496e31b5bb097bca22225806725ab693a4688419",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 30,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/B1/OdaSin_B1_Fixture.shp",
+      "checksum": "7c6ad0fe33e16838707d5e9fef7797b93bc7bab986a6c822d811d924f5fd5561",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/B1/OdaSin_B1_Floor.shp",
+      "checksum": "4ec458fea5bd61ebb2c25ad5c23beb04e833695995e19996eeabf21db2cdfe1e",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 7,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/B1/OdaSin_B1_Opening.shp",
+      "checksum": "470bf1daa477ca915fd99470912afbba1d9a8d08af1aa21819612508c9c2fd05",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/B1/OdaSin_B1_Space.shp",
+      "checksum": "75e62c4a3eb2bc3d4825593cc812f39bcd9365b61cddcfb6597161f9651f37a5",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 54,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/B1/OdaSin_B1_TWSI_Line.shp",
+      "checksum": "67bd15e90ed7574092d658269569fce0d32e5e1ae68600d2a8731b034dea1c16",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 18,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/6.小田急新宿駅_小田急エース/B1/OdaSin_B1_TWSI_Point.shp",
+      "checksum": "9e8e618f66d72f7aa6da60a9a6c85df3761e07cdc76bd0b129d5d26cc57f1af5",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 13,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/0/KeioSin_0_Drawing.shp",
+      "checksum": "4bf40451a760ded5fe7c50cf71122e56332f588897a91d172d5c722f2715e30b",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 20,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/0/KeioSin_0_Facility.shp",
+      "checksum": "ab1f552a2886c8fed3798ffa02cff4e8c9e903e222591a1fb312f2a4b87444d0",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 10,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/0/KeioSin_0_Floor.shp",
+      "checksum": "d3e12ded4561077a7209cd46434591edd8d1bfc02ea2d9432d1cdf1879d844bc",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/0/KeioSin_0_Space.shp",
+      "checksum": "bb9bc4e536e9e185f2e0576a0865b0e3a64ba6613d002ae1250a06b9664cd1b1",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/1/KeioSin_1_Drawing.shp",
+      "checksum": "9ae2b4f753f4c5ed84ddd60c5c0c9c89a3e877f77a3d2da15d7a571c67f84eef",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/1/KeioSin_1_Facility.shp",
+      "checksum": "bbda806e6ee2a6d96d540b09ee327e28bcd2f3c3ab6f8d42057b30b2bf8214f4",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/1/KeioSin_1_Floor.shp",
+      "checksum": "18d68adeb0a76c78acee1e18b27abded7449fc383ea63627761668aef15825c1",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/1/KeioSin_1_Space.shp",
+      "checksum": "1cf1471e37960c0b3922127c3e52e6e0a5a54ae0ad34654b465d141cd6aea8b8",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 4,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/2/KeioSin_2_Drawing.shp",
+      "checksum": "68ea87b1e2bd314c5bc9584d0400492b9c84c9eca95c043c50ad1d774228eb45",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 8,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/2/KeioSin_2_Facility.shp",
+      "checksum": "ab39dd32eb43cc0ba29a577975ed0227fc6fbfb4a7392ddba4bac9b4901d68d0",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/2/KeioSin_2_Floor.shp",
+      "checksum": "4d54af57f63e2314349cccf062ab0229c633ed9d52396a987bcee3fef116322d",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/2/KeioSin_2_Space.shp",
+      "checksum": "9d1584e4bb464d96814e456f36d1e9d2a022cb25f5468d08f222ae40283dd94e",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 7,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/B1/KeioSin_B1_Drawing.shp",
+      "checksum": "e0770fc4f8dcbb145a0cf9a0c8a4f2896ec72d97750e0748ab6a758d1d9f6467",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 64,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/B1/KeioSin_B1_Facility.shp",
+      "checksum": "b2eeb24da8754826603a9b6c1fdc9faffa092f5d16f72a9c36faaf0208c72043",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 29,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/B1/KeioSin_B1_Fixture.shp",
+      "checksum": "f95fe6cff19603bd65f22bb6b14d395e260705d2fee5efac73c74ffc804af9f0",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 58,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/B1/KeioSin_B1_Floor.shp",
+      "checksum": "acee739be541aa17c9afa6dedf30c277149d2c6856cb5e8a2387f82af77b0296",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 12,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/B1/KeioSin_B1_Opening.shp",
+      "checksum": "66b1f1e876f801d8bb11ac9fdeb2f7e676ff6cac230992b44778a50832f6ea39",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 8,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/B1/KeioSin_B1_Space.shp",
+      "checksum": "843e6b963828eda6d57c4727847251b20e9aaf0521f4235a0b44f16b0ab88f05",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 82,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/B1/KeioSin_B1_TWSI_Line.shp",
+      "checksum": "3c115f4cd2812b97e8d363f48e8d429dd7481290938108a88e7c2372bb3bf1fd",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 39,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/7.京王新宿駅_京王モールアネックス/B1/KeioSin_B1_TWSI_Point.shp",
+      "checksum": "68f91986b952a9e59359d0bb26c7c3937bfbf8ee80a458a3117848e525e106c4",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 34,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/0/KeioTika_0_Drawing.shp",
+      "checksum": "79dbb13a7180f7cd45c42ee2d4158f5c11d4d42872504b9e75e1a6e22f3368a1",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 18,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/0/KeioTika_0_Facility.shp",
+      "checksum": "9ec72fe7b991aa9f29012536ac1c8a23b1186abae3ed638db95f61f8a1cb7aa8",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 12,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/0/KeioTika_0_Floor.shp",
+      "checksum": "a6355838151736ef0604a10d1830c552f870330d2eb569de04977ddd187d09e4",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/0/KeioTika_0_Space.shp",
+      "checksum": "5e89ad167d877e1ca67a704f51695087132deef0a7289fc197cfed2bca44540d",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 6,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/1/KeioTika_1_Facility.shp",
+      "checksum": "af84a7b2484ef31d6c7abb2fa75e493e6a36e6672afbe5bce53fc55aa8bc24bb",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/1/KeioTika_1_Floor.shp",
+      "checksum": "91209e6bc3de6e93390becc3f66c0d5f765c7c5828cba081d0d03cd68e31347b",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/1/KeioTika_1_Space.shp",
+      "checksum": "291e9b435bcab9ad80f46551623f195393028031f51994d566fe6e5d24a74209",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/B1/KeioTika_B1_Drawing.shp",
+      "checksum": "a2c6833e6459049ff36dc67505487397a9553d8e6e55b5e26380128a00f2162c",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 33,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/B1/KeioTika_B1_Facility.shp",
+      "checksum": "a26f19f8c0c54373ad857f55e60116d639ab830b2ab37cacbe4dd8590148c885",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 18,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/B1/KeioTika_B1_Fixture.shp",
+      "checksum": "e78e8b223623e1da48256caeac3af34ce83ce23d1ab36392dd18cd0fd4b46eba",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/B1/KeioTika_B1_Floor.shp",
+      "checksum": "199bcef000997e274c889de4e06d612af6963166c22e7b134c663e08e645f894",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/B1/KeioTika_B1_Opening.shp",
+      "checksum": "a90f7c25b23d4fdadaa9cd78624b26803abfb58f3efdda9fc2e748568d2e1d68",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/B1/KeioTika_B1_Space.shp",
+      "checksum": "efbd1c0dc654d1ff66d3444738826b07e8046e1e2db4256d4fb859b023907f4f",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 44,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/B1/KeioTika_B1_TWSI_Line.shp",
+      "checksum": "060e6ded320e801a7389cf7782c8af15af182906610acb7fd421baefb7367bd9",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 9,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/8.京王モール/B1/KeioTika_B1_TWSI_Point.shp",
+      "checksum": "ad5becfb8ad890efa874fe5464951d710e4fe822f24466327484cb9f83428910",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 7,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/9.都営新宿駅/B1/OedoSin_B1_Drawing.shp",
+      "checksum": "33a1fc2167994eb4373d82f0ca3515ce33d5a750c1df3d9b1c1a5ac31dd83025",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 3,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/9.都営新宿駅/B1/OedoSin_B1_Facility.shp",
+      "checksum": "3b5cc93109f8da64f8a66d03a438cd3efb180430ad68f9f20e259592f84a05a8",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Point"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/9.都営新宿駅/B1/OedoSin_B1_Floor.shp",
+      "checksum": "26a89920dd9a7a9d7b072bd0100201c8459831f9eee214a6ace6a935251a2966",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/9.都営新宿駅/B1/OedoSin_B1_Opening.shp",
+      "checksum": "b637c4f7afa28af1817e7476f8685f97291078a95c7eda19d1b666a097549501",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/9.都営新宿駅/B1/OedoSin_B1_Space.shp",
+      "checksum": "1274ff38b5c5ec5fe1bc6199f2a84b7fccee544dcf6228f4510d390c7c74ed56",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 5,
+      "geometryType": "Polygon"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/nw/Shinjuku_link.shp",
+      "checksum": "5f51037008d16a8b3e4db0be82573994c96968b320adcf19cae1587fb6ce504c",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 2541,
+      "geometryType": "PolyLine"
+    },
+    {
+      "sourcePath": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/nw/Shinjuku_node.shp",
+      "checksum": "0ed75845a37f27090b8b22939f26efa5f1bea3ec6f82e7727cdda89bbf627ad8",
+      "detectedTextEncoding": "unspecified (DBF code page byte only)",
+      "crs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+      "featureCount": 1982,
+      "geometryType": "Point"
+    }
+  ]
+}

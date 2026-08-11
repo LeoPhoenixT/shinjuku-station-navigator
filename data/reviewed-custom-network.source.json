@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "revision": "jr-b1-east-west-gates-v1",
+  "approval": {
+    "status": "reviewed",
+    "basis": "User-approved topology based on the published reference visualization and the visible East-West concourse. The existing East and West corridor-turn nodes are joined directly; accessibility remains unknown pending field verification."
+  },
+  "nodes": [
+    {
+      "id": "custom:jr-b1-east-gate",
+      "name": "東改札 custom gate node",
+      "floorId": "B1",
+      "role": "gate",
+      "coordinates": [20.375, -5, -40.23]
+    },
+    {
+      "id": "custom:jr-b1-east-turn",
+      "name": "東改札 corridor turn",
+      "floorId": "B1",
+      "role": "turn",
+      "coordinates": [20.375, -5, -53.981]
+    },
+    {
+      "id": "custom:jr-b1-west-gate-1",
+      "name": "西改札 record 1 custom gate node",
+      "floorId": "B1",
+      "role": "gate",
+      "coordinates": [-35.858, -5, -34.086]
+    },
+    {
+      "id": "custom:jr-b1-west-turn-1",
+      "name": "西改札 record 1 corridor turn",
+      "floorId": "B1",
+      "role": "turn",
+      "coordinates": [-35.858, -5, -45.413]
+    },
+    {
+      "id": "custom:jr-b1-west-gate-3",
+      "name": "西改札 record 3 custom gate node",
+      "floorId": "B1",
+      "role": "gate",
+      "coordinates": [-53.434, -5, -31.903]
+    },
+    {
+      "id": "custom:jr-b1-west-turn-3",
+      "name": "西改札 record 3 corridor turn and branch junction",
+      "floorId": "B1",
+      "role": "turn",
+      "coordinates": [-53.434, -5, -45.413]
+    }
+  ],
+  "edges": [
+    {
+      "id": "custom:jr-b1-east-gate-to-turn",
+      "from": "custom:jr-b1-east-gate",
+      "to": "custom:jr-b1-east-turn",
+      "kind": "gate"
+    },
+    {
+      "id": "custom:jr-b1-east-turn-to-official",
+      "from": "custom:jr-b1-east-turn",
+      "to": "4744a81cd91b4650808daccedb5decd9",
+      "kind": "corridor"
+    },
+    {
+      "id": "custom:jr-b1-east-west-concourse",
+      "from": "custom:jr-b1-east-turn",
+      "to": "custom:jr-b1-west-turn-1",
+      "kind": "corridor"
+    },
+    {
+      "id": "custom:jr-b1-west-gate-1-to-turn-1",
+      "from": "custom:jr-b1-west-gate-1",
+      "to": "custom:jr-b1-west-turn-1",
+      "kind": "gate"
+    },
+    {
+      "id": "custom:jr-b1-west-turn-1-to-turn-3",
+      "from": "custom:jr-b1-west-turn-1",
+      "to": "custom:jr-b1-west-turn-3",
+      "kind": "corridor"
+    },
+    {
+      "id": "custom:jr-b1-west-gate-3-to-turn-3",
+      "from": "custom:jr-b1-west-gate-3",
+      "to": "custom:jr-b1-west-turn-3",
+      "kind": "gate"
+    },
+    {
+      "id": "custom:jr-b1-west-turn-3-to-official",
+      "from": "custom:jr-b1-west-turn-3",
+      "to": "fd2ecff60aea4697a921d26f7d4d7c91",
+      "kind": "corridor"
+    }
+  ],
+  "placeAttachments": [
+    {
+      "placeId": "gate:5b65a4b8660c4821bdb1fc6c1a9aa9bb",
+      "nodeId": "custom:jr-b1-east-gate"
+    },
+    {
+      "placeId": "gate:28e4244fffc54d69b600d7d4d64f2a1e",
+      "nodeId": "custom:jr-b1-west-gate-1"
+    },
+    {
+      "placeId": "gate:f7ec73273c3e45c3835bff65f7c5cbfd",
+      "nodeId": "custom:jr-b1-west-gate-3"
+    }
+  ]
+}

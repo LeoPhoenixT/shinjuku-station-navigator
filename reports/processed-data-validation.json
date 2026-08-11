@@ -1,0 +1,20 @@
+{
+  "input": "public/data/processed/jr-shinjuku-ticket-gates-b1.json",
+  "valid": true,
+  "errors": [],
+  "warnings": [],
+  "summary": {
+    "featureCount": 48,
+    "layerCount": 6,
+    "usesMeters": true,
+    "rawShapefilesInPublic": false,
+    "bounds": {
+      "minX": -134.502,
+      "minY": -5,
+      "minZ": -82.716,
+      "maxX": 66.865,
+      "maxY": -5,
+      "maxZ": 87.054
+    }
+  }
+}

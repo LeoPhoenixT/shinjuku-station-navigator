@@ -1,0 +1,82 @@
+{
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "selection": {
+    "ordinals": [
+      -1,
+      0
+    ],
+    "floorMapping": {
+      "0": "0",
+      "-1": "B1"
+    },
+    "boundsSource": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Floor.shp",
+    "bounds": [
+      139.69911232753415,
+      35.69011797905394,
+      139.70133956363827,
+      35.69164305121278
+    ],
+    "groundFloorNames": [
+      "グランドレベル"
+    ],
+    "groundSpaceNames": []
+  },
+  "statistics": {
+    "nodeCountByOrdinal": {
+      "0": 18,
+      "-1": 147
+    },
+    "selectedLinkCount": 191,
+    "crossFloorLinkCount": 4,
+    "crossFloorMovementTypeCounts": {
+      "4": 1,
+      "6": 3
+    }
+  },
+  "crossFloorLinks": [
+    {
+      "id": "2b4132c2a2d2431294e1b2cb10b1f158",
+      "from": "1ff82bf8150e4f7bacfd143b00987482",
+      "to": "c9303597501442c8bc678126ec8d54ff",
+      "fromOrdinal": 0,
+      "toOrdinal": -1,
+      "routeType": "6",
+      "direction": "1",
+      "distanceMeters": 10.3,
+      "geometryRecord": 734
+    },
+    {
+      "id": "6e09f033cda0472cb754fef74c313d83",
+      "from": "6de93a4ec6014f938caa0cff6f8600bb",
+      "to": "8fb268aa3db54a818231a85bc652e6e1",
+      "fromOrdinal": -1,
+      "toOrdinal": 0,
+      "routeType": "4",
+      "direction": "1",
+      "distanceMeters": 0,
+      "geometryRecord": 1121
+    },
+    {
+      "id": "7a4a7a6e884847a69797c3e9ddc2b58f",
+      "from": "9dd5b4b8e93c4e5fae840b755e62c1f1",
+      "to": "3b7e012171d347feb39378b76b9d2773",
+      "fromOrdinal": -1,
+      "toOrdinal": 0,
+      "routeType": "6",
+      "direction": "1",
+      "distanceMeters": 7.4,
+      "geometryRecord": 833
+    },
+    {
+      "id": "f3b9a961962b4114b14e162832f3cb3d",
+      "from": "5b1bc6ddfe5a496d8ededcc031a698c7",
+      "to": "84d9aeb33a9d4927a87a24eb6cd26470",
+      "fromOrdinal": -1,
+      "toOrdinal": 0,
+      "routeType": "6",
+      "direction": "1",
+      "distanceMeters": 16.7,
+      "geometryRecord": 823
+    }
+  ]
+}

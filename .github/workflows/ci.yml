@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test with coverage thresholds
+        run: npm run test:coverage
+
+      - name: Audit production dependencies
+        run: npm run audit:prod
+
+      - name: Verify processed release data
+        run: npm run release:verify
+
+  browser:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser tests
+        run: npm run test:e2e
+
+  container:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build container
+        run: npm run docker:build
+
+      - name: Start container
+        run: docker run --detach --name shinjuku-indoor-navigator --publish 8080:8080 shinjuku-indoor-navigator:local
+
+      - name: Verify container
+        run: npm run container:verify -- http://127.0.0.1:8080
+
+      - name: Show container logs on failure
+        if: failure()
+        run: docker logs shinjuku-indoor-navigator
+
+      - name: Stop container
+        if: always()
+        run: docker rm --force shinjuku-indoor-navigator

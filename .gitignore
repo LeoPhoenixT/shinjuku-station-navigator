@@ -1,0 +1,21 @@
+node_modules
+dist-scripts/
+
+dist/
+coverage/
+playwright-report/
+test-results/
+reports/current-release-status.md
+
+# Local-only upstream source material. Keep these files available for optional
+# data regeneration, but never include them in the public repository.
+/shapefile/
+/shapefile.zip
+/docs/地物凡例.pdf
+/docs/製品仕様書.pdf
+/docs/設備凡例.pdf
+
+# Local-only maintainer references. Keep these files locally, but do not
+# publish personal implementation retrospectives or release operations.
+/docs/PROJECT_DESIGN_AND_IMPLEMENTATION_REVIEW.md
+/docs/PUBLIC_RELEASE.md

@@ -1,0 +1,2993 @@
+{
+  "schemaVersion": 1,
+  "importerVersion": "phase2-2026-07-15",
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "source": {
+    "facilityId": "jr-shinjuku-ticket-gates",
+    "facilityName": "1.JR新宿駅改札",
+    "floorId": "B1",
+    "sourceDirectory": "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1",
+    "checksums": {
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Floor.shp": "4d647520ab7a2d553da5200534c266c0cd633b5f38c42a09a4685698dbcac2aa",
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Floor.dbf": "aaec3f80d6624d80619ae2fce86b9991b8f151c048afdfc72e2ce1a6e8f15a25",
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Space.shp": "b72db490ca7b237600a9903932678b5c8481a7c0894c0f287b384b7016872e49",
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Space.dbf": "04bc8328a78c4c30a4cf89b68d5b3513f11121e3d98d10a75370d5e2ac53a0ac",
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Opening.shp": "4e901ed2defc8575f7dac500b6c15196e585c1ea368b165e15193b644291b932",
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Opening.dbf": "d20166cd5180a8f64e7df0244a5cda35b4410865889ac074fec56c90a103d411",
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Facility.shp": "6847f5b3100dde68e6cdaa04d582fb1602d711e00e073575eeb229255f1ef87a",
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_Facility.dbf": "f46715fe41dd8535a19050568d8ffb57542551d2eb8ff6c30da72db642229390",
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_TWSI_Line.shp": "75356bf414c9902d1109471c7cf16f0beaaea53262fbbf6a036cf0159c39fd40",
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_TWSI_Line.dbf": "5f7a28a3b70f7c6400ef430a3180234a8af82c8a29d48d6efa86cdfa9da490f2",
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_TWSI_Point.shp": "54b3f34407858336dbaa805e35c03e0a6b84e5fe781a4a0c44d3c0a76a07f50b",
+      "shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1/JrSin_B1_TWSI_Point.dbf": "254378fc58dede724937cd8258605e6150f915e48cbe499dc6edc7c02b759f25"
+    }
+  },
+  "coordinateSystem": {
+    "sourceCrs": "GEOGCS[\"GCS_JGD_2011\",DATUM[\"D_JGD_2011\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+    "origin": {
+      "lon": 139.7006,
+      "lat": 35.6909
+    },
+    "units": "meters",
+    "axes": {
+      "x": "east",
+      "y": "vertical",
+      "z": "south"
+    }
+  },
+  "layers": {
+    "Floor": {
+      "featureCount": 3,
+      "fields": [
+        "category",
+        "id",
+        "name",
+        "ordinal",
+        "short_name",
+        "source"
+      ]
+    },
+    "Space": {
+      "featureCount": 13,
+      "fields": [
+        "category",
+        "floor_id",
+        "id",
+        "name",
+        "nonpublic",
+        "restricted",
+        "source",
+        "suite",
+        "toll"
+      ]
+    },
+    "Opening": {
+      "featureCount": 3,
+      "fields": [
+        "floor_id",
+        "id",
+        "name",
+        "source"
+      ]
+    },
+    "Facility": {
+      "featureCount": 2,
+      "fields": [
+        "category",
+        "floor_id",
+        "id",
+        "name",
+        "source"
+      ]
+    },
+    "TWSI_Line": {
+      "featureCount": 15,
+      "fields": [
+        "category",
+        "endnode",
+        "floor_id",
+        "id",
+        "roof",
+        "source",
+        "startnode"
+      ]
+    },
+    "TWSI_Point": {
+      "featureCount": 12,
+      "fields": [
+        "category",
+        "floor_id",
+        "id",
+        "lat",
+        "lon",
+        "name",
+        "source"
+      ]
+    }
+  },
+  "features": [
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Facility:a6544518cd5640398cfb2a58e8d47f8d",
+      "sourceId": "a6544518cd5640398cfb2a58e8d47f8d",
+      "sourceRecord": 1,
+      "layer": "Facility",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          63.723,
+          -5,
+          -20.374
+        ]
+      },
+      "properties": {
+        "category": "F011",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "a6544518cd5640398cfb2a58e8d47f8d",
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Facility:f2973ca230f941928433ca974ad3aff1",
+      "sourceId": "f2973ca230f941928433ca974ad3aff1",
+      "sourceRecord": 2,
+      "layer": "Facility",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          59.738,
+          -5,
+          -54.174
+        ]
+      },
+      "properties": {
+        "category": "F011",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "f2973ca230f941928433ca974ad3aff1",
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Floor:5a37b18eeae54cc6ae1d906f4b74cdfb",
+      "sourceId": "5a37b18eeae54cc6ae1d906f4b74cdfb",
+      "sourceRecord": 3,
+      "layer": "Floor",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              -119.57,
+              -5,
+              70.556
+            ],
+            [
+              -118.603,
+              -5,
+              79.428
+            ],
+            [
+              -121.408,
+              -5,
+              79.719
+            ],
+            [
+              -120.974,
+              -5,
+              83.663
+            ],
+            [
+              -121.722,
+              -5,
+              83.752
+            ],
+            [
+              -121.974,
+              -5,
+              83.782
+            ],
+            [
+              -122.329,
+              -5,
+              84.234
+            ],
+            [
+              -122.042,
+              -5,
+              86.661
+            ],
+            [
+              -125.345,
+              -5,
+              87.054
+            ],
+            [
+              -126.333,
+              -5,
+              85.915
+            ],
+            [
+              -127.102,
+              -5,
+              86.597
+            ],
+            [
+              -131.382,
+              -5,
+              81.468
+            ],
+            [
+              -131.675,
+              -5,
+              81.144
+            ],
+            [
+              -134.097,
+              -5,
+              81.381
+            ],
+            [
+              -134.405,
+              -5,
+              78.337
+            ],
+            [
+              -134.502,
+              -5,
+              77.38
+            ],
+            [
+              -132.063,
+              -5,
+              77.089
+            ],
+            [
+              -131.917,
+              -5,
+              75.637
+            ],
+            [
+              -132.386,
+              -5,
+              74.257
+            ],
+            [
+              -123.336,
+              -5,
+              71.153
+            ],
+            [
+              -119.57,
+              -5,
+              70.556
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "id": "5a37b18eeae54cc6ae1d906f4b74cdfb",
+        "name": "地下1階",
+        "ordinal": -1,
+        "short_name": "B1F",
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Floor:804eea1f76e24a35ab7e34f12a5585ea",
+      "sourceId": "804eea1f76e24a35ab7e34f12a5585ea",
+      "sourceRecord": 2,
+      "layer": "Floor",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              43.697,
+              -5,
+              -75.749
+            ],
+            [
+              58.954,
+              -5,
+              -77.623
+            ],
+            [
+              60.036,
+              -5,
+              -66.497
+            ],
+            [
+              60.911,
+              -5,
+              -59.299
+            ],
+            [
+              64.76,
+              -5,
+              -27.67
+            ],
+            [
+              65.614,
+              -5,
+              -20.657
+            ],
+            [
+              66.865,
+              -5,
+              -10.253
+            ],
+            [
+              44.945,
+              -5,
+              -7.562
+            ],
+            [
+              45.793,
+              -5,
+              20.858
+            ],
+            [
+              50.991,
+              -5,
+              20.219
+            ],
+            [
+              51.006,
+              -5,
+              19.738
+            ],
+            [
+              52.768,
+              -5,
+              19.522
+            ],
+            [
+              51.396,
+              -5,
+              34.132
+            ],
+            [
+              40.364,
+              -5,
+              38.279
+            ],
+            [
+              36.852,
+              -5,
+              22.263
+            ],
+            [
+              37.084,
+              -5,
+              21.927
+            ],
+            [
+              40.009,
+              -5,
+              21.568
+            ],
+            [
+              39.195,
+              -5,
+              15.097
+            ],
+            [
+              40.626,
+              -5,
+              14.921
+            ],
+            [
+              40.3,
+              -5,
+              12.241
+            ],
+            [
+              38.773,
+              -5,
+              12.428
+            ],
+            [
+              38.736,
+              -5,
+              12.125
+            ],
+            [
+              38.632,
+              -5,
+              12.138
+            ],
+            [
+              37.976,
+              -5,
+              6.726
+            ],
+            [
+              36.39,
+              -5,
+              6.92
+            ],
+            [
+              34.093,
+              -5,
+              4.773
+            ],
+            [
+              32.006,
+              -5,
+              -1.319
+            ],
+            [
+              29.462,
+              -5,
+              -13.823
+            ],
+            [
+              26.101,
+              -5,
+              -40.942
+            ],
+            [
+              14.649,
+              -5,
+              -39.519
+            ],
+            [
+              16.098,
+              -5,
+              -27.616
+            ],
+            [
+              -9.035,
+              -5,
+              -24.581
+            ],
+            [
+              -8.858,
+              -5,
+              -23.132
+            ],
+            [
+              -14.775,
+              -5,
+              -22.405
+            ],
+            [
+              -14.785,
+              -5,
+              -22.558
+            ],
+            [
+              -17.503,
+              -5,
+              -22.377
+            ],
+            [
+              -17.483,
+              -5,
+              -22.068
+            ],
+            [
+              -22.89,
+              -5,
+              -21.409
+            ],
+            [
+              -23.565,
+              -5,
+              -26.955
+            ],
+            [
+              -28.095,
+              -5,
+              -26.449
+            ],
+            [
+              -28.903,
+              -5,
+              -33.175
+            ],
+            [
+              -29.475,
+              -5,
+              -33.108
+            ],
+            [
+              -29.689,
+              -5,
+              -34.861
+            ],
+            [
+              -42.026,
+              -5,
+              -33.311
+            ],
+            [
+              -42.292,
+              -5,
+              -35.538
+            ],
+            [
+              -50.179,
+              -5,
+              -34.553
+            ],
+            [
+              -50.011,
+              -5,
+              -32.332
+            ],
+            [
+              -57.78,
+              -5,
+              -31.361
+            ],
+            [
+              -58.025,
+              -5,
+              -33.377
+            ],
+            [
+              -66.716,
+              -5,
+              -32.283
+            ],
+            [
+              -72.319,
+              -5,
+              -33.391
+            ],
+            [
+              -72.179,
+              -5,
+              -55.998
+            ],
+            [
+              -72.005,
+              -5,
+              -56.906
+            ],
+            [
+              -65.749,
+              -5,
+              -57.779
+            ],
+            [
+              -65.807,
+              -5,
+              -58.266
+            ],
+            [
+              15.296,
+              -5,
+              -68.357
+            ],
+            [
+              28.134,
+              -5,
+              -69.954
+            ],
+            [
+              27.965,
+              -5,
+              -71.354
+            ],
+            [
+              31.118,
+              -5,
+              -71.744
+            ],
+            [
+              31.007,
+              -5,
+              -72.627
+            ],
+            [
+              29.958,
+              -5,
+              -81.283
+            ],
+            [
+              42.839,
+              -5,
+              -82.716
+            ],
+            [
+              43.697,
+              -5,
+              -75.749
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "name": "地下1階",
+        "ordinal": -1,
+        "short_name": "B1F",
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Floor:8ddb424adb854b01b1f00580bbb3332a",
+      "sourceId": "8ddb424adb854b01b1f00580bbb3332a",
+      "sourceRecord": 1,
+      "layer": "Floor",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              -71.329,
+              -5,
+              -77.971
+            ],
+            [
+              -73.224,
+              -5,
+              -58.992
+            ],
+            [
+              -71.653,
+              -5,
+              -58.711
+            ],
+            [
+              -72.003,
+              -5,
+              -56.906
+            ],
+            [
+              -72.179,
+              -5,
+              -55.998
+            ],
+            [
+              -72.319,
+              -5,
+              -33.391
+            ],
+            [
+              -66.716,
+              -5,
+              -32.283
+            ],
+            [
+              -58.025,
+              -5,
+              -33.377
+            ],
+            [
+              -57.78,
+              -5,
+              -31.361
+            ],
+            [
+              -56.957,
+              -5,
+              -31.462
+            ],
+            [
+              -56.756,
+              -5,
+              -29.81
+            ],
+            [
+              -60.489,
+              -5,
+              -29.385
+            ],
+            [
+              -60.497,
+              -5,
+              -29.195
+            ],
+            [
+              -65.608,
+              -5,
+              -29.404
+            ],
+            [
+              -65.965,
+              -5,
+              -21.492
+            ],
+            [
+              -67.253,
+              -5,
+              -19.76
+            ],
+            [
+              -67.411,
+              -5,
+              -11.681
+            ],
+            [
+              -74.915,
+              -5,
+              -15.106
+            ],
+            [
+              -77.753,
+              -5,
+              -15.666
+            ],
+            [
+              -77.154,
+              -5,
+              -18.73
+            ],
+            [
+              -83.108,
+              -5,
+              -19.904
+            ],
+            [
+              -83.708,
+              -5,
+              -16.835
+            ],
+            [
+              -85.476,
+              -5,
+              -17.197
+            ],
+            [
+              -84.634,
+              -5,
+              -21.476
+            ],
+            [
+              -81.241,
+              -5,
+              -35.17
+            ],
+            [
+              -80.316,
+              -5,
+              -57.665
+            ],
+            [
+              -78.644,
+              -5,
+              -79.481
+            ],
+            [
+              -71.329,
+              -5,
+              -77.971
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "id": "8ddb424adb854b01b1f00580bbb3332a",
+        "name": "地下1階",
+        "ordinal": -1,
+        "short_name": "B1F",
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Opening:28e4244fffc54d69b600d7d4d64f2a1e",
+      "sourceId": "28e4244fffc54d69b600d7d4d64f2a1e",
+      "sourceRecord": 1,
+      "layer": "Opening",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              -42.026,
+              -5,
+              -33.311
+            ],
+            [
+              -29.689,
+              -5,
+              -34.861
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "28e4244fffc54d69b600d7d4d64f2a1e",
+        "name": "西改札",
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Opening:5b65a4b8660c4821bdb1fc6c1a9aa9bb",
+      "sourceId": "5b65a4b8660c4821bdb1fc6c1a9aa9bb",
+      "sourceRecord": 2,
+      "layer": "Opening",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              14.649,
+              -5,
+              -39.519
+            ],
+            [
+              26.101,
+              -5,
+              -40.942
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "5b65a4b8660c4821bdb1fc6c1a9aa9bb",
+        "name": "東改札",
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Opening:f7ec73273c3e45c3835bff65f7c5cbfd",
+      "sourceId": "f7ec73273c3e45c3835bff65f7c5cbfd",
+      "sourceRecord": 3,
+      "layer": "Opening",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              -56.957,
+              -5,
+              -31.462
+            ],
+            [
+              -49.91,
+              -5,
+              -32.344
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "f7ec73273c3e45c3835bff65f7c5cbfd",
+        "name": "西改札",
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:241bbb6bd59e4b0b940081324dbda6c3",
+      "sourceId": "241bbb6bd59e4b0b940081324dbda6c3",
+      "sourceRecord": 13,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              -28.903,
+              -5,
+              -33.175
+            ],
+            [
+              -29.475,
+              -5,
+              -33.108
+            ],
+            [
+              -29.99,
+              -5,
+              -37.477
+            ],
+            [
+              12.174,
+              -5,
+              -42.5
+            ],
+            [
+              13.277,
+              -5,
+              -42.533
+            ],
+            [
+              13.927,
+              -5,
+              -42.335
+            ],
+            [
+              14.352,
+              -5,
+              -41.963
+            ],
+            [
+              14.649,
+              -5,
+              -39.519
+            ],
+            [
+              16.098,
+              -5,
+              -27.616
+            ],
+            [
+              -9.035,
+              -5,
+              -24.581
+            ],
+            [
+              -8.853,
+              -5,
+              -23.108
+            ],
+            [
+              -14.775,
+              -5,
+              -22.405
+            ],
+            [
+              -14.785,
+              -5,
+              -22.558
+            ],
+            [
+              -17.503,
+              -5,
+              -22.377
+            ],
+            [
+              -17.483,
+              -5,
+              -22.068
+            ],
+            [
+              -22.89,
+              -5,
+              -21.409
+            ],
+            [
+              -23.565,
+              -5,
+              -26.955
+            ],
+            [
+              -28.095,
+              -5,
+              -26.449
+            ],
+            [
+              -28.903,
+              -5,
+              -33.175
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B019",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "241bbb6bd59e4b0b940081324dbda6c3",
+        "name": null,
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": null,
+        "toll": "3"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:2c48387395fe474d8e3933facfd84ae4",
+      "sourceId": "2c48387395fe474d8e3933facfd84ae4",
+      "sourceRecord": 5,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              38.992,
+              -5,
+              -45.964
+            ],
+            [
+              40.768,
+              -5,
+              -31.371
+            ],
+            [
+              42.421,
+              -5,
+              -16.8
+            ],
+            [
+              44.191,
+              -5,
+              -2.614
+            ],
+            [
+              42.799,
+              -5,
+              -1.943
+            ],
+            [
+              38.368,
+              -5,
+              -1.399
+            ],
+            [
+              38.396,
+              -5,
+              -1.163
+            ],
+            [
+              36.13,
+              -5,
+              -0.885
+            ],
+            [
+              36.929,
+              -5,
+              3.244
+            ],
+            [
+              37.062,
+              -5,
+              4.391
+            ],
+            [
+              34.093,
+              -5,
+              4.773
+            ],
+            [
+              32.006,
+              -5,
+              -1.319
+            ],
+            [
+              29.462,
+              -5,
+              -13.823
+            ],
+            [
+              26.101,
+              -5,
+              -40.942
+            ],
+            [
+              25.686,
+              -5,
+              -44.296
+            ],
+            [
+              38.992,
+              -5,
+              -45.964
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B019",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "2c48387395fe474d8e3933facfd84ae4",
+        "name": null,
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": null,
+        "toll": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:51539e3af6584458bf4a7f8ccec54efb",
+      "sourceId": "51539e3af6584458bf4a7f8ccec54efb",
+      "sourceRecord": 8,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              40.768,
+              -5,
+              -31.371
+            ],
+            [
+              43.672,
+              -5,
+              -31.72
+            ],
+            [
+              45.373,
+              -5,
+              -17.18
+            ],
+            [
+              42.422,
+              -5,
+              -16.8
+            ],
+            [
+              40.768,
+              -5,
+              -31.371
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B001",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "51539e3af6584458bf4a7f8ccec54efb",
+        "name": null,
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": null,
+        "toll": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:547478546b1041688e061f4aa14d5e52",
+      "sourceId": "547478546b1041688e061f4aa14d5e52",
+      "sourceRecord": 11,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              50.922,
+              -5,
+              -65.378
+            ],
+            [
+              60.036,
+              -5,
+              -66.497
+            ],
+            [
+              60.911,
+              -5,
+              -59.299
+            ],
+            [
+              50.251,
+              -5,
+              -58.006
+            ],
+            [
+              49.566,
+              -5,
+              -63.637
+            ],
+            [
+              50.922,
+              -5,
+              -65.378
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B019",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "547478546b1041688e061f4aa14d5e52",
+        "name": null,
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": null,
+        "toll": "3"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:5b7b0377890a4d9fb5a6c7e959ccbc6b",
+      "sourceId": "5b7b0377890a4d9fb5a6c7e959ccbc6b",
+      "sourceRecord": 12,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              52.208,
+              -5,
+              -43.89
+            ],
+            [
+              52.031,
+              -5,
+              -45.34
+            ],
+            [
+              52.451,
+              -5,
+              -45.392
+            ],
+            [
+              51.552,
+              -5,
+              -52.776
+            ],
+            [
+              54.572,
+              -5,
+              -53.147
+            ],
+            [
+              54.516,
+              -5,
+              -53.549
+            ],
+            [
+              57.94,
+              -5,
+              -53.954
+            ],
+            [
+              58.56,
+              -5,
+              -48.948
+            ],
+            [
+              62.118,
+              -5,
+              -49.385
+            ],
+            [
+              65.066,
+              -5,
+              -25.158
+            ],
+            [
+              61.429,
+              -5,
+              -24.712
+            ],
+            [
+              62.003,
+              -5,
+              -20.214
+            ],
+            [
+              58.699,
+              -5,
+              -19.808
+            ],
+            [
+              58.14,
+              -5,
+              -24.308
+            ],
+            [
+              54.005,
+              -5,
+              -23.8
+            ],
+            [
+              51.52,
+              -5,
+              -43.806
+            ],
+            [
+              52.208,
+              -5,
+              -43.89
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B019",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "5b7b0377890a4d9fb5a6c7e959ccbc6b",
+        "name": null,
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": null,
+        "toll": "3"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:67ff030463fe438a8713847679163ed0",
+      "sourceId": "67ff030463fe438a8713847679163ed0",
+      "sourceRecord": 3,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              57.95,
+              -5,
+              -53.955
+            ],
+            [
+              61.509,
+              -5,
+              -54.392
+            ],
+            [
+              62.118,
+              -5,
+              -49.385
+            ],
+            [
+              58.56,
+              -5,
+              -48.948
+            ],
+            [
+              57.95,
+              -5,
+              -53.955
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B021",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "67ff030463fe438a8713847679163ed0",
+        "name": "不明",
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": "不明",
+        "toll": "3"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:9a790142121846cbbb59cfbba8b6cb16",
+      "sourceId": "9a790142121846cbbb59cfbba8b6cb16",
+      "sourceRecord": 9,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              36.13,
+              -5,
+              -0.885
+            ],
+            [
+              38.396,
+              -5,
+              -1.163
+            ],
+            [
+              38.746,
+              -5,
+              1.292
+            ],
+            [
+              37.795,
+              -5,
+              3.137
+            ],
+            [
+              36.929,
+              -5,
+              3.244
+            ],
+            [
+              36.13,
+              -5,
+              -0.885
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B001",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "9a790142121846cbbb59cfbba8b6cb16",
+        "name": null,
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": null,
+        "toll": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:a5e892c26afc43fc91f75b458130b7e6",
+      "sourceId": "a5e892c26afc43fc91f75b458130b7e6",
+      "sourceRecord": 6,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              61.441,
+              -5,
+              -24.713
+            ],
+            [
+              65.066,
+              -5,
+              -25.158
+            ],
+            [
+              65.614,
+              -5,
+              -20.657
+            ],
+            [
+              61.988,
+              -5,
+              -20.212
+            ],
+            [
+              61.441,
+              -5,
+              -24.713
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B021",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "a5e892c26afc43fc91f75b458130b7e6",
+        "name": "不明",
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": "不明",
+        "toll": "3"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:a9196486ebc04ba79f62d155856ceba4",
+      "sourceId": "a9196486ebc04ba79f62d155856ceba4",
+      "sourceRecord": 1,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              -72.179,
+              -5,
+              -55.998
+            ],
+            [
+              -72.319,
+              -5,
+              -33.391
+            ],
+            [
+              -81.241,
+              -5,
+              -35.17
+            ],
+            [
+              -80.316,
+              -5,
+              -57.665
+            ],
+            [
+              -72.179,
+              -5,
+              -55.998
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B029",
+        "floor_id": "8ddb424adb854b01b1f00580bbb3332a",
+        "id": "a9196486ebc04ba79f62d155856ceba4",
+        "name": null,
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": null,
+        "toll": "3"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:ad677030732440c9af1c27004f4c7bf4",
+      "sourceId": "ad677030732440c9af1c27004f4c7bf4",
+      "sourceRecord": 10,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              -81.241,
+              -5,
+              -35.17
+            ],
+            [
+              -66.716,
+              -5,
+              -32.283
+            ],
+            [
+              -58.025,
+              -5,
+              -33.377
+            ],
+            [
+              -57.78,
+              -5,
+              -31.361
+            ],
+            [
+              -56.957,
+              -5,
+              -31.462
+            ],
+            [
+              -56.756,
+              -5,
+              -29.81
+            ],
+            [
+              -60.489,
+              -5,
+              -29.385
+            ],
+            [
+              -60.497,
+              -5,
+              -29.195
+            ],
+            [
+              -63.979,
+              -5,
+              -29.339
+            ],
+            [
+              -65.608,
+              -5,
+              -29.404
+            ],
+            [
+              -65.963,
+              -5,
+              -21.501
+            ],
+            [
+              -67.253,
+              -5,
+              -19.76
+            ],
+            [
+              -67.411,
+              -5,
+              -11.681
+            ],
+            [
+              -74.915,
+              -5,
+              -15.106
+            ],
+            [
+              -77.753,
+              -5,
+              -15.666
+            ],
+            [
+              -77.154,
+              -5,
+              -18.73
+            ],
+            [
+              -80.138,
+              -5,
+              -19.318
+            ],
+            [
+              -83.108,
+              -5,
+              -19.904
+            ],
+            [
+              -83.708,
+              -5,
+              -16.835
+            ],
+            [
+              -85.476,
+              -5,
+              -17.197
+            ],
+            [
+              -84.634,
+              -5,
+              -21.476
+            ],
+            [
+              -81.241,
+              -5,
+              -35.17
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B005",
+        "floor_id": "8ddb424adb854b01b1f00580bbb3332a",
+        "id": "ad677030732440c9af1c27004f4c7bf4",
+        "name": null,
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": null,
+        "toll": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:d7f6d357418d42cabb2586f740e9f78f",
+      "sourceId": "d7f6d357418d42cabb2586f740e9f78f",
+      "sourceRecord": 4,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              51.396,
+              -5,
+              34.132
+            ],
+            [
+              40.364,
+              -5,
+              38.279
+            ],
+            [
+              36.852,
+              -5,
+              22.263
+            ],
+            [
+              37.084,
+              -5,
+              21.927
+            ],
+            [
+              50.991,
+              -5,
+              20.219
+            ],
+            [
+              51.006,
+              -5,
+              19.738
+            ],
+            [
+              52.768,
+              -5,
+              19.522
+            ],
+            [
+              51.396,
+              -5,
+              34.132
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B019",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "d7f6d357418d42cabb2586f740e9f78f",
+        "name": null,
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": null,
+        "toll": "3"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:e4188a32fa764add8eaaafbcb18c0bbd",
+      "sourceId": "e4188a32fa764add8eaaafbcb18c0bbd",
+      "sourceRecord": 2,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              -73.224,
+              -5,
+              -58.992
+            ],
+            [
+              -71.653,
+              -5,
+              -58.711
+            ],
+            [
+              -72.003,
+              -5,
+              -56.906
+            ],
+            [
+              -72.179,
+              -5,
+              -55.998
+            ],
+            [
+              -80.316,
+              -5,
+              -57.665
+            ],
+            [
+              -78.644,
+              -5,
+              -79.481
+            ],
+            [
+              -71.329,
+              -5,
+              -77.971
+            ],
+            [
+              -73.224,
+              -5,
+              -58.992
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B005",
+        "floor_id": "8ddb424adb854b01b1f00580bbb3332a",
+        "id": "e4188a32fa764add8eaaafbcb18c0bbd",
+        "name": null,
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": null,
+        "toll": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:Space:e913376eceb1493581d1a91859191bc2",
+      "sourceId": "e913376eceb1493581d1a91859191bc2",
+      "sourceRecord": 7,
+      "layer": "Space",
+      "geometry": {
+        "type": "Polygon",
+        "parts": [
+          [
+            [
+              27.965,
+              -5,
+              -71.354
+            ],
+            [
+              31.118,
+              -5,
+              -71.744
+            ],
+            [
+              31.007,
+              -5,
+              -72.627
+            ],
+            [
+              30.67,
+              -5,
+              -75.425
+            ],
+            [
+              30.328,
+              -5,
+              -78.24
+            ],
+            [
+              30.049,
+              -5,
+              -80.533
+            ],
+            [
+              29.958,
+              -5,
+              -81.283
+            ],
+            [
+              42.85,
+              -5,
+              -82.712
+            ],
+            [
+              43.697,
+              -5,
+              -75.749
+            ],
+            [
+              48.041,
+              -5,
+              -76.283
+            ],
+            [
+              50.29,
+              -5,
+              -76.559
+            ],
+            [
+              52.514,
+              -5,
+              -76.832
+            ],
+            [
+              55.887,
+              -5,
+              -77.246
+            ],
+            [
+              58.954,
+              -5,
+              -77.623
+            ],
+            [
+              59.452,
+              -5,
+              -72.497
+            ],
+            [
+              60.036,
+              -5,
+              -66.497
+            ],
+            [
+              50.922,
+              -5,
+              -65.378
+            ],
+            [
+              49.566,
+              -5,
+              -63.637
+            ],
+            [
+              50.251,
+              -5,
+              -58.006
+            ],
+            [
+              60.911,
+              -5,
+              -59.299
+            ],
+            [
+              61.509,
+              -5,
+              -54.392
+            ],
+            [
+              54.526,
+              -5,
+              -53.535
+            ],
+            [
+              54.573,
+              -5,
+              -53.147
+            ],
+            [
+              51.552,
+              -5,
+              -52.776
+            ],
+            [
+              52.451,
+              -5,
+              -45.392
+            ],
+            [
+              52.031,
+              -5,
+              -45.34
+            ],
+            [
+              52.208,
+              -5,
+              -43.89
+            ],
+            [
+              51.52,
+              -5,
+              -43.806
+            ],
+            [
+              54.005,
+              -5,
+              -23.8
+            ],
+            [
+              58.151,
+              -5,
+              -24.309
+            ],
+            [
+              58.699,
+              -5,
+              -19.808
+            ],
+            [
+              65.614,
+              -5,
+              -20.657
+            ],
+            [
+              66.865,
+              -5,
+              -10.253
+            ],
+            [
+              44.945,
+              -5,
+              -7.562
+            ],
+            [
+              45.793,
+              -5,
+              20.858
+            ],
+            [
+              40.009,
+              -5,
+              21.568
+            ],
+            [
+              39.195,
+              -5,
+              15.097
+            ],
+            [
+              40.626,
+              -5,
+              14.921
+            ],
+            [
+              40.3,
+              -5,
+              12.241
+            ],
+            [
+              38.773,
+              -5,
+              12.428
+            ],
+            [
+              38.736,
+              -5,
+              12.125
+            ],
+            [
+              38.632,
+              -5,
+              12.138
+            ],
+            [
+              37.976,
+              -5,
+              6.726
+            ],
+            [
+              36.39,
+              -5,
+              6.92
+            ],
+            [
+              34.093,
+              -5,
+              4.773
+            ],
+            [
+              37.062,
+              -5,
+              4.391
+            ],
+            [
+              36.929,
+              -5,
+              3.244
+            ],
+            [
+              37.795,
+              -5,
+              3.137
+            ],
+            [
+              38.746,
+              -5,
+              1.293
+            ],
+            [
+              38.368,
+              -5,
+              -1.399
+            ],
+            [
+              42.799,
+              -5,
+              -1.943
+            ],
+            [
+              44.191,
+              -5,
+              -2.614
+            ],
+            [
+              42.421,
+              -5,
+              -16.8
+            ],
+            [
+              45.392,
+              -5,
+              -17.165
+            ],
+            [
+              43.672,
+              -5,
+              -31.72
+            ],
+            [
+              40.768,
+              -5,
+              -31.371
+            ],
+            [
+              38.992,
+              -5,
+              -45.964
+            ],
+            [
+              25.686,
+              -5,
+              -44.296
+            ],
+            [
+              26.101,
+              -5,
+              -40.942
+            ],
+            [
+              14.649,
+              -5,
+              -39.519
+            ],
+            [
+              14.352,
+              -5,
+              -41.963
+            ],
+            [
+              13.927,
+              -5,
+              -42.335
+            ],
+            [
+              13.277,
+              -5,
+              -42.533
+            ],
+            [
+              12.174,
+              -5,
+              -42.5
+            ],
+            [
+              5.659,
+              -5,
+              -41.724
+            ],
+            [
+              -21.936,
+              -5,
+              -38.436
+            ],
+            [
+              -29.99,
+              -5,
+              -37.477
+            ],
+            [
+              -29.689,
+              -5,
+              -34.861
+            ],
+            [
+              -42.026,
+              -5,
+              -33.311
+            ],
+            [
+              -42.292,
+              -5,
+              -35.538
+            ],
+            [
+              -50.179,
+              -5,
+              -34.553
+            ],
+            [
+              -49.91,
+              -5,
+              -32.344
+            ],
+            [
+              -56.957,
+              -5,
+              -31.462
+            ],
+            [
+              -57.78,
+              -5,
+              -31.361
+            ],
+            [
+              -58.025,
+              -5,
+              -33.377
+            ],
+            [
+              -66.716,
+              -5,
+              -32.283
+            ],
+            [
+              -72.319,
+              -5,
+              -33.391
+            ],
+            [
+              -72.179,
+              -5,
+              -55.998
+            ],
+            [
+              -72.005,
+              -5,
+              -56.906
+            ],
+            [
+              -65.749,
+              -5,
+              -57.779
+            ],
+            [
+              -65.807,
+              -5,
+              -58.266
+            ],
+            [
+              15.296,
+              -5,
+              -68.357
+            ],
+            [
+              28.134,
+              -5,
+              -69.954
+            ],
+            [
+              27.969,
+              -5,
+              -71.303
+            ],
+            [
+              27.965,
+              -5,
+              -71.354
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "B029",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "e913376eceb1493581d1a91859191bc2",
+        "name": null,
+        "nonpublic": "2",
+        "restricted": "2",
+        "source": "1",
+        "suite": null,
+        "toll": "3"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:1d365c3bfa954d1d9694c6484e0716b0",
+      "sourceId": "1d365c3bfa954d1d9694c6484e0716b0",
+      "sourceRecord": 12,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              51.188,
+              -5,
+              -30.922
+            ],
+            [
+              50.183,
+              -5,
+              -38.964
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "032f2d0c1f214f5e844c4df44b10e8f7",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "1d365c3bfa954d1d9694c6484e0716b0",
+        "roof": "2",
+        "source": "1",
+        "startnode": "00a0841febd544c3b111f0816e3983c1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:1dff02a541f84b878131bbf98250ddc2",
+      "sourceId": "1dff02a541f84b878131bbf98250ddc2",
+      "sourceRecord": 5,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              45.043,
+              -5,
+              -1.174
+            ],
+            [
+              45.428,
+              -5,
+              -1.221
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": null,
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "1dff02a541f84b878131bbf98250ddc2",
+        "roof": "2",
+        "source": "1",
+        "startnode": "9692f40d2c6d4869b0ab5acec91ba266"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:235e8c19cdc04fd191197b22eab1a831",
+      "sourceId": "235e8c19cdc04fd191197b22eab1a831",
+      "sourceRecord": 15,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              48.582,
+              -5,
+              -6.215
+            ],
+            [
+              47.877,
+              -5,
+              -11.858
+            ],
+            [
+              53.487,
+              -5,
+              -12.523
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "c14d9fdc38dc4ef08c18d282c45c2a42",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "235e8c19cdc04fd191197b22eab1a831",
+        "roof": "2",
+        "source": "1",
+        "startnode": null
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:264616123bce4df6a857d2dcf6235fc1",
+      "sourceId": "264616123bce4df6a857d2dcf6235fc1",
+      "sourceRecord": 6,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              38.257,
+              -5,
+              -82.71
+            ],
+            [
+              40.133,
+              -5,
+              -66.873
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "4e14a5bb5945474594324efc269cd7de",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "264616123bce4df6a857d2dcf6235fc1",
+        "roof": "2",
+        "source": "1",
+        "startnode": null
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:48b836bc5765483fb1975a24bd434426",
+      "sourceId": "48b836bc5765483fb1975a24bd434426",
+      "sourceRecord": 7,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              40.133,
+              -5,
+              -66.873
+            ],
+            [
+              31.438,
+              -5,
+              -65.777
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": null,
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "48b836bc5765483fb1975a24bd434426",
+        "roof": "2",
+        "source": "1",
+        "startnode": "4e14a5bb5945474594324efc269cd7de"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:59cd7b1a0fae46c594be22f38e345253",
+      "sourceId": "59cd7b1a0fae46c594be22f38e345253",
+      "sourceRecord": 1,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              44.726,
+              -5,
+              -38.312
+            ],
+            [
+              50.183,
+              -5,
+              -38.964
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "032f2d0c1f214f5e844c4df44b10e8f7",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "59cd7b1a0fae46c594be22f38e345253",
+        "roof": "2",
+        "source": "1",
+        "startnode": "8330943e285348948b3dfcb62c7dfdbf"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:6674e3dab10e4f408d491168cdfcd133",
+      "sourceId": "6674e3dab10e4f408d491168cdfcd133",
+      "sourceRecord": 10,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              48.005,
+              -5,
+              -56.393
+            ],
+            [
+              46.594,
+              -5,
+              -67.687
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "8d74e3de23cf4c95a9cdeff5ffa51e31",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "6674e3dab10e4f408d491168cdfcd133",
+        "roof": "2",
+        "source": "1",
+        "startnode": "0925bedb70c34d22948d317eff28633f"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:6dff2838647e46a5b8b59a16836520d7",
+      "sourceId": "6dff2838647e46a5b8b59a16836520d7",
+      "sourceRecord": 3,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              57.681,
+              -5,
+              -54.805
+            ],
+            [
+              57.381,
+              -5,
+              -57.337
+            ],
+            [
+              48.005,
+              -5,
+              -56.393
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "0925bedb70c34d22948d317eff28633f",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "6dff2838647e46a5b8b59a16836520d7",
+        "roof": "2",
+        "source": "1",
+        "startnode": "863d64c30c414b60937bd56976649677"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:756e8a6bbb5740b58a6d28c4cefad4ed",
+      "sourceId": "756e8a6bbb5740b58a6d28c4cefad4ed",
+      "sourceRecord": 14,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              62.464,
+              -5,
+              -15.14
+            ],
+            [
+              62.655,
+              -5,
+              -13.612
+            ],
+            [
+              53.487,
+              -5,
+              -12.523
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "c14d9fdc38dc4ef08c18d282c45c2a42",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "756e8a6bbb5740b58a6d28c4cefad4ed",
+        "roof": "2",
+        "source": "1",
+        "startnode": "33953bab2c1c47f8b0f75dbdf2223bbc"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:a8734f7052194b63b576e63ffb4d5d3f",
+      "sourceId": "a8734f7052194b63b576e63ffb4d5d3f",
+      "sourceRecord": 9,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              46.594,
+              -5,
+              -67.687
+            ],
+            [
+              45.761,
+              -5,
+              -74.351
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "ec158ffc1a9f42dc9d15ba3ce27d051c",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "a8734f7052194b63b576e63ffb4d5d3f",
+        "roof": "2",
+        "source": "1",
+        "startnode": "8d74e3de23cf4c95a9cdeff5ffa51e31"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:ab0bb8727c6a48c192c8ded7372775f6",
+      "sourceId": "ab0bb8727c6a48c192c8ded7372775f6",
+      "sourceRecord": 2,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              45.505,
+              -5,
+              -30.243
+            ],
+            [
+              51.188,
+              -5,
+              -30.922
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "00a0841febd544c3b111f0816e3983c1",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "ab0bb8727c6a48c192c8ded7372775f6",
+        "roof": "2",
+        "source": "1",
+        "startnode": "3a744dd055f3422382738650d19dad1c"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:c876874e862d4f37840d092120585654",
+      "sourceId": "c876874e862d4f37840d092120585654",
+      "sourceRecord": 8,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              46.594,
+              -5,
+              -67.687
+            ],
+            [
+              40.133,
+              -5,
+              -66.873
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "4e14a5bb5945474594324efc269cd7de",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "c876874e862d4f37840d092120585654",
+        "roof": "2",
+        "source": "1",
+        "startnode": "8d74e3de23cf4c95a9cdeff5ffa51e31"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:d07e5714968f4fe1a047e9af82911c18",
+      "sourceId": "d07e5714968f4fe1a047e9af82911c18",
+      "sourceRecord": 11,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              50.183,
+              -5,
+              -38.964
+            ],
+            [
+              48.005,
+              -5,
+              -56.393
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "0925bedb70c34d22948d317eff28633f",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "d07e5714968f4fe1a047e9af82911c18",
+        "roof": "2",
+        "source": "1",
+        "startnode": "032f2d0c1f214f5e844c4df44b10e8f7"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:f8a270939ec2469cae19f851bf55efbd",
+      "sourceId": "f8a270939ec2469cae19f851bf55efbd",
+      "sourceRecord": 13,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              53.487,
+              -5,
+              -12.523
+            ],
+            [
+              51.188,
+              -5,
+              -30.922
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": "00a0841febd544c3b111f0816e3983c1",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "f8a270939ec2469cae19f851bf55efbd",
+        "roof": "2",
+        "source": "1",
+        "startnode": "c14d9fdc38dc4ef08c18d282c45c2a42"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Line:fe34767ebf6f4ac8a62f5b4ced09d939",
+      "sourceId": "fe34767ebf6f4ac8a62f5b4ced09d939",
+      "sourceRecord": 4,
+      "layer": "TWSI_Line",
+      "geometry": {
+        "type": "PolyLine",
+        "parts": [
+          [
+            [
+              38.688,
+              -5,
+              9.833
+            ],
+            [
+              45.734,
+              -5,
+              9.032
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "endnode": null,
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "fe34767ebf6f4ac8a62f5b4ced09d939",
+        "roof": "2",
+        "source": "1",
+        "startnode": null
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:00a0841febd544c3b111f0816e3983c1",
+      "sourceId": "00a0841febd544c3b111f0816e3983c1",
+      "sourceRecord": 11,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.188,
+          -5,
+          -30.922
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "00a0841febd544c3b111f0816e3983c1",
+        "lat": 35.6911778,
+        "lon": 139.701166,
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:032f2d0c1f214f5e844c4df44b10e8f7",
+      "sourceId": "032f2d0c1f214f5e844c4df44b10e8f7",
+      "sourceRecord": 10,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          50.183,
+          -5,
+          -38.964
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "032f2d0c1f214f5e844c4df44b10e8f7",
+        "lat": 35.69125,
+        "lon": 139.701155,
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:0925bedb70c34d22948d317eff28633f",
+      "sourceId": "0925bedb70c34d22948d317eff28633f",
+      "sourceRecord": 9,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          48.005,
+          -5,
+          -56.393
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "0925bedb70c34d22948d317eff28633f",
+        "lat": 35.6914066,
+        "lon": 139.701131,
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:33953bab2c1c47f8b0f75dbdf2223bbc",
+      "sourceId": "33953bab2c1c47f8b0f75dbdf2223bbc",
+      "sourceRecord": 2,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          62.464,
+          -5,
+          -15.14
+        ]
+      },
+      "properties": {
+        "category": "4",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "33953bab2c1c47f8b0f75dbdf2223bbc",
+        "lat": 35.691036,
+        "lon": 139.70129,
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:3a744dd055f3422382738650d19dad1c",
+      "sourceId": "3a744dd055f3422382738650d19dad1c",
+      "sourceRecord": 3,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.505,
+          -5,
+          -30.243
+        ]
+      },
+      "properties": {
+        "category": "6",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "3a744dd055f3422382738650d19dad1c",
+        "lat": 35.6911717,
+        "lon": 139.701103,
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:4e14a5bb5945474594324efc269cd7de",
+      "sourceId": "4e14a5bb5945474594324efc269cd7de",
+      "sourceRecord": 7,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          40.133,
+          -5,
+          -66.873
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "4e14a5bb5945474594324efc269cd7de",
+        "lat": 35.6915007,
+        "lon": 139.701043,
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:8330943e285348948b3dfcb62c7dfdbf",
+      "sourceId": "8330943e285348948b3dfcb62c7dfdbf",
+      "sourceRecord": 4,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.726,
+          -5,
+          -38.312
+        ]
+      },
+      "properties": {
+        "category": "6",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "8330943e285348948b3dfcb62c7dfdbf",
+        "lat": 35.6912442,
+        "lon": 139.701094,
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:863d64c30c414b60937bd56976649677",
+      "sourceId": "863d64c30c414b60937bd56976649677",
+      "sourceRecord": 5,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          57.681,
+          -5,
+          -54.805
+        ]
+      },
+      "properties": {
+        "category": "4",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "863d64c30c414b60937bd56976649677",
+        "lat": 35.6913923,
+        "lon": 139.701238,
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:8d74e3de23cf4c95a9cdeff5ffa51e31",
+      "sourceId": "8d74e3de23cf4c95a9cdeff5ffa51e31",
+      "sourceRecord": 8,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          46.594,
+          -5,
+          -67.687
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "8d74e3de23cf4c95a9cdeff5ffa51e31",
+        "lat": 35.691508,
+        "lon": 139.701115,
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:9692f40d2c6d4869b0ab5acec91ba266",
+      "sourceId": "9692f40d2c6d4869b0ab5acec91ba266",
+      "sourceRecord": 1,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.043,
+          -5,
+          -1.174
+        ]
+      },
+      "properties": {
+        "category": "6",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "9692f40d2c6d4869b0ab5acec91ba266",
+        "lat": 35.6909105,
+        "lon": 139.701098,
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:c14d9fdc38dc4ef08c18d282c45c2a42",
+      "sourceId": "c14d9fdc38dc4ef08c18d282c45c2a42",
+      "sourceRecord": 12,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          53.487,
+          -5,
+          -12.523
+        ]
+      },
+      "properties": {
+        "category": "1",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "c14d9fdc38dc4ef08c18d282c45c2a42",
+        "lat": 35.6910125,
+        "lon": 139.701191,
+        "name": null,
+        "source": "1"
+      }
+    },
+    {
+      "id": "jr-shinjuku-ticket-gates:B1:TWSI_Point:ec158ffc1a9f42dc9d15ba3ce27d051c",
+      "sourceId": "ec158ffc1a9f42dc9d15ba3ce27d051c",
+      "sourceRecord": 6,
+      "layer": "TWSI_Point",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          45.761,
+          -5,
+          -74.351
+        ]
+      },
+      "properties": {
+        "category": "4",
+        "floor_id": "804eea1f76e24a35ab7e34f12a5585ea",
+        "id": "ec158ffc1a9f42dc9d15ba3ce27d051c",
+        "lat": 35.6915679,
+        "lon": 139.701106,
+        "name": null,
+        "source": "1"
+      }
+    }
+  ],
+  "statistics": {
+    "importedFeatures": 48,
+    "skippedRecords": 0,
+    "malformedRecords": 0,
+    "bounds": {
+      "minX": -134.502,
+      "minY": -5,
+      "minZ": -82.716,
+      "maxX": 66.865,
+      "maxY": -5,
+      "maxZ": 87.054
+    }
+  }
+}
