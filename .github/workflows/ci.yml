@@ -81,15 +81,15 @@ jobs:
         run: npm run docker:build
 
       - name: Start container
-        run: docker run --detach --name shinjuku-indoor-navigator --publish 8080:8080 shinjuku-indoor-navigator:local
+        run: docker run --detach --name shinjuku-station-navigator --publish 8080:8080 shinjuku-station-navigator:local
 
       - name: Verify container
         run: npm run container:verify -- http://127.0.0.1:8080
 
       - name: Show container logs on failure
         if: failure()
-        run: docker logs shinjuku-indoor-navigator
+        run: docker logs shinjuku-station-navigator
 
       - name: Stop container
         if: always()
-        run: docker rm --force shinjuku-indoor-navigator
+        run: docker rm --force shinjuku-station-navigator
