@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This guide is the operational source of truth for working on Shinjuku Indoor Navigator. It covers a normal public clone, optional GIS regeneration, implementation boundaries, and the checks required before publishing changes.
+This guide is the operational source of truth for working on Shinjuku Station Navigator. It covers a normal public clone, optional GIS regeneration, implementation boundaries, and the checks required before publishing changes.
 
 For the current module layout and design boundaries, read [ARCHITECTURE.md](ARCHITECTURE.md).
 
@@ -119,6 +119,8 @@ Raw MLIT source materials are ignored local inputs and must never be committed.
 
 If a runtime asset is deployed, it must be generated, registered in the deterministic build contract, runtime-validated, and checked by release verification.
 
+SEO entry pages are generated with the Vite production build. The canonical production origin is `https://shinjuku.leotctam.com`; `/` is the English page and `/ja/` is the Japanese page. Keep their canonical URLs, reciprocal `hreflang` links, static fallback content, `robots.txt`, and `sitemap.xml` synchronized through `npm run release:verify`.
+
 ## Verification
 
 For ordinary code and documentation changes:
@@ -150,7 +152,7 @@ For production delivery:
 ```bash
 npm run build
 npm run docker:build
-docker run --rm -p 8080:8080 shinjuku-indoor-navigator:local
+docker run --rm -p 8080:8080 shinjuku-station-navigator:local
 npm run container:verify -- http://127.0.0.1:8080
 ```
 
@@ -159,7 +161,7 @@ The normal `build` command performs strict TypeScript checking and creates the V
 The Docker build stage gives Node a configurable 768 MB heap; the final Nginx stage does not inherit that setting. Override it only when the builder has enough memory:
 
 ```bash
-docker build --build-arg NODE_MAX_OLD_SPACE_SIZE=1024 --tag shinjuku-indoor-navigator:local .
+docker build --build-arg NODE_MAX_OLD_SPACE_SIZE=1024 --tag shinjuku-station-navigator:local .
 ```
 
 Vite cannot bundle this application reliably inside a hard 512 MB memory limit. For a 512 MB VPS, build and publish the image in CI and pull it on the VPS, or provide enough swap/build memory. Raising the heap above the machine's available RAM without swap can cause the operating system to terminate the build.

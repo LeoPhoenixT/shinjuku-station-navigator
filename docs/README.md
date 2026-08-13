@@ -1,6 +1,6 @@
 # Documentation
 
-This directory contains the durable public documentation for Shinjuku Indoor Navigator. Historical phase reports and completed implementation plans are intentionally omitted so the documentation stays focused on the current system.
+This directory contains the durable public documentation for Shinjuku Station Navigator. Historical phase reports and completed implementation plans are intentionally omitted so the documentation stays focused on the current system.
 
 ## Start here
 

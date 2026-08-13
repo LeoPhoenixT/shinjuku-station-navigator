@@ -2,7 +2,7 @@
 
 ## System shape
 
-Shinjuku Indoor Navigator is a static React application backed by deterministic, preprocessed MLIT indoor-map data. The browser does not parse shapefiles and the renderer does not invent walkable topology.
+Shinjuku Station Navigator is a static React application backed by deterministic, preprocessed MLIT indoor-map data. The browser does not parse shapefiles and the renderer does not invent walkable topology.
 
 ```text
 immutable MLIT shapefiles
@@ -78,7 +78,7 @@ Floor extrusion, wall height, floor spacing, opacity, and camera orientation nev
 
 ### Delivery
 
-- Vite produces relative asset URLs and hashed application bundles.
+- Vite produces relative asset URLs and hashed application bundles, plus crawlable English and Japanese entry pages at `/` and `/ja/` with localized canonical, social, and structured metadata.
 - `Dockerfile` performs a reproducible multi-stage build.
 - `deploy/nginx.conf` serves the SPA on port 8080 with fallback routing, compression, cache policies, a health endpoint, and security headers.
 - `scripts/verify-container.ts` checks health, SPA fallback, headers, processed data, and raw-source exclusion.
@@ -123,7 +123,7 @@ Accessibility is conservative:
 - `npm run test:e2e` — desktop and mobile Chromium journeys.
 - `npm run data:inspect` — source inventory evidence; requires the local raw package.
 - `npm run data:check` — byte-identical generated-output verification; requires the local raw package.
-- `npm run release:verify` — deployed asset, size, performance, schema, and raw-file checks.
+- `npm run release:verify` — deployed asset, SEO metadata and discovery files, size, performance, schema, and raw-file checks.
 - `npm run audit:prod` — production dependency vulnerability gate.
 - `npm run docker:build` and `npm run container:verify` — production server verification.
 

@@ -1,6 +1,6 @@
 # Shinjuku Station Navigator
 
-A 3D indoor navigation and pathfinding application for the MLIT Shinjuku Station indoor map dataset.
+A 3D station navigation and pathfinding application for the MLIT Shinjuku Station indoor map dataset.
 
 ## Current capabilities
 
@@ -12,6 +12,7 @@ A 3D indoor navigation and pathfinding application for the MLIT Shinjuku Station
 - Shareable route URLs and production-artifact verification
 - Route summaries with turn and floor-transition instructions
 - Reproducible Docker/Nginx delivery with security and health checks
+- Crawlable English and Japanese entry pages with localized search and social metadata
 
 ## Stack
 
@@ -46,7 +47,7 @@ npm run audit:prod
 
 ```bash
 npm run docker:build
-docker run --rm -p 8080:8080 shinjuku-indoor-navigator:local
+docker run --rm -p 8080:8080 shinjuku-station-navigator:local
 ```
 
 The application is served at `http://localhost:8080` and exposes `GET /healthz`. In another terminal, run `npm run container:verify` to check the SPA fallback, processed data, security headers, and raw-source exclusion.

@@ -1,5 +1,5 @@
 export const en = {
-  'app.title': 'Shinjuku Indoor Navigator',
+  'app.title': 'Shinjuku Station Navigator',
   'app.viewerLabel': 'Shinjuku multi-floor indoor map',
   'app.loadingRenderer': 'Loading map renderer…',
   'app.loadingData': 'Loading and validating Shinjuku map data…',

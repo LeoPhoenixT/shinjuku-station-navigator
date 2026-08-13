@@ -4,6 +4,7 @@ import { App } from './app/App';
 import { LocaleProvider } from './i18n/LocaleProvider.js';
 
 const rootElement = document.getElementById('root');
+const initialLocale = window.location.pathname.replace(/\\/g, '/').replace(/\/+$/, '') === '/ja' ? 'ja' : undefined;
 
 if (!rootElement) {
   throw new Error('Root element #root was not found');
@@ -11,6 +12,6 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <LocaleProvider><App /></LocaleProvider>
+    <LocaleProvider initialLocale={initialLocale}><App /></LocaleProvider>
   </StrictMode>,
 );
