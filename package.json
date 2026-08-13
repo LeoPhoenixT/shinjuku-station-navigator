@@ -1,5 +1,5 @@
 {
-  "name": "shinjuku-indoor-navigator",
+  "name": "shinjuku-station-navigator",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -17,7 +17,7 @@
     "test:e2e": "npm run build && playwright test",
     "test:watch": "vitest",
     "audit:prod": "npm audit --omit=dev --audit-level=high",
-    "docker:build": "docker build --tag shinjuku-indoor-navigator:local .",
+    "docker:build": "docker build --tag shinjuku-station-navigator:local .",
     "container:verify": "tsc -p tsconfig.scripts.json && node dist-scripts/scripts/verify-container.js",
     "data:inspect": "tsc -p tsconfig.scripts.json && node dist-scripts/scripts/inspect-dataset.js",
     "data:profile": "tsc -p tsconfig.scripts.json && node dist-scripts/scripts/profile-map-semantics.js",

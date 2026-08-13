@@ -35,7 +35,9 @@ export async function verifyContainer(baseUrl = DEFAULT_BASE_URL): Promise<void>
 
   const app = await waitForResponse(`${normalized}/a/deep/spa/path`);
   const html = await app.text();
-  if (!html.includes('<div id="root"></div>')) throw new Error('SPA fallback did not return the application shell.');
+  if (!html.includes('<div id="root">') || !html.includes('<h1>Shinjuku Station Navigator</h1>')) {
+    throw new Error('SPA fallback did not return the crawlable application shell.');
+  }
   requireHeader(app, 'content-security-policy', /default-src 'none'/);
   requireHeader(app, 'x-content-type-options', /^nosniff$/);
   requireHeader(app, 'x-frame-options', /^DENY$/);

@@ -5,15 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="3D indoor navigation and pathfinding for Shinjuku Station"
+      content="Plan walking routes through Shinjuku Station with a 3D map, accessible route profiles, and searchable facilities."
     />
+    <link rel="canonical" href="https://shinjuku.leotctam.com/" />
+    <link rel="alternate" hreflang="en" href="https://shinjuku.leotctam.com/" />
+    <link rel="alternate" hreflang="ja" href="https://shinjuku.leotctam.com/ja/" />
+    <link rel="alternate" hreflang="x-default" href="https://shinjuku.leotctam.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Shinjuku Station Navigator" />
+    <meta property="og:title" content="Shinjuku Station Navigator" />
+    <meta property="og:description" content="Plan walking routes through Shinjuku Station with a 3D map, accessible route profiles, and searchable facilities." />
+    <meta property="og:url" content="https://shinjuku.leotctam.com/" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Shinjuku Station Navigator" />
+    <meta name="twitter:description" content="Plan walking routes through Shinjuku Station with a 3D map, accessible route profiles, and searchable facilities." />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-    <title>Shinjuku Indoor Navigator</title>
+    <title>Shinjuku Station Navigator</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Shinjuku Station Navigator",
+        "applicationCategory": "NavigationApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "en",
+        "url": "https://shinjuku.leotctam.com/",
+        "description": "Plan walking routes through Shinjuku Station with a 3D map, accessible route profiles, and searchable facilities."
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main>
+        <h1>Shinjuku Station Navigator</h1>
+        <p>Plan walking routes through Shinjuku Station with a 3D indoor map.</p>
+        <section>
+          <h2>Accessible station routes</h2>
+          <p>Search ticket gates, platforms, exits, and facilities, then choose a route that is shortest, wheelchair accessible, avoids stairs, or prefers elevators.</p>
+        </section>
+        <p>This interactive map needs JavaScript to calculate and display routes.</p>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

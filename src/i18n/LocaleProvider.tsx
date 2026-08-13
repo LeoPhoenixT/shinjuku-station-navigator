@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react
 import { isLocale, translate, type Locale, type TranslationKey, type TranslationVariables } from './types.js';
 import { LocaleContext } from './context.js';
 import { DEFAULT_LOCALE, LOCALE_STORAGE_KEY } from './config.js';
+import { applyDocumentMetadata } from '../seo/metadata.js';
 
 function readSavedLocale(): Locale {
   if (typeof window === 'undefined') return DEFAULT_LOCALE;
@@ -35,6 +36,7 @@ export function LocaleProvider({ children, initialLocale }: { children: ReactNod
 
   useEffect(() => {
     document.documentElement.lang = locale;
+    applyDocumentMetadata(locale);
   }, [locale]);
 
   const value = useMemo(() => ({ locale, setLocale, t }), [locale, setLocale, t]);

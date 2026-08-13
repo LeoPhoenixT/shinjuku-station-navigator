@@ -11,6 +11,7 @@ const distRoot = 'dist';
 const rawExtensions = new Set(['.shp', '.shx', '.dbf', '.prj', '.cpg']);
 const MAX_PROCESSED_BYTES = 10_000_000;
 const MAX_JAVASCRIPT_CHUNK_BYTES = 1_000_000;
+const SITE_ORIGIN = 'https://shinjuku.leotctam.com';
 const EXPECTED_PROCESSED_ASSETS = [
   'jr-shinjuku-ticket-gates-b1-official-network.json',
   'jr-shinjuku-ticket-gates-b1.json',
@@ -24,6 +25,11 @@ function filesUnder(root: string): string[] {
   return readdirSync(root, { recursive: true, withFileTypes: true }).filter((entry) => entry.isFile()).map((entry) => path.join(entry.parentPath, entry.name)).sort();
 }
 
+function requireHtml(html: string, file: string, required: string[]): void {
+  const missing = required.filter((value) => !html.includes(value));
+  if (missing.length > 0) throw new Error(`SEO markup is missing from ${file}:\n${missing.join('\n')}`);
+}
+
 export function verifyDeployment(): void {
   const files = filesUnder(distRoot);
   const rawFiles = files.filter((file) => rawExtensions.has(path.extname(file).toLowerCase()));
@@ -32,6 +38,32 @@ export function verifyDeployment(): void {
   const html = readFileSync(path.join(distRoot, 'index.html'), 'utf8');
   if (/\b(?:src|href)="\/(?!\/)/.test(html)) throw new Error('Production HTML contains a root-absolute asset URL and will not be repository-subpath safe.');
   if (!html.includes('./assets/')) throw new Error('Production HTML does not contain repository-relative bundled assets.');
+  const japaneseHtml = readFileSync(path.join(distRoot, 'ja', 'index.html'), 'utf8');
+  requireHtml(html, 'index.html', [
+    '<html lang="en">',
+    `<link rel="canonical" href="${SITE_ORIGIN}/" />`,
+    `<link rel="alternate" hreflang="ja" href="${SITE_ORIGIN}/ja/" />`,
+    '<meta property="og:type" content="website" />',
+    '<meta name="twitter:card" content="summary" />',
+    '"@type": "WebApplication"',
+    '<h1>Shinjuku Station Navigator</h1>',
+  ]);
+  requireHtml(japaneseHtml, 'ja/index.html', [
+    '<html lang="ja">',
+    `<link rel="canonical" href="${SITE_ORIGIN}/ja/" />`,
+    `<link rel="alternate" hreflang="en" href="${SITE_ORIGIN}/" />`,
+    '<meta property="og:locale" content="ja_JP" />',
+    '<h1>新宿駅ナビゲーター</h1>',
+    '../assets/',
+  ]);
+  if (japaneseHtml.includes('/ja/ja/')) throw new Error('Japanese SEO page contains a duplicated locale path.');
+
+  const robots = readFileSync(path.join(distRoot, 'robots.txt'), 'utf8');
+  if (!robots.includes('User-agent: *') || !robots.includes(`Sitemap: ${SITE_ORIGIN}/sitemap.xml`)) throw new Error('robots.txt does not allow crawling and advertise the sitemap.');
+  const sitemap = readFileSync(path.join(distRoot, 'sitemap.xml'), 'utf8');
+  for (const url of [`${SITE_ORIGIN}/`, `${SITE_ORIGIN}/ja/`]) {
+    if (!sitemap.includes(`<loc>${url}</loc>`)) throw new Error(`sitemap.xml is missing ${url}.`);
+  }
 
   const dataFiles = files.filter((file) => file.includes(`${path.sep}data${path.sep}processed${path.sep}`));
   const dataFileNames = new Set(dataFiles.map((file) => path.basename(file)));

@@ -18,7 +18,7 @@ describe('App', () => {
   it('renders the compact map-first shell and floor viewer loading state', () => {
     render(<App />);
 
-    expect(screen.getByRole('heading', { name: 'Shinjuku Indoor Navigator' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Shinjuku Station Navigator' })).toBeInTheDocument();
     expect(screen.queryByText('About & data')).not.toBeInTheDocument();
     expect(screen.queryByText(/search named places, route across/i)).not.toBeInTheDocument();
     expect(screen.getByText(/modified for this application/)).toBeInTheDocument();
