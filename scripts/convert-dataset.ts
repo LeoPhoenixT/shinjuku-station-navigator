@@ -3,12 +3,11 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { floorElevationMeters, normalizeFloorId } from '../src/data/floors.js';
 import { lonLatToLocalMeters, SHINJUKU_LOCAL_ORIGIN } from '../src/data/coordinates.js';
+import type { LayerName as ProcessedLayerName, ProcessedDataset, ProcessedFeature, ProcessedGeometry } from '../src/types/processed.js';
 import { readDbf, readShp, type ShapeGeometry } from './data/shapefile.js';
 import { isMainModule, portablePath } from './data/is-main-module.js';
 
-type LayerName = 'Floor' | 'Space' | 'Opening' | 'Facility' | 'Fixture' | 'TWSI_Line' | 'TWSI_Point';
-interface ProcessedFeature { id: string; sourceId: string; sourceRecord: number; layer: LayerName; geometry: unknown; properties: Record<string, unknown> }
-interface ProcessedDataset { schemaVersion: 1; importerVersion: string; generatedAt: string; source: { facilityId: string; facilityName: string; floorId: string; sourceDirectory: string; checksums: Record<string, string> }; coordinateSystem: { sourceCrs: string; origin: typeof SHINJUKU_LOCAL_ORIGIN; units: 'meters'; axes: { x: string; y: string; z: string } }; layers: Record<string, { featureCount: number; fields: string[] }>; features: ProcessedFeature[]; statistics: { importedFeatures: number; skippedRecords: number; malformedRecords: number; bounds: { minX: number; minY: number; minZ: number; maxX: number; maxY: number; maxZ: number } } }
+type LayerName = Exclude<ProcessedLayerName, 'Drawing'>;
 
 const ROOT = 'shapefile/新宿駅周辺屋内地図オープンデータ（Shapefile）/1.JR新宿駅改札/B1';
 const OUTPUT = 'public/data/processed/jr-shinjuku-ticket-gates-b1.json';
@@ -18,7 +17,7 @@ function sha256(filePath: string): string { return createHash('sha256').update(r
 function stableProperties(properties: Record<string, unknown>): Record<string, unknown> { return Object.fromEntries(Object.entries(properties).sort(([a], [b]) => a.localeCompare(b))); }
 function sourceId(properties: Record<string, unknown>, fallback: number): string { return String(properties.id ?? `record-${fallback}`); }
 function localize(point: [number, number], floorId: string): [number, number, number] { const p = lonLatToLocalMeters({ lon: point[0], lat: point[1] }, SHINJUKU_LOCAL_ORIGIN, floorElevationMeters(floorId)); return [p.x, p.y, p.z]; }
-function convertGeometry(geometry: ShapeGeometry, floorId: string): unknown {
+function convertGeometry(geometry: ShapeGeometry, floorId: string): ProcessedGeometry {
   if (geometry.type === 'Point') return { type: 'Point', coordinates: localize(geometry.coordinates, floorId) };
   return { type: geometry.type, parts: geometry.parts.map((part) => part.map((point) => localize(point, floorId))) };
 }
@@ -39,7 +38,7 @@ export function convertDataset(output = OUTPUT, sourceRoot = ROOT): ProcessedDat
   const floorId = normalizeFloorId('B1');
   const stats = { importedFeatures: 0, skippedRecords: 0, malformedRecords: 0, bounds: { minX: Infinity, minY: Infinity, minZ: Infinity, maxX: -Infinity, maxY: -Infinity, maxZ: -Infinity } };
   const features: ProcessedFeature[] = [];
-  const layers: ProcessedDataset['layers'] = {};
+  const layers: NonNullable<ProcessedDataset['layers']> = {};
   const checksums: Record<string, string> = {};
   const sourceCrs = readFileSync(path.join(sourceRoot, 'JrSin_B1_Floor.prj'), 'utf8').trim();
   for (const layer of LAYERS) {
