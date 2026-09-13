@@ -13,10 +13,10 @@ export function partitionVisibleFloors(
   routeFloorIds: string[],
   floorViewMode: FloorViewMode,
 ): { activeFloors: string[]; contextFloors: string[] } {
-  const emphasizedFloors = routeFloorIds.length > 0
-    ? visibleFloors.filter((floorId) => routeFloorIds.includes(floorId))
-    : floorViewMode === 'focused'
-      ? visibleFloors.filter((floorId) => floorId === activeFloor)
+  const emphasizedFloors = floorViewMode === 'focused'
+    ? visibleFloors.filter((floorId) => floorId === activeFloor)
+    : floorViewMode === 'route'
+      ? visibleFloors.filter((floorId) => routeFloorIds.includes(floorId))
       : visibleFloors;
   const emphasized = new Set(emphasizedFloors);
   return {

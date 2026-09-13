@@ -14,31 +14,101 @@ export function normalizePlaceQuery(value: string): string {
   return value.normalize('NFKC').toLocaleLowerCase('ja').replaceAll(/\s+/g, ' ').trim();
 }
 
-export function searchPlaces(places: NamedPlaceRecord[], query: string, locale: Locale = 'en', translations?: PlaceTranslationsDataset): NamedPlaceRecord[] {
-  void locale; // Display locale intentionally does not change the bilingual index.
-  const normalized = normalizePlaceQuery(query);
-  const routable = places.filter(({ routable }) => routable);
-  if (!normalized) return routable;
-  return routable.filter((place) => {
-    const translatedPlace = placeTranslation(place.id, translations);
-    const translatedArea = areaTranslation(place.sourceFacility, translations);
-    return [
-      place.name,
-      translatedPlace?.ja,
-      translatedPlace?.en,
-      ...(translatedPlace?.aliasesJa ?? []),
-      ...(translatedPlace?.aliasesEn ?? []),
-      categoryDisplayName(place.category, 'en'),
-      categoryDisplayName(place.category, 'ja'),
-      place.sourceFacility,
-      translatedArea?.ja,
-      translatedArea?.en,
-      ...(translatedArea?.aliasesJa ?? []),
-      ...(translatedArea?.aliasesEn ?? []),
-      ...(place.aliases ?? []),
-    ].filter((value): value is string => Boolean(value))
-      .some((value) => normalizePlaceQuery(value).includes(normalized));
+function searchTerms(place: NamedPlaceRecord, translations?: PlaceTranslationsDataset): string[] {
+  const translatedPlace = placeTranslation(place.id, translations);
+  const translatedArea = areaTranslation(place.sourceFacility, translations);
+  return [
+    place.name,
+    translatedPlace?.ja,
+    translatedPlace?.en,
+    ...(translatedPlace?.aliasesJa ?? []),
+    ...(translatedPlace?.aliasesEn ?? []),
+    categoryDisplayName(place.category, 'en'),
+    categoryDisplayName(place.category, 'ja'),
+    place.sourceFacility,
+    translatedArea?.ja,
+    translatedArea?.en,
+    ...(translatedArea?.aliasesJa ?? []),
+    ...(translatedArea?.aliasesEn ?? []),
+    ...(place.aliases ?? []),
+  ].filter((value): value is string => Boolean(value));
+}
+
+export interface PlaceSearchIndexStatistics {
+  placeCount: number;
+  routablePlaceCount: number;
+  indexedTermCount: number;
+  /** Every substring query visits this many pre-normalized documents. */
+  queryCandidateCount: number;
+}
+
+export interface PlaceSearchIndex {
+  readonly statistics: PlaceSearchIndexStatistics;
+  readonly categories: readonly NamedPlaceRecord['category'][];
+  indexOf(id: string): number | undefined;
+  findById(id: string): NamedPlaceRecord | undefined;
+  search(query: string, locale?: Locale): NamedPlaceRecord[];
+  findByDisplayName(value: string, locale?: Locale): NamedPlaceRecord | undefined;
+}
+
+export interface PlaceIdIndex {
+  indexOf(id: string): number | undefined;
+}
+
+interface IndexedPlace {
+  place: NamedPlaceRecord;
+  normalizedTerms: readonly string[];
+}
+
+export function buildPlaceIdIndex(places: readonly NamedPlaceRecord[]): PlaceIdIndex {
+  const indexes = new Map(places.map(({ id }, index) => [id, index]));
+  return Object.freeze({ indexOf: (id: string) => indexes.get(id) });
+}
+
+export function buildPlaceSearchIndex(places: readonly NamedPlaceRecord[], translations?: PlaceTranslationsDataset): PlaceSearchIndex {
+  const idIndex = buildPlaceIdIndex(places);
+  const entries: IndexedPlace[] = [];
+  const displayNames = new Map<Locale, Map<string, NamedPlaceRecord>>([
+    ['en', new Map()],
+    ['ja', new Map()],
+  ]);
+  let indexedTermCount = 0;
+  for (const place of places) {
+    for (const locale of ['en', 'ja'] as const) {
+      const displayName = placeDisplayName(place, locale, translations);
+      const names = displayNames.get(locale)!;
+      if (!names.has(displayName)) names.set(displayName, place);
+    }
+    if (!place.routable) continue;
+    const normalizedTerms = searchTerms(place, translations).map(normalizePlaceQuery);
+    indexedTermCount += normalizedTerms.length;
+    entries.push({ place, normalizedTerms });
+  }
+  const statistics = Object.freeze({ placeCount: places.length, routablePlaceCount: entries.length, indexedTermCount, queryCandidateCount: entries.length });
+  const categories = Object.freeze([...new Set(entries.map(({ place }) => place.category))]);
+
+  return Object.freeze({
+    statistics,
+    categories,
+    indexOf: idIndex.indexOf,
+    findById(id: string): NamedPlaceRecord | undefined {
+      const index = idIndex.indexOf(id);
+      return index === undefined ? undefined : places[index];
+    },
+    search(query: string, locale: Locale = 'en'): NamedPlaceRecord[] {
+      void locale; // Display locale intentionally does not change the bilingual index.
+      const normalized = normalizePlaceQuery(query);
+      if (!normalized) return entries.map(({ place }) => place);
+      return entries.filter(({ normalizedTerms }) => normalizedTerms.some((term) => term.includes(normalized))).map(({ place }) => place);
+    },
+    findByDisplayName(value: string, locale: Locale = 'en'): NamedPlaceRecord | undefined {
+      return displayNames.get(locale)?.get(value);
+    },
   });
+}
+
+export function searchPlaces(places: NamedPlaceRecord[], query: string, locale: Locale = 'en', translations?: PlaceTranslationsDataset): NamedPlaceRecord[] {
+  return buildPlaceSearchIndex(places, translations).search(query, locale);
 }
 
 export interface PlaceSearchGroup {
@@ -63,7 +133,7 @@ export function groupPlacesByFloorArea(places: NamedPlaceRecord[], locale: Local
 }
 
 export function findPlaceByDisplayName(places: NamedPlaceRecord[], value: string, locale: Locale = 'en', translations?: PlaceTranslationsDataset): NamedPlaceRecord | undefined {
-  return places.find((place) => placeDisplayName(place, locale, translations) === value);
+  return buildPlaceSearchIndex(places, translations).findByDisplayName(value, locale);
 }
 
 export function findNearestRoutablePlace(

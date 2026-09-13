@@ -6,7 +6,7 @@ import { lonLatToLocalMeters, SHINJUKU_LOCAL_ORIGIN } from '../src/data/coordina
 import { parseOfficialNetwork, type NamedPlaceRecord, type NamedPlacesDataset, type OfficialNetworkDataset } from '../src/schema/processed.js';
 import { parseFloorDataset } from '../src/schema/processed.js';
 import { parseReviewedCustomNetwork, type ReviewedCustomNetworkDataset } from '../src/schema/reviewedCustomNetwork.js';
-import { resolveIndoorMapCategory } from '../src/data/indoorMapCategories.js';
+import { resolveFacilityNamedPlacePolicy, resolveIndoorMapCategory } from '../src/data/indoorMapCategories.js';
 import { buildFacilityMarkerCandidates } from '../src/map/facilityMarkers.js';
 import { isMainModule, portablePath } from './data/is-main-module.js';
 
@@ -17,12 +17,6 @@ const NETWORK = 'public/data/processed/jr-shinjuku-ticket-gates-b1-official-netw
 const OUTPUT = 'public/data/processed/shinjuku-b1-named-places.json';
 const FULL_MAP = 'public/data/processed/shinjuku-full-map.json';
 const REVIEWED_NETWORK = 'public/data/processed/shinjuku-reviewed-custom-network.json';
-
-const FACILITY_PLACE_CATEGORIES: Readonly<Record<string, NamedPlaceRecord['category']>> = {
-  F001: 'toilet', F002: 'toilet', F005: 'toilet', F011: 'stairs', F012: 'elevator',
-  F013: 'escalator', F014: 'slope', F017: 'entrance', F018: 'information', F020: 'waiting-room',
-  F021: 'nursing-room', F030: 'atm', F031: 'locker', F101: 'ticket-office', F108: 'exit',
-};
 
 function walk(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -254,8 +248,17 @@ export function buildNamedPlaces(networkInput = NETWORK, output = OUTPUT, mapInp
   });
 
   const fullMap = parseFloorDataset(JSON.parse(readFileSync(mapInput, 'utf8')));
-  const facilityCandidates = buildFacilityMarkerCandidates(fullMap.features, network.nodes.map((node) => ({ id: node.id, floorId: node.floorId, x: node.coordinates[0], z: node.coordinates[2] })))
-    .filter((candidate) => candidate.status === 'public' && FACILITY_PLACE_CATEGORIES[candidate.categoryCode])
+  const allFacilityCandidates = buildFacilityMarkerCandidates(fullMap.features, network.nodes.map((node) => ({ id: node.id, floorId: node.floorId, x: node.coordinates[0], z: node.coordinates[2] })));
+  const facilityPolicyByCandidateId = new Map<string, ReturnType<typeof resolveFacilityNamedPlacePolicy>>();
+  for (const candidate of allFacilityCandidates) {
+    const definition = resolveIndoorMapCategory('Facility', candidate.categoryCode);
+    if (!definition.known || !definition.destinationEligible) continue;
+    const policy = resolveFacilityNamedPlacePolicy(candidate.categoryCode);
+    if (!policy) throw new Error(`Destination-eligible Facility category ${candidate.categoryCode} has no named-place policy.`);
+    facilityPolicyByCandidateId.set(candidate.id, policy);
+  }
+  const facilityCandidates = allFacilityCandidates
+    .filter((candidate) => candidate.status === 'public' && facilityPolicyByCandidateId.get(candidate.id)?.namedPlaceCategory)
     .sort((a, b) => a.sourceFacility.localeCompare(b.sourceFacility, 'ja') || a.floorId.localeCompare(b.floorId) || a.categoryCode.localeCompare(b.categoryCode) || a.id.localeCompare(b.id));
   const groupTotals = new Map<string, number>();
   for (const candidate of facilityCandidates) {
@@ -267,7 +270,8 @@ export function buildNamedPlaces(networkInput = NETWORK, output = OUTPUT, mapInp
     const node = network.nodes.find(({ id }) => id === candidate.alignmentNodeId);
     if (!node || candidate.alignmentDistanceMeters === undefined) continue;
     const definition = resolveIndoorMapCategory('Facility', candidate.categoryCode);
-    if (!definition.known || !definition.destinationEligible) continue;
+    const policy = facilityPolicyByCandidateId.get(candidate.id);
+    if (!definition.known || !policy?.namedPlaceCategory) continue;
     const key = `${candidate.sourceFacility}\u0000${candidate.floorId}\u0000${candidate.categoryCode}`;
     const index = (groupIndexes.get(key) ?? 0) + 1;
     groupIndexes.set(key, index);
@@ -283,7 +287,7 @@ export function buildNamedPlaces(networkInput = NETWORK, output = OUTPUT, mapInp
       sourceCategoryCode: candidate.categoryCode,
       name,
       aliases: candidate.sourceName ? [definition.nameJa, definition.nameEn] : [definition.nameEn],
-      category: FACILITY_PLACE_CATEGORIES[candidate.categoryCode],
+      category: policy.namedPlaceCategory,
       nameKind: candidate.sourceName ? 'source' : 'generated-category',
       floorId: candidate.floorId,
       coordinates: candidate.coordinates,

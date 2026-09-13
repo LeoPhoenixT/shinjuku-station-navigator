@@ -12,6 +12,46 @@ function copy<T>(value: T): T {
   return structuredClone(value);
 }
 
+type NamedPlacesFixture = {
+  places: Array<{
+    name: string;
+    routable: boolean;
+    access: {
+      confidence: 'high' | 'medium' | 'low';
+      reviewStatus: 'automatic' | 'reviewed';
+      componentId: number;
+    };
+  }>;
+  statistics: {
+    placeCount: number;
+    routablePlaceCount: number;
+    uniqueNameCount: number;
+    attachmentConfidenceCounts: Record<string, number>;
+    componentCounts: Record<string, number>;
+  };
+};
+
+function namedPlacesFixture(): NamedPlacesFixture {
+  return copy(placesValue) as NamedPlacesFixture;
+}
+
+function synchronizePlaceStatistics(dataset: NamedPlacesFixture): void {
+  const attachmentConfidenceCounts = { high: 0, medium: 0, low: 0 };
+  const componentCounts: Record<string, number> = {};
+  for (const place of dataset.places) {
+    attachmentConfidenceCounts[place.access.confidence] += 1;
+    const componentId = String(place.access.componentId);
+    componentCounts[componentId] = (componentCounts[componentId] ?? 0) + 1;
+  }
+  dataset.statistics = {
+    placeCount: dataset.places.length,
+    routablePlaceCount: dataset.places.filter(({ routable }) => routable).length,
+    uniqueNameCount: new Set(dataset.places.map(({ name }) => name)).size,
+    attachmentConfidenceCounts,
+    componentCounts,
+  };
+}
+
 describe('processed data runtime schemas', () => {
   it('accepts the checked-in network and place datasets', () => {
     const network = parseOfficialNetwork(networkValue);
@@ -74,5 +114,54 @@ describe('processed data runtime schemas', () => {
     const invalidPlaces = copy(placesValue) as { places: Array<{ access: { nodeId: string } }> };
     invalidPlaces.places[0].access.nodeId = 'missing-node';
     expect(() => parseNamedPlaces(invalidPlaces, network, reviewedNetwork)).toThrow('refers to missing node');
+  });
+
+  it('rejects routable automatic low-confidence attachments but permits non-routable and reviewed low attachments', () => {
+    const network = parseOfficialNetwork(networkValue);
+    const reviewedNetwork = parseReviewedCustomNetwork(reviewedNetworkValue, network);
+
+    const automaticRoutable = namedPlacesFixture();
+    automaticRoutable.places[0].access.confidence = 'low';
+    automaticRoutable.places[0].access.reviewStatus = 'automatic';
+    automaticRoutable.places[0].routable = true;
+    synchronizePlaceStatistics(automaticRoutable);
+    expect(() => parseNamedPlaces(automaticRoutable, network, reviewedNetwork)).toThrow(/automatic low-confidence.*routable/i);
+
+    const automaticNonRoutable = namedPlacesFixture();
+    automaticNonRoutable.places[0].access.confidence = 'low';
+    automaticNonRoutable.places[0].access.reviewStatus = 'automatic';
+    automaticNonRoutable.places[0].routable = false;
+    synchronizePlaceStatistics(automaticNonRoutable);
+    expect(parseNamedPlaces(automaticNonRoutable, network, reviewedNetwork).places[0].routable).toBe(false);
+
+    // docs/DATA_MODEL.md states that low-confidence attachments are excluded until reviewed.
+    const reviewedRoutable = namedPlacesFixture();
+    reviewedRoutable.places[0].access.confidence = 'low';
+    reviewedRoutable.places[0].access.reviewStatus = 'reviewed';
+    reviewedRoutable.places[0].routable = true;
+    synchronizePlaceStatistics(reviewedRoutable);
+    expect(parseNamedPlaces(reviewedRoutable, network, reviewedNetwork).places[0].routable).toBe(true);
+  });
+
+  it('rejects mismatched named-place statistics and invalid count-record keys or values', () => {
+    const network = parseOfficialNetwork(networkValue);
+    const reviewedNetwork = parseReviewedCustomNetwork(reviewedNetworkValue, network);
+    const expectRejected = (mutate: (dataset: NamedPlacesFixture) => void) => {
+      const dataset = namedPlacesFixture();
+      mutate(dataset);
+      expect(() => parseNamedPlaces(dataset, network, reviewedNetwork)).toThrow();
+    };
+
+    expectRejected((dataset) => { dataset.statistics.placeCount += 1; });
+    expectRejected((dataset) => { dataset.statistics.routablePlaceCount += 1; });
+    expectRejected((dataset) => { dataset.statistics.uniqueNameCount += 1; });
+    expectRejected((dataset) => { dataset.statistics.attachmentConfidenceCounts.high -= 1; });
+    expectRejected((dataset) => { dataset.statistics.componentCounts['0'] -= 1; });
+    expectRejected((dataset) => { delete dataset.statistics.attachmentConfidenceCounts.low; });
+    expectRejected((dataset) => { dataset.statistics.attachmentConfidenceCounts.unexpected = 0; });
+    expectRejected((dataset) => { dataset.statistics.attachmentConfidenceCounts.medium = -1; });
+    expectRejected((dataset) => { delete dataset.statistics.componentCounts['0']; });
+    expectRejected((dataset) => { dataset.statistics.componentCounts.unexpected = 0; });
+    expectRejected((dataset) => { dataset.statistics.componentCounts['0'] = -1; });
   });
 });

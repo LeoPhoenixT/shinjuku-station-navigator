@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { buildOfficialGraph } from '../src/graph/buildOfficialGraph';
+import type { GraphEdge, RoutingGraph } from '../src/graph/types';
 import { admissibleHeuristicScale, astar, dijkstra } from '../src/routing/pathfinding';
 import { planRoute } from '../src/routing/routeService';
 import type { NamedPlacesDataset, OfficialNetworkDataset } from '../src/types/officialNetwork';
@@ -9,6 +10,37 @@ import type { HumanGoldenRouteReport } from '../scripts/build-human-golden-route
 const network = JSON.parse(readFileSync('public/data/processed/jr-shinjuku-ticket-gates-b1-official-network.json', 'utf8')) as OfficialNetworkDataset;
 const places = JSON.parse(readFileSync('public/data/processed/shinjuku-b1-named-places.json', 'utf8')) as NamedPlacesDataset;
 const golden = JSON.parse(readFileSync('reports/human-golden-route.json', 'utf8')) as HumanGoldenRouteReport;
+const crossFloorConnector = network.edges.find(({ id }) => id === '6e09f033cda0472cb754fef74c313d83');
+
+if (!crossFloorConnector) throw new Error('Expected the pinned cross-floor connector in the official network.');
+
+const directionalFixtureEdge: GraphEdge = {
+  id: 'fixture:forward',
+  from: 'fixture:a',
+  to: 'fixture:b',
+  distanceMeters: 1,
+  direction: 'forward',
+  kind: 'corridor',
+  accessibility: 'yes',
+  floorFrom: 'fixture:0',
+  floorTo: 'fixture:0',
+  geometry: [[0, 0, 0], [1, 0, 0]],
+};
+
+const directionalFixture: RoutingGraph = {
+  nodes: [
+    { id: 'fixture:a', x: 0, y: 0, z: 0, floorId: 'fixture:0', facilityId: 'fixture', kind: 'normal' },
+    { id: 'fixture:b', x: 1, y: 0, z: 0, floorId: 'fixture:0', facilityId: 'fixture', kind: 'normal' },
+    { id: 'fixture:isolated', x: 2, y: 0, z: 0, floorId: 'fixture:0', facilityId: 'fixture', kind: 'normal' },
+  ],
+  edges: [directionalFixtureEdge],
+  adjacency: {
+    'fixture:a': [directionalFixtureEdge],
+    'fixture:b': [],
+    'fixture:isolated': [],
+  },
+  rejectedEdges: [],
+};
 
 describe('Phase 5A human-named golden route', () => {
   it('pins the established official-network topology and journey costs', () => {
@@ -43,18 +75,46 @@ describe('Phase 5A human-named golden route', () => {
     expect(astar(graph, start.access.nodeId, end.access.nodeId)?.totalCost).toBe(dijkstra(graph, start.access.nodeId, end.access.nodeId)?.totalCost);
   });
 
-  it('uses an admissible heuristic and matches Dijkstra for deterministic full-network samples', () => {
+  it('matches Dijkstra for deterministic representative oracle cases', () => {
+    const graph = buildOfficialGraph(network);
+    const sameFloorStart = golden.route.nodeIds[0]!;
+    const sameFloorDestination = golden.route.nodeIds[golden.route.nodeIds.length - 1]!;
+    const crossFloorStart = crossFloorConnector.direction === 'reverse' ? crossFloorConnector.to : crossFloorConnector.from;
+    const crossFloorDestination = crossFloorConnector.direction === 'reverse' ? crossFloorConnector.from : crossFloorConnector.to;
+
+    // These are pinned committed-data routes: the human golden route stays on B1,
+    // while this named elevator connector crosses B1 to floor 0.
+    expect(graph.nodes.find(({ id }) => id === sameFloorStart)?.floorId).toBe('B1');
+    expect(graph.nodes.find(({ id }) => id === sameFloorDestination)?.floorId).toBe('B1');
+    expect(crossFloorConnector.floorFrom).not.toBe(crossFloorConnector.floorTo);
+
+    for (const { start, destination } of [
+      { start: sameFloorStart, destination: sameFloorDestination },
+      { start: crossFloorStart, destination: crossFloorDestination },
+    ]) {
+      const aStar = astar(graph, start, destination);
+      const oracle = dijkstra(graph, start, destination);
+      expect(aStar).not.toBeNull();
+      expect(aStar?.totalCost).toBe(oracle?.totalCost);
+    }
+
+    // The official network is not an isolated directionality fixture, so this
+    // deliberately tiny graph proves the allowed and forbidden one-way cases.
+    const forwardAStar = astar(directionalFixture, 'fixture:a', 'fixture:b');
+    const forwardOracle = dijkstra(directionalFixture, 'fixture:a', 'fixture:b');
+    expect(forwardAStar).not.toBeNull();
+    expect(forwardAStar?.totalCost).toBe(forwardOracle?.totalCost);
+    expect(astar(directionalFixture, 'fixture:b', 'fixture:a')).toBeNull();
+    expect(dijkstra(directionalFixture, 'fixture:b', 'fixture:a')).toBeNull();
+    expect(astar(directionalFixture, 'fixture:a', 'fixture:isolated')).toBeNull();
+    expect(dijkstra(directionalFixture, 'fixture:a', 'fixture:isolated')).toBeNull();
+  });
+
+  it('uses an admissible heuristic', () => {
     const graph = buildOfficialGraph(network);
     expect(admissibleHeuristicScale(graph)).toBeGreaterThan(0);
     expect(admissibleHeuristicScale(graph)).toBeLessThanOrEqual(1);
-    const stride = Math.max(1, Math.floor(graph.nodes.length / 32));
-    const samples = graph.nodes.filter((_, index) => index % stride === 0).slice(0, 32);
-    for (const start of samples) {
-      for (const destination of samples) {
-        expect(astar(graph, start.id, destination.id)?.totalCost ?? null).toBe(dijkstra(graph, start.id, destination.id)?.totalCost ?? null);
-      }
-    }
-  }, 20_000);
+  });
 
   it('uses geometry length rather than free travel for zero-distance source links', () => {
     const graph = buildOfficialGraph(network);

@@ -73,6 +73,41 @@ function oneOf<T extends string>(value: unknown, allowed: readonly T[], label: s
   return value as T;
 }
 
+function exactKeys(value: Record<string, unknown>, required: readonly string[], label: string): void {
+  for (const key of required) {
+    if (!Object.hasOwn(value, key)) throw new Error(`${label} is missing required key ${key}.`);
+  }
+  for (const key of Object.keys(value)) {
+    if (!required.includes(key)) throw new Error(`${label} contains unsupported key ${key}.`);
+  }
+}
+
+function validateCoordinateSystem(value: unknown, officialCoordinateSystem: OfficialNetworkDataset['coordinateSystem']): void {
+  const label = 'reviewed custom network coordinateSystem';
+  const coordinateSystem = object(value, label);
+  exactKeys(coordinateSystem, ['units', 'origin', 'axes'], label);
+  if (string(coordinateSystem.units, `${label}.units`) !== officialCoordinateSystem.units) {
+    throw new Error(`${label}.units must match official network coordinate system.`);
+  }
+
+  const origin = object(coordinateSystem.origin, `${label}.origin`);
+  exactKeys(origin, ['lon', 'lat'], `${label}.origin`);
+  if (finiteNumber(origin.lon, `${label}.origin.lon`) !== officialCoordinateSystem.origin.lon) {
+    throw new Error(`${label}.origin.lon must match official network coordinate system.`);
+  }
+  if (finiteNumber(origin.lat, `${label}.origin.lat`) !== officialCoordinateSystem.origin.lat) {
+    throw new Error(`${label}.origin.lat must match official network coordinate system.`);
+  }
+
+  const axes = object(coordinateSystem.axes, `${label}.axes`);
+  exactKeys(axes, ['x', 'y', 'z'], `${label}.axes`);
+  for (const axis of ['x', 'y', 'z'] as const) {
+    if (string(axes[axis], `${label}.axes.${axis}`) !== officialCoordinateSystem.axes[axis]) {
+      throw new Error(`${label}.axes.${axis} must match official network coordinate system.`);
+    }
+  }
+}
+
 export function reviewedNodeKind(node: ReviewedCustomNetworkNode): GraphNodeKind {
   return node.role === 'gate' ? 'gate' : 'normal';
 }
@@ -85,8 +120,7 @@ export function parseReviewedCustomNetwork(value: unknown, officialNetwork: Offi
   const approval = object(root.approval, 'reviewed custom network approval');
   if (approval.status !== 'reviewed') throw new Error('Reviewed custom network must have reviewed approval status.');
   string(approval.basis, 'reviewed custom network approval.basis');
-  const coordinateSystem = object(root.coordinateSystem, 'reviewed custom network coordinateSystem');
-  if (JSON.stringify(coordinateSystem) !== JSON.stringify(officialNetwork.coordinateSystem)) throw new Error('Reviewed custom network coordinate system must match the official network.');
+  validateCoordinateSystem(root.coordinateSystem, officialNetwork.coordinateSystem);
   if (!Array.isArray(root.nodes) || !Array.isArray(root.edges) || !Array.isArray(root.placeAttachments)) {
     throw new Error('Reviewed custom network must contain node, edge, and place attachment arrays.');
   }

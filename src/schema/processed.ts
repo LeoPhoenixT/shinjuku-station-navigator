@@ -123,6 +123,17 @@ function integer(value: unknown, label: string, minimum = 0): number {
   return result;
 }
 
+function exactCountRecord(value: unknown, label: string, expected: Record<string, number>): void {
+  const counts = object(value, label);
+  for (const [key, expectedCount] of Object.entries(expected)) {
+    if (!Object.hasOwn(counts, key)) throw new Error(`${label} is missing count ${key}.`);
+    if (integer(counts[key], `${label}.${key}`) !== expectedCount) throw new Error(`${label}.${key} does not match places.`);
+  }
+  for (const key of Object.keys(counts)) {
+    if (!Object.hasOwn(expected, key)) throw new Error(`${label} contains unexpected count ${key}.`);
+  }
+}
+
 function boolean(value: unknown, label: string): boolean {
   if (typeof value !== 'boolean') throw new Error(`${label} must be boolean.`);
   return value;
@@ -321,6 +332,10 @@ export function parseNamedPlaces(value: unknown, network?: OfficialNetworkDatase
     ...(reviewedNetwork?.nodes ?? []).map((node) => [node.id, { floorId: node.floorId, coordinates: node.coordinates }] as const),
   ]) : undefined;
   const ids = new Set<string>();
+  const names = new Set<string>();
+  let routablePlaceCount = 0;
+  const attachmentConfidenceCounts = { high: 0, medium: 0, low: 0 };
+  const componentCounts: Record<string, number> = {};
   for (const [index, placeValue] of root.places.entries()) {
     const place = object(placeValue, `place ${index}`);
     const id = string(place.id, `place ${index}.id`);
@@ -332,35 +347,41 @@ export function parseNamedPlaces(value: unknown, network?: OfficialNetworkDatase
     integer(place.sourceRecord, `place ${id}.sourceRecord`, 1);
     oneOf(place.sourceLayer, ['Opening', 'Space', 'Facility', 'Network'] as const, `place ${id}.sourceLayer`);
     string(place.sourceCategoryCode, `place ${id}.sourceCategoryCode`);
-    string(place.name, `place ${id}.name`);
+    const name = string(place.name, `place ${id}.name`);
     const coordinates = point(place.coordinates, `place ${id}.coordinates`);
     if (place.aliases !== undefined) stringArray(place.aliases, `place ${id}.aliases`);
     oneOf(place.category, ['gate', 'connector', 'toilet', 'elevator', 'escalator', 'stairs', 'slope', 'entrance', 'exit', 'information', 'waiting-room', 'nursing-room', 'atm', 'locker', 'ticket-office'] as const, `place ${id}.category`);
     if (place.nameKind !== undefined) oneOf(place.nameKind, ['source', 'generated-descriptive', 'generated-category'] as const, `place ${id}.nameKind`);
     const floorId = string(place.floorId, `place ${id}.floorId`);
-    boolean(place.routable, `place ${id}.routable`);
+    const routable = boolean(place.routable, `place ${id}.routable`);
     const access = object(place.access, `place ${id}.access`);
     const nodeId = string(access.nodeId, `place ${id}.access.nodeId`);
     const node = nodeById?.get(nodeId);
     if (nodeById && !node) throw new Error(`Place ${id} refers to missing node ${nodeId}.`);
     if (node && node.floorId !== floorId) throw new Error(`Place ${id} and access node ${nodeId} are on different floors.`);
     const distanceMeters = nonNegativeNumber(access.distanceMeters, `place ${id}.access.distanceMeters`);
-    oneOf(access.confidence, ['high', 'medium', 'low'] as const, `place ${id}.access.confidence`);
-    oneOf(access.reviewStatus, ['automatic', 'reviewed'] as const, `place ${id}.access.reviewStatus`);
+    const confidence = oneOf(access.confidence, ['high', 'medium', 'low'] as const, `place ${id}.access.confidence`);
+    const reviewStatus = oneOf(access.reviewStatus, ['automatic', 'reviewed'] as const, `place ${id}.access.reviewStatus`);
+    if (confidence === 'low' && reviewStatus === 'automatic' && routable) throw new Error(`Place ${id} automatic low-confidence attachment must not be routable.`);
     oneOf(access.accessibility, ['yes', 'no', 'unknown'] as const, `place ${id}.access.accessibility`);
-    integer(access.componentId, `place ${id}.access.componentId`);
+    const componentId = integer(access.componentId, `place ${id}.access.componentId`);
     if (!Array.isArray(access.geometry) || access.geometry.length !== 2) throw new Error(`Place ${id}.access.geometry must contain two points.`);
     const accessStart = point(access.geometry[0], `place ${id}.access.geometry[0]`); const accessEnd = point(access.geometry[1], `place ${id}.access.geometry[1]`);
     if (!pointsEqual(accessStart, coordinates)) throw new Error(`Place ${id} access geometry must start at the place coordinate.`);
     if (node && !pointsEqual(accessEnd, node.coordinates)) throw new Error(`Place ${id} access geometry must end at its official node.`);
     const measuredDistance = Math.hypot(accessEnd[0] - accessStart[0], accessEnd[1] - accessStart[1], accessEnd[2] - accessStart[2]);
     if (Math.abs(measuredDistance - distanceMeters) > 0.01) throw new Error(`Place ${id} access distance does not match its geometry.`);
+    names.add(name);
+    if (routable) routablePlaceCount += 1;
+    attachmentConfidenceCounts[confidence] += 1;
+    const componentKey = String(componentId);
+    componentCounts[componentKey] = (componentCounts[componentKey] ?? 0) + 1;
   }
   const statistics = object(root.statistics, 'named places statistics');
   if (integer(statistics.placeCount, 'named places statistics.placeCount') !== root.places.length) throw new Error('Named places placeCount does not match places.length.');
-  integer(statistics.routablePlaceCount, 'named places statistics.routablePlaceCount');
-  integer(statistics.uniqueNameCount, 'named places statistics.uniqueNameCount');
-  object(statistics.attachmentConfidenceCounts, 'named places statistics.attachmentConfidenceCounts');
-  object(statistics.componentCounts, 'named places statistics.componentCounts');
+  if (integer(statistics.routablePlaceCount, 'named places statistics.routablePlaceCount') !== routablePlaceCount) throw new Error('Named places routablePlaceCount does not match places.');
+  if (integer(statistics.uniqueNameCount, 'named places statistics.uniqueNameCount') !== names.size) throw new Error('Named places uniqueNameCount does not match places.');
+  exactCountRecord(statistics.attachmentConfidenceCounts, 'named places statistics.attachmentConfidenceCounts', attachmentConfidenceCounts);
+  exactCountRecord(statistics.componentCounts, 'named places statistics.componentCounts', componentCounts);
   return value as NamedPlacesDataset;
 }

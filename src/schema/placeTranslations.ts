@@ -61,6 +61,24 @@ function aliases(value: unknown, label: string): string[] {
   return value;
 }
 
+function nonNegativeInteger(value: unknown, label: string): number {
+  if (typeof value !== 'number' || !Number.isFinite(value) || !Number.isInteger(value) || value < 0) {
+    throw new Error(`${label} must be a non-negative integer.`);
+  }
+  return value;
+}
+
+function exactCountRecord(value: unknown, label: string, expected: Record<string, number>): void {
+  const counts = object(value, label);
+  for (const [key, expectedCount] of Object.entries(expected)) {
+    if (!Object.hasOwn(counts, key)) throw new Error(`${label} is missing count ${key}.`);
+    if (nonNegativeInteger(counts[key], `${label}.${key}`) !== expectedCount) throw new Error(`${label}.${key} does not match translation records.`);
+  }
+  for (const key of Object.keys(counts)) {
+    if (!Object.hasOwn(expected, key)) throw new Error(`${label} contains unexpected count ${key}.`);
+  }
+}
+
 function reviewedAreaJapaneseName(id: string): string {
   return id.replace(/^\d+\./, '').replaceAll('_', '・');
 }
@@ -155,7 +173,6 @@ export function parsePlaceTranslations(value: unknown, namedPlaces: NamedPlacesD
   for (const status of STATUS_VALUES) {
     if (statusCounts[status] !== expectedStatusCounts[status]) throw new Error(`Place-translation status count ${status} is incorrect.`);
   }
-  const sourceCounts = object(statistics.sourceCounts, 'place translations.statistics.sourceCounts');
-  if (JSON.stringify(sourceCounts) !== JSON.stringify(expectedSourceCounts)) throw new Error('Place-translation source counts are incorrect.');
+  exactCountRecord(statistics.sourceCounts, 'place translations.statistics.sourceCounts', expectedSourceCounts);
   return { ...root, places, areas } as unknown as PlaceTranslationsDataset;
 }

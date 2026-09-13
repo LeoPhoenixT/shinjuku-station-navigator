@@ -158,6 +158,8 @@ npm run container:verify -- http://127.0.0.1:8080
 
 The normal `build` command performs strict TypeScript checking and creates the Vite bundle. The Docker build intentionally runs the bundle-only `build:bundle` command because type checking is already a required quality gate; this avoids repeating the TypeScript compiler's memory peak on constrained image builders. Do not use `build:bundle` as a substitute for the standard verification set.
 
+`npm run release:verify` measures every emitted JavaScript file in raw and gzip form, then enforces the executable per-chunk limits in `scripts/release-budgets.ts`. The raw limit preserves the pre-existing 1 MB release contract. The gzip limit retains at least 25% growth headroom over the R7 baseline and rounds to a stable 250 kB boundary. Current file-level measurements belong in the generated `reports/current-release-status.md`, not in this guide.
+
 The Docker build stage gives Node a configurable 768 MB heap; the final Nginx stage does not inherit that setting. Override it only when the builder has enough memory:
 
 ```bash

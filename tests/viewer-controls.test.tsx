@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { ViewerControls } from '../src/components/ViewerControls';
+import type { ViewerControlsProps } from '../src/components/ViewerControls';
 import { placeDisplayName } from '../src/features/route-planner/placeSearch';
 import { LocaleProvider } from '../src/i18n/LocaleProvider';
 import type { NamedPlaceRecord } from '../src/schema/processed';
@@ -25,13 +26,32 @@ function renderProps(debug = false, overrides = {}) {
     floorIds: ['B3', 'B2', 'B1', '0', '1', '2', '3', '4'], visibleFloors: ['B1'], routeFloorIds: [], activeFloor: 'B1', floorViewMode: 'focused' as const, selectFloor: vi.fn(), showStack: vi.fn(), showRouteFloors: vi.fn(), toggleCustomFloor: vi.fn(),
     rotationEnabled: false, setRotationEnabled: vi.fn(),
     fitRoute: vi.fn(), fitStation: vi.fn(), zoomIn: vi.fn(), zoomOut: vi.fn(), showNorthView: vi.fn(), showAngledView: vi.fn(), cameraHeading: 0,
-    selectedStepIndex: undefined, onStepSelect: vi.fn(), legendItems: [], ...overrides,
+    selectedStepIndex: undefined, onStepSelect: vi.fn(), interactionMessage: undefined as string | undefined, legendItems: [], ...overrides,
+  };
+}
+
+function viewerControlsProps(props: ReturnType<typeof renderProps>): ViewerControlsProps {
+  return {
+    planner: {
+      places: props.places, startId: props.startId, destinationId: props.destinationId, setStartId: props.setStartId, setDestinationId: props.setDestinationId,
+      swapPlaces: props.swapPlaces, clearRoute: props.clearRoute, route: props.route, profile: props.profile, setProfile: props.setProfile, routeDirty: props.routeDirty, submitRoute: props.submitRoute,
+    },
+    navigation: {
+      floors: { floorIds: props.floorIds, visibleFloors: props.visibleFloors, routeFloorIds: props.routeFloorIds, activeFloor: props.activeFloor, floorViewMode: props.floorViewMode, selectFloor: props.selectFloor, showStack: props.showStack, showRouteFloors: props.showRouteFloors, toggleCustomFloor: props.toggleCustomFloor },
+      camera: { rotationEnabled: props.rotationEnabled, setRotationEnabled: props.setRotationEnabled, fitRoute: props.fitRoute, fitStation: props.fitStation, zoomIn: props.zoomIn, zoomOut: props.zoomOut, showNorthView: props.showNorthView, showAngledView: props.showAngledView, cameraHeading: props.cameraHeading, selectedStepIndex: props.selectedStepIndex, selectStep: props.onStepSelect },
+    },
+    display: {
+      layers: { showOfficialNetwork: props.showOfficialNetwork, setShowOfficialNetwork: props.setShowOfficialNetwork, showFacilities: props.showFacilities, setShowFacilities: props.setShowFacilities, facilityCategories: props.facilityCategories, enabledFacilityCategories: props.enabledFacilityCategories, toggleFacilityCategory: props.toggleFacilityCategory, showAllFacilityCategories: props.showAllFacilityCategories, clearAllFacilityCategories: props.clearAllFacilityCategories, resetFacilityCategories: props.resetFacilityCategories, showStructuralDetails: props.showStructuralDetails, setShowStructuralDetails: props.setShowStructuralDetails },
+      diagnostics: { debug: props.debug, setDebug: props.setDebug, showAllSourceLinks: props.showAllSourceLinks, setShowAllSourceLinks: props.setShowAllSourceLinks, showOfficialNodes: props.showOfficialNodes, setShowOfficialNodes: props.setShowOfficialNodes, showTwsi: props.showTwsi, setShowTwsi: props.setShowTwsi },
+    },
+    feedback: { interactionMessage: props.interactionMessage },
+    legend: { items: props.legendItems },
   };
 }
 
 function renderControls(overrides = {}) {
   const props = renderProps(false, overrides);
-  render(<ViewerControls {...props} />);
+  render(<ViewerControls {...viewerControlsProps(props)} />);
   return props;
 }
 
@@ -69,6 +89,25 @@ describe('viewer controls', () => {
     expect(screen.getByRole('group', { name: 'Floor B2 · Metro east area · Gate' })).toBeInTheDocument();
   });
 
+  it('rebuilds the place index for a new places identity while preserving combobox semantics', () => {
+    const props = renderProps();
+    const view = render(<ViewerControls {...viewerControlsProps(props)} />);
+    const startSearch = screen.getByLabelText('Search start place');
+    fireEvent.focus(startSearch);
+    const listbox = screen.getByRole('listbox');
+    expect(startSearch).toHaveAttribute('role', 'combobox');
+    expect(startSearch).toHaveAttribute('aria-autocomplete', 'list');
+    expect(startSearch).toHaveAttribute('aria-controls', listbox.id);
+    expect(startSearch).toHaveAttribute('aria-expanded', 'true');
+    expect(startSearch).toHaveAttribute('aria-activedescendant', `${listbox.id}-0`);
+    expect(document.getElementById(`${listbox.id}-0`)).toHaveAttribute('role', 'option');
+
+    const added = { ...places[0], id: 'reindexed', name: 'Reindexed place', aliases: ['new index only'] };
+    view.rerender(<ViewerControls {...viewerControlsProps({ ...props, places: [...places, added] })} />);
+    fireEvent.change(screen.getByLabelText('Search start place'), { target: { value: 'new index only' } });
+    expect(screen.getByRole('option', { name: /Reindexed place/i })).toBeInTheDocument();
+  });
+
   it('filters destination discovery through category shortcuts', () => {
     renderControls();
     fireEvent.focus(screen.getByLabelText('Search destination place'));
@@ -101,12 +140,12 @@ describe('viewer controls', () => {
   });
 
   it('exposes the pedestrian network normally and keeps raw overlays in debug mode', () => {
-    const { rerender } = render(<ViewerControls {...renderProps(false)} />);
+    const { rerender } = render(<ViewerControls {...viewerControlsProps(renderProps(false))} />);
     fireEvent.click(screen.getByLabelText('Map settings'));
     expect(screen.getByRole('group', { name: 'Display layers' })).toBeInTheDocument();
     expect(screen.getByRole('checkbox', { name: /Walking network/i })).toBeInTheDocument();
     fireEvent.click(screen.getByText('Developer diagnostics'));
-    rerender(<ViewerControls {...renderProps(true)} />);
+    rerender(<ViewerControls {...viewerControlsProps(renderProps(true))} />);
     expect(screen.getByRole('checkbox', { name: /Walking network/i })).toBeInTheDocument();
     expect(screen.getByLabelText('Node IDs')).toBeInTheDocument();
     expect(screen.getByLabelText('Tactile guidance (TWSI)')).toBeInTheDocument();
@@ -134,6 +173,34 @@ describe('viewer controls', () => {
     expect(screen.getByTitle('Map heading 0 degrees. Reset north-up.')).toBeInTheDocument();
   });
 
+  it('moves focus through the non-modal settings dialog and restores its trigger after Escape', () => {
+    renderControls();
+    const trigger = screen.getByLabelText('Map settings');
+    trigger.focus();
+    fireEvent.click(trigger);
+
+    const dialog = screen.getByRole('dialog', { name: 'Map display settings' });
+    const done = screen.getByRole('button', { name: 'Close map settings' });
+    expect(dialog).toHaveAttribute('aria-modal', 'false');
+    expect(done).toHaveFocus();
+
+    const markerCheckbox = screen.getByRole('checkbox', { name: /Markers/ });
+    markerCheckbox.focus();
+    fireEvent.keyDown(markerCheckbox, { key: 'ArrowDown' });
+    expect(markerCheckbox).toHaveFocus();
+
+    fireEvent.keyDown(markerCheckbox, { key: 'Escape' });
+    expect(screen.queryByRole('dialog', { name: 'Map display settings' })).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+
+    fireEvent.click(trigger);
+    const reopenedDone = screen.getByRole('button', { name: 'Close map settings' });
+    expect(reopenedDone).toHaveFocus();
+    fireEvent.click(reopenedDone);
+    expect(screen.queryByRole('dialog', { name: 'Map display settings' })).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+  });
+
   it('emphasizes a floor without using the visibility control and can restore the complete stack', () => {
     const props = renderControls({ floorViewMode: 'stack', visibleFloors: ['B3', 'B2', 'B1', '0', '1', '2', '3', '4'] });
     expect(screen.getByRole('button', { name: 'Previous floors' })).toBeInTheDocument();
@@ -146,9 +213,9 @@ describe('viewer controls', () => {
   });
 
   it('marks the focused floor in the top floor bar', () => {
-    renderControls({ floorViewMode: 'focused', visibleFloors: ['B1', '0'], activeFloor: 'B1' });
-    expect(screen.getByRole('radio', { name: 'Emphasize B1 floor' })).toBeChecked();
-    expect(screen.getByRole('radio', { name: 'Emphasize Ground floor' })).not.toBeChecked();
+    renderControls({ floorViewMode: 'focused', visibleFloors: ['B2', 'B1', '0'], routeFloorIds: ['B1', '0'], activeFloor: 'B2' });
+    expect(screen.getByRole('radio', { name: 'Emphasize B2 floor' })).toBeChecked();
+    expect(screen.getByRole('radio', { name: 'Emphasize B1 floor, on route' })).not.toBeChecked();
   });
 
   it('supports marker category and custom-floor preferences', () => {
@@ -304,7 +371,7 @@ describe('viewer controls', () => {
   it('switches a live route to Japanese without changing route state or URL', () => {
     const props = renderProps(false, { route: okRoute });
     const originalUrl = window.location.href;
-    render(<LocaleProvider initialLocale="en"><ViewerControls {...props} /></LocaleProvider>);
+    render(<LocaleProvider initialLocale="en"><ViewerControls {...viewerControlsProps(props)} /></LocaleProvider>);
     expect(screen.getByText('Continue on B1 for 2.0 m.')).toBeInTheDocument();
 
     fireEvent.click(screen.getByLabelText('Map settings'));

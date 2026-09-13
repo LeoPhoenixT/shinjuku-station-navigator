@@ -61,7 +61,8 @@ This layer imports neither React nor Three.js. Tests can therefore prove directi
 - `src/i18n/LocaleProvider.tsx` owns the `en`/`ja` UI locale, versioned browser persistence, and the document language.
 - `src/i18n/catalogs/` contains compile-time-aligned UI catalogs; `src/i18n/formatters.ts` turns route steps, warnings, floors, categories, and estimates into localized presentation text.
 - `src/components/FloorViewer.tsx` is the composition root that connects these view models.
-- `src/components/ViewerControls.tsx` and the smaller toolbar/sheet/legend components provide accessible controls.
+- `src/components/viewerViewModels.ts` defines small readonly planner, navigation, display, feedback, and legend contracts; `FloorViewer` composes them and each control receives only its local dependency group.
+- `src/components/ViewerControls.tsx` and the smaller toolbar/sheet/legend components provide accessible controls. ViewerControls builds one immutable bilingual place-search index per places/translations identity and shares it between start and destination search; its `id -> index` lookup avoids per-option linear scans.
 
 Stable place IDs and the route profile are encoded in the URL. Graph node IDs remain an internal detail.
 
@@ -69,7 +70,7 @@ Locale is deliberately not encoded in route URLs. Changing language rerenders th
 
 ### Map presentation
 
-- `src/map/MapScene.tsx` composes floor, space, fixture, structure, network, route, and marker layers.
+- `src/map/MapScene.tsx` retains scene composition, selection derivation, and React resource ownership. `src/map/sceneGeometry.ts` contains pure geometry/data selection; `sceneLayers.tsx`, `sceneLinePrimitives.tsx`, and `sceneMarkerLayers.tsx` group floor/space/fixture, line/network/route, and marker/place rendering respectively.
 - Facility-marker candidates are prepared once by the viewer and shared with the scene and legend.
 - Repeated geometry uses merged meshes, instancing, and GPU line primitives.
 - The selected route appears in both the 3D scene and a camera-projected SVG overlay.
@@ -78,7 +79,7 @@ Floor extrusion, wall height, floor spacing, opacity, and camera orientation nev
 
 ### Delivery
 
-- Vite produces relative asset URLs and hashed application bundles, plus crawlable English and Japanese entry pages at `/` and `/ja/` with localized canonical, social, and structured metadata.
+- Vite produces relative asset URLs and hashed application bundles, plus crawlable English and Japanese entry pages at `/` and `/ja/` with localized canonical, social, and structured metadata. `src/seo/staticPage.ts` uses locale metadata and a structured template to produce both entry pages after Vite emits hashed assets. The application shell uses `lazy()` to split the viewer, but it renders that boundary immediately, so the viewer and Three.js remain startup dependencies rather than deferred feature code. Release verification measures every JavaScript chunk in raw and gzip form against the executable bundle budget.
 - `Dockerfile` performs a reproducible multi-stage build.
 - `deploy/nginx.conf` serves the SPA on port 8080 with fallback routing, compression, cache policies, a health endpoint, and security headers.
 - `scripts/verify-container.ts` checks health, SPA fallback, headers, processed data, and raw-source exclusion.

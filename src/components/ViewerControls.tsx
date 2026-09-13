@@ -1,76 +1,24 @@
-import { useCallback, useEffect, useId, useState, type KeyboardEvent } from 'react';
-import { findPlaceByDisplayName, groupPlacesByFloorArea, placeDisplayName, searchPlaces } from '../features/route-planner/placeSearch.js';
+import { useCallback, useEffect, useId, useMemo, useState, type KeyboardEvent } from 'react';
+import { buildPlaceIdIndex, buildPlaceSearchIndex, groupPlacesByFloorArea, placeDisplayName, type PlaceSearchIndex } from '../features/route-planner/placeSearch.js';
 import { categoryDisplayName, placeSecondaryText, publicPlaceName } from '../places/placePresentation.js';
 import type { NamedPlaceRecord } from '../schema/processed.js';
 import type { RoutePlan } from '../routing/routeService.js';
-import type { RoutingProfile } from '../routing/pathfinding.js';
 import { estimateJourney, estimatedTimeText } from '../routing/journeyEstimate.js';
 import { MapToolbar } from './MapToolbar.js';
 import { MapLegend } from './MapLegend.js';
 import { RouteSheet } from './RouteSheet.js';
-import type { MapLegendItem } from '../map/mapLegend.js';
-import type { FloorViewMode } from '../map/displayPreferences.js';
 import { useI18n } from '../i18n/context.js';
 import { translate, type Locale } from '../i18n/types.js';
 import { floorLongName } from '../places/placePresentation.js';
 import type { PlaceTranslationsDataset } from '../schema/placeTranslations.js';
+import type { PlannerViewModel, ViewerDisplayViewModel, ViewerFeedbackViewModel, ViewerLegendViewModel, ViewerNavigationViewModel } from './viewerViewModels.js';
 
-interface ViewerControlsProps {
-  debug: boolean;
-  setDebug: (value: boolean) => void;
-  showAllSourceLinks: boolean;
-  setShowAllSourceLinks: (value: boolean) => void;
-  places: NamedPlaceRecord[];
-  translations?: PlaceTranslationsDataset;
-  startId: string;
-  destinationId: string;
-  setStartId: (id: string) => void;
-  setDestinationId: (id: string) => void;
-  swapPlaces: () => void;
-  clearRoute: () => void;
-  route: RoutePlan;
-  profile: RoutingProfile;
-  setProfile: (profile: RoutingProfile) => void;
-  routeDirty: boolean;
-  submitRoute: () => void;
-  showOfficialNetwork: boolean;
-  setShowOfficialNetwork: (value: boolean) => void;
-  showOfficialNodes: boolean;
-  setShowOfficialNodes: (value: boolean) => void;
-  showTwsi: boolean;
-  setShowTwsi: (value: boolean) => void;
-  showFacilities: boolean;
-  setShowFacilities: (value: boolean) => void;
-  facilityCategories: Array<{ code: string; label: string; count: number }>;
-  enabledFacilityCategories: ReadonlySet<string>;
-  toggleFacilityCategory: (code: string) => void;
-  showAllFacilityCategories: () => void;
-  clearAllFacilityCategories: () => void;
-  resetFacilityCategories: () => void;
-  showStructuralDetails: boolean;
-  setShowStructuralDetails: (value: boolean) => void;
-  floorIds: string[];
-  visibleFloors: string[];
-  routeFloorIds: string[];
-  activeFloor: string;
-  floorViewMode: FloorViewMode;
-  selectFloor: (floorId: string) => void;
-  showStack: () => void;
-  showRouteFloors: () => void;
-  toggleCustomFloor: (floorId: string) => void;
-  rotationEnabled: boolean;
-  setRotationEnabled: (value: boolean) => void;
-  fitRoute: () => void;
-  fitStation: () => void;
-  zoomIn: () => void;
-  zoomOut: () => void;
-  showNorthView: () => void;
-  showAngledView: () => void;
-  cameraHeading: number;
-  selectedStepIndex?: number;
-  onStepSelect: (index: number) => void;
-  interactionMessage?: string;
-  legendItems: MapLegendItem[];
+export interface ViewerControlsProps {
+  readonly planner: PlannerViewModel;
+  readonly navigation: ViewerNavigationViewModel;
+  readonly display: ViewerDisplayViewModel;
+  readonly feedback: ViewerFeedbackViewModel;
+  readonly legend: ViewerLegendViewModel;
 }
 
 function routeMessage(route: RoutePlan, locale: Locale): string {
@@ -80,23 +28,27 @@ function routeMessage(route: RoutePlan, locale: Locale): string {
   return translate(locale, route.reason === 'low-confidence-attachment' ? 'route.status.attachmentReview' : route.placeId.length === 0 ? 'route.status.chooseEndpoints' : 'route.status.invalidSelection');
 }
 
-function PlaceSearchInput({ kind, places, translations, value, onChange }: { kind: 'start' | 'destination'; places: NamedPlaceRecord[]; translations?: PlaceTranslationsDataset; value: string; onChange: (id: string) => void }) {
+function PlaceSearchInput({ kind, searchIndex, translations, value, onChange }: { kind: 'start' | 'destination'; searchIndex: PlaceSearchIndex; translations?: PlaceTranslationsDataset; value: string; onChange: (id: string) => void }) {
   const { locale, t } = useI18n();
   const label = t(kind === 'start' ? 'planner.start' : 'planner.destination');
   const searchLabel = locale === 'en' ? label.toLocaleLowerCase('en') : label;
   const listId = useId();
   const inputId = useId();
-  const selected = places.find((place) => place.id === value);
+  const selected = searchIndex.findById(value);
   const [query, setQuery] = useState(selected ? placeDisplayName(selected, locale, translations) : value);
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [category, setCategory] = useState<NamedPlaceRecord['category'] | 'all'>('all');
   const selectedText = selected ? placeDisplayName(selected, locale, translations) : value;
   const searchTerm = open && query === selectedText ? '' : query;
-  const allResults = searchPlaces(places, searchTerm, locale, translations).filter((place) => category === 'all' || place.category === category);
-  const visibleResults = allResults.slice(0, 100);
-  const groups = groupPlacesByFloorArea(visibleResults, locale, translations);
-  const matches = groups.flatMap((group) => group.places);
+  const allResults = useMemo(
+    () => searchIndex.search(searchTerm, locale).filter((place) => category === 'all' || place.category === category),
+    [category, locale, searchIndex, searchTerm],
+  );
+  const visibleResults = useMemo(() => allResults.slice(0, 100), [allResults]);
+  const groups = useMemo(() => groupPlacesByFloorArea(visibleResults, locale, translations), [locale, translations, visibleResults]);
+  const matches = useMemo(() => groups.flatMap((group) => group.places), [groups]);
+  const matchIndexById = useMemo(() => buildPlaceIdIndex(matches), [matches]);
 
   useEffect(() => setQuery(selected ? placeDisplayName(selected, locale, translations) : value), [locale, selected, translations, value]);
 
@@ -124,7 +76,7 @@ function PlaceSearchInput({ kind, places, translations, value, onChange }: { kin
 
   const categoryShortcuts = ([
     ['gate', t('search.gates')], ['exit', t('search.exits')], ['toilet', t('search.toilets')], ['elevator', t('search.elevators')], ['locker', t('search.lockers')],
-  ] as const).filter(([candidate]) => places.some((place) => place.routable && place.category === candidate));
+  ] as const).filter(([candidate]) => searchIndex.categories.includes(candidate));
 
   return <div className="place-search"><label htmlFor={inputId}>{label}</label>
     <input
@@ -146,7 +98,7 @@ function PlaceSearchInput({ kind, places, translations, value, onChange }: { kin
         setOpen(true);
         setActiveIndex(0);
         if (next.length === 0) onChange('');
-        const exact = findPlaceByDisplayName(places, next, locale, translations);
+        const exact = searchIndex.findByDisplayName(next, locale);
         if (exact) onChange(exact.id);
       }}
       onBlur={() => {
@@ -167,7 +119,7 @@ function PlaceSearchInput({ kind, places, translations, value, onChange }: { kin
         return <li className="place-option-group" key={`${group.floorId}:${group.areaId}:${group.category}`} role="group" aria-label={t('search.group', { floor, area: group.area, category: categoryName })}>
         <div className="place-option-heading"><strong>{floor}</strong><span>{group.area} · {categoryName}</span></div>
         {group.places.map((place) => {
-          const index = matches.findIndex((match) => match.id === place.id);
+          const index = matchIndexById.indexOf(place.id)!;
           return <div
             className="place-option"
             id={`${listId}-${index}`}
@@ -184,13 +136,16 @@ function PlaceSearchInput({ kind, places, translations, value, onChange }: { kin
 }
 
 export function ViewerControls(props: ViewerControlsProps) {
+  const { planner, navigation, display, feedback, legend } = props;
+  const { camera } = navigation;
   const { locale, t } = useI18n();
-  const routablePlaces = props.places.filter(({ routable }) => routable);
+  const routablePlaces = useMemo(() => planner.places.filter(({ routable }) => routable), [planner.places]);
+  const placeSearchIndex = useMemo(() => buildPlaceSearchIndex(routablePlaces, planner.translations), [planner.translations, routablePlaces]);
   const [shareMessage, setShareMessage] = useState<string>();
   const [narrow] = useState(() => typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 640px)').matches);
   const [expandedPanels, setExpandedPanels] = useState<Set<'planner' | 'directions' | 'settings' | 'legend'>>(() => {
     const panels = new Set<'planner' | 'directions' | 'settings' | 'legend'>();
-    if (props.route.status !== 'ok' && !narrow) panels.add('planner');
+    if (planner.route.status !== 'ok' && !narrow) panels.add('planner');
     return panels;
   });
   const panelOpen = (panel: 'planner' | 'directions' | 'settings' | 'legend') => expandedPanels.has(panel);
@@ -207,8 +162,8 @@ export function ViewerControls(props: ViewerControlsProps) {
     return () => window.clearTimeout(timeout);
   }, [shareMessage]);
   useEffect(() => {
-    if (props.route.status === 'ok') setPanelOpen('planner', false);
-  }, [props.route, setPanelOpen]);
+    if (planner.route.status === 'ok') setPanelOpen('planner', false);
+  }, [planner.route, setPanelOpen]);
   const copyRouteLink = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
@@ -217,50 +172,45 @@ export function ViewerControls(props: ViewerControlsProps) {
       setShareMessage(t('route.shareUnavailable'));
     }
   };
-  const routeSummary = props.route.status === 'ok'
+  const routeSummary = planner.route.status === 'ok'
     ? t('route.summary', {
-      start: publicPlaceName(props.route.start, locale, props.translations),
-      destination: publicPlaceName(props.route.destination, locale, props.translations),
-      time: estimatedTimeText(estimateJourney(props.route), locale),
-      distance: props.route.totalDistanceMeters.toFixed(1),
+      start: publicPlaceName(planner.route.start, locale, planner.translations),
+      destination: publicPlaceName(planner.route.destination, locale, planner.translations),
+      time: estimatedTimeText(estimateJourney(planner.route), locale),
+      distance: planner.route.totalDistanceMeters.toFixed(1),
     })
-    : props.startId || props.destinationId ? t('planner.summary.complete') : t('planner.title');
-  const emptyRequest = props.route.status === 'invalid-place' && props.route.placeId.length === 0;
+    : planner.startId || planner.destinationId ? t('planner.summary.complete') : t('planner.title');
+  const emptyRequest = planner.route.status === 'invalid-place' && planner.route.placeId.length === 0;
 
   return <div className="route-controls">
     <MapToolbar
-      floorIds={props.floorIds} visibleFloors={props.visibleFloors} routeFloorIds={props.routeFloorIds} activeFloor={props.activeFloor} floorViewMode={props.floorViewMode} selectFloor={props.selectFloor} showStack={props.showStack} showRouteFloors={props.showRouteFloors} toggleCustomFloor={props.toggleCustomFloor}
-      canFitRoute={props.route.status === 'ok'} fitRoute={props.fitRoute} fitStation={props.fitStation} zoomIn={props.zoomIn} zoomOut={props.zoomOut} showNorthView={props.showNorthView} showAngledView={props.showAngledView}
-      cameraHeading={props.cameraHeading}
-      rotationEnabled={props.rotationEnabled} setRotationEnabled={props.setRotationEnabled}
-      showFacilities={props.showFacilities} setShowFacilities={props.setShowFacilities} facilityCategories={props.facilityCategories} enabledFacilityCategories={props.enabledFacilityCategories} toggleFacilityCategory={props.toggleFacilityCategory} showAllFacilityCategories={props.showAllFacilityCategories} clearAllFacilityCategories={props.clearAllFacilityCategories} resetFacilityCategories={props.resetFacilityCategories} showStructuralDetails={props.showStructuralDetails} setShowStructuralDetails={props.setShowStructuralDetails}
-      debug={props.debug} setDebug={props.setDebug} showAllSourceLinks={props.showAllSourceLinks} setShowAllSourceLinks={props.setShowAllSourceLinks} showOfficialNetwork={props.showOfficialNetwork} setShowOfficialNetwork={props.setShowOfficialNetwork} showOfficialNodes={props.showOfficialNodes} setShowOfficialNodes={props.setShowOfficialNodes} showTwsi={props.showTwsi} setShowTwsi={props.setShowTwsi}
+      navigation={navigation} display={display} canFitRoute={planner.route.status === 'ok'}
       settingsOpen={panelOpen('settings')} onSettingsOpenChange={(open) => setPanelOpen('settings', open)}
     />
     <div className="journey-stack">
-      <MapLegend items={props.legendItems} open={panelOpen('legend')} onOpenChange={(open) => setPanelOpen('legend', open)} />
-      {(plannerOpen || props.route.status !== 'ok') ? <section className={`planner-card ${plannerOpen ? '' : 'planner-card-collapsed'} ${emptyRequest && !plannerOpen ? 'planner-card-empty' : ''}`} aria-label={t('planner.label')}>
+      <MapLegend items={legend.items} open={panelOpen('legend')} onOpenChange={(open) => setPanelOpen('legend', open)} />
+      {(plannerOpen || planner.route.status !== 'ok') ? <section className={`planner-card ${plannerOpen ? '' : 'planner-card-collapsed'} ${emptyRequest && !plannerOpen ? 'planner-card-empty' : ''}`} aria-label={t('planner.label')}>
         <header className="planner-header">
           <span><span className="planner-kicker">{t('planner.kicker')}</span><strong>{t('planner.title')}</strong></span>
-          <span className="planner-summary" title={routeSummary}>{(props.startId || props.destinationId) ? routeSummary : ''}</span>
+          <span className="planner-summary" title={routeSummary}>{(planner.startId || planner.destinationId) ? routeSummary : ''}</span>
           <button type="button" className="planner-toggle" aria-label={t(plannerOpen ? 'planner.actions.hideLabel' : 'planner.actions.edit')} aria-expanded={plannerOpen} aria-controls="planner-body" onClick={() => setPanelOpen('planner', !plannerOpen)}>{t(plannerOpen ? 'planner.actions.hide' : 'planner.actions.edit')}</button>
         </header>
         {plannerOpen && <div className="planner-body" id="planner-body">
           <div className="place-row">
-            <PlaceSearchInput kind="start" places={routablePlaces} translations={props.translations} value={props.startId} onChange={props.setStartId} />
-            <button type="button" className="swap-places" onClick={props.swapPlaces} aria-label={t('planner.actions.swap')} title={t('planner.actions.swap')}>⇄</button>
-            <PlaceSearchInput kind="destination" places={routablePlaces} translations={props.translations} value={props.destinationId} onChange={props.setDestinationId} />
+            <PlaceSearchInput kind="start" searchIndex={placeSearchIndex} translations={planner.translations} value={planner.startId} onChange={planner.setStartId} />
+            <button type="button" className="swap-places" onClick={planner.swapPlaces} aria-label={t('planner.actions.swap')} title={t('planner.actions.swap')}>⇄</button>
+            <PlaceSearchInput kind="destination" searchIndex={placeSearchIndex} translations={planner.translations} value={planner.destinationId} onChange={planner.setDestinationId} />
           </div>
           <div className="planner-actions">
-            <label className="profile-control"><span>{t('planner.routeField')}</span><select aria-label={t('profile.label')} value={props.profile} onChange={(event) => props.setProfile(event.target.value as RoutingProfile)}><option value="shortest">{t('profile.shortest')}</option><option value="accessible">{t('profile.accessible')}</option><option value="avoid-stairs">{t('profile.avoidStairs')}</option><option value="prefer-elevator">{t('profile.preferElevator')}</option><option value="fewest-floor-changes">{t('profile.fewestFloorChanges')}</option></select></label>
-            <button type="button" className="submit-route" onClick={props.submitRoute} disabled={!props.startId || !props.destinationId || !props.routeDirty}>{t(props.route.status === 'ok' ? 'planner.actions.update' : 'planner.actions.show')}</button>
-            <button type="button" className="clear-route" onClick={props.clearRoute} disabled={!props.startId && !props.destinationId && props.route.status !== 'ok'}>{t('planner.actions.clear')}</button>
-            <button type="button" className="share-route" onClick={() => void copyRouteLink()} disabled={!props.startId || !props.destinationId}>{t('planner.actions.share')}</button>
+            <label className="profile-control"><span>{t('planner.routeField')}</span><select aria-label={t('profile.label')} value={planner.profile} onChange={(event) => planner.setProfile(event.target.value as PlannerViewModel['profile'])}><option value="shortest">{t('profile.shortest')}</option><option value="accessible">{t('profile.accessible')}</option><option value="avoid-stairs">{t('profile.avoidStairs')}</option><option value="prefer-elevator">{t('profile.preferElevator')}</option><option value="fewest-floor-changes">{t('profile.fewestFloorChanges')}</option></select></label>
+            <button type="button" className="submit-route" onClick={planner.submitRoute} disabled={!planner.startId || !planner.destinationId || !planner.routeDirty}>{t(planner.route.status === 'ok' ? 'planner.actions.update' : 'planner.actions.show')}</button>
+            <button type="button" className="clear-route" onClick={planner.clearRoute} disabled={!planner.startId && !planner.destinationId && planner.route.status !== 'ok'}>{t('planner.actions.clear')}</button>
+            <button type="button" className="share-route" onClick={() => void copyRouteLink()} disabled={!planner.startId || !planner.destinationId}>{t('planner.actions.share')}</button>
           </div>
-          <p className={`planner-status ${props.route.status === 'ok' || emptyRequest ? '' : 'planner-status-error'}`} role={props.route.status === 'ok' || emptyRequest ? 'status' : 'alert'}>{routeMessage(props.route, locale)}</p>
+          <p className={`planner-status ${planner.route.status === 'ok' || emptyRequest ? '' : 'planner-status-error'}`} role={planner.route.status === 'ok' || emptyRequest ? 'status' : 'alert'}>{routeMessage(planner.route, locale)}</p>
         </div>}
-      </section> : <RouteSheet route={props.route} translations={props.translations} selectedStepIndex={props.selectedStepIndex} onStepSelect={props.onStepSelect} expanded={panelOpen('directions')} onExpandedChange={(open) => setPanelOpen('directions', open)} onEditRoute={() => setPanelOpen('planner', true)} />}
+      </section> : <RouteSheet route={planner.route} translations={planner.translations} selectedStepIndex={camera.selectedStepIndex} onStepSelect={camera.selectStep} expanded={panelOpen('directions')} onExpandedChange={(open) => setPanelOpen('directions', open)} onEditRoute={() => setPanelOpen('planner', true)} />}
     </div>
-    {(shareMessage || props.interactionMessage) && <div className="app-toast" role="status">{shareMessage || props.interactionMessage}</div>}
+    {(shareMessage || feedback.interactionMessage) && <div className="app-toast" role="status">{shareMessage || feedback.interactionMessage}</div>}
   </div>;
 }

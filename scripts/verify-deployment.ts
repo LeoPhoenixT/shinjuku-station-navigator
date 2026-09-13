@@ -1,16 +1,17 @@
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { gzipSync } from 'node:zlib';
 import { benchmarkRoute } from '../src/routing/benchmark.js';
 import { buildOfficialGraph } from '../src/graph/buildOfficialGraph.js';
 import { mergeReviewedCustomGraph } from '../src/graph/buildReviewedCustomGraph.js';
 import { parseFloorDataset, parseNamedPlaces, parseOfficialNetwork } from '../src/schema/processed.js';
 import { parseReviewedCustomNetwork } from '../src/schema/reviewedCustomNetwork.js';
 import { parsePlaceTranslations } from '../src/schema/placeTranslations.js';
+import { assertJavaScriptBundleBudget, formatJavaScriptBundleSize, type JavaScriptBundleSize } from './release-budgets.js';
 
 const distRoot = 'dist';
 const rawExtensions = new Set(['.shp', '.shx', '.dbf', '.prj', '.cpg']);
 const MAX_PROCESSED_BYTES = 10_000_000;
-const MAX_JAVASCRIPT_CHUNK_BYTES = 1_000_000;
 const SITE_ORIGIN = 'https://shinjuku.leotctam.com';
 const EXPECTED_PROCESSED_ASSETS = [
   'jr-shinjuku-ticket-gates-b1-official-network.json',
@@ -84,10 +85,17 @@ export function verifyDeployment(): void {
 
   const distBytes = files.reduce((total, file) => total + statSync(file).size, 0);
   const processedBytes = dataFiles.reduce((total, file) => total + statSync(file).size, 0);
-  const javascriptFiles = files.filter((file) => path.extname(file) === '.js');
-  const largestJavascriptBytes = Math.max(...javascriptFiles.map((file) => statSync(file).size));
+  const javascriptBundles: JavaScriptBundleSize[] = files.filter((file) => path.extname(file) === '.js').map((file) => {
+    const contents = readFileSync(file);
+    return {
+      file: path.relative(distRoot, file).split(path.sep).join('/'),
+      rawBytes: contents.byteLength,
+      gzipBytes: gzipSync(contents).byteLength,
+    };
+  });
+  assertJavaScriptBundleBudget(javascriptBundles);
+  const largestJavascriptBytes = Math.max(...javascriptBundles.map((bundle) => bundle.rawBytes));
   if (processedBytes > MAX_PROCESSED_BYTES) throw new Error(`Processed browser data uses ${processedBytes} bytes, exceeding the ${MAX_PROCESSED_BYTES}-byte budget.`);
-  if (largestJavascriptBytes > MAX_JAVASCRIPT_CHUNK_BYTES) throw new Error(`Largest JavaScript chunk uses ${largestJavascriptBytes} bytes, exceeding the ${MAX_JAVASCRIPT_CHUNK_BYTES}-byte budget.`);
   writeFileSync('reports/current-release-status.md', [
     '# Current Release Status',
     '',
@@ -99,6 +107,8 @@ export function verifyDeployment(): void {
     `- Visual map: ${mapLayerCount.toLocaleString('en-US')} layers and ${map.features.length.toLocaleString('en-US')} features across ${mapFloorCount.toLocaleString('en-US')} floors.`,
     `- Release artifact: ${files.length} files and ${(distBytes / 1_000_000).toFixed(2)} MB.`,
     `- Processed browser data: ${dataFiles.length} files and ${(processedBytes / 1_000_000).toFixed(2)} MB.`,
+    '- JavaScript bundles:',
+    ...javascriptBundles.map((bundle) => `  - ${formatJavaScriptBundleSize(bundle)}.`),
     `- Largest JavaScript chunk: ${(largestJavascriptBytes / 1_000).toFixed(1)} kB.`,
     `- Representative A* route: ${benchmark.averageMilliseconds.toFixed(3)} ms average over ${benchmark.iterations} runs.`,
     '- Raw GIS files in the release: none.',
@@ -106,7 +116,9 @@ export function verifyDeployment(): void {
   ].join('\n'));
   console.log(`Release artifact: ${files.length} files, ${(distBytes / 1_000_000).toFixed(2)} MB total.`);
   console.log(`Processed browser data: ${dataFiles.length} files, ${(processedBytes / 1_000_000).toFixed(2)} MB total.`);
-  console.log(`Largest JavaScript chunk: ${(largestJavascriptBytes / 1_000).toFixed(1)} kB (budget ${(MAX_JAVASCRIPT_CHUNK_BYTES / 1_000).toFixed(0)} kB).`);
+  console.log('JavaScript bundle budgets verified:');
+  for (const bundle of javascriptBundles) console.log(`- ${formatJavaScriptBundleSize(bundle)}`);
+  console.log(`Largest JavaScript chunk: ${(largestJavascriptBytes / 1_000).toFixed(1)} kB.`);
   console.log(`Representative A* route: ${benchmark.averageMilliseconds.toFixed(3)} ms average over ${benchmark.iterations} runs.`);
   console.log('Repository-relative paths verified; raw GIS files absent.');
 }
