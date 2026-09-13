@@ -24,6 +24,7 @@ import { displayElevation } from '../map/stackedElevation.js';
 import { MAX_CAMERA_POLAR_ANGLE } from '../map/touchGestures.js';
 import { publicPlaceName } from '../places/placePresentation.js';
 import { ViewerControls } from './ViewerControls.js';
+import type { PlannerViewModel, ViewerDisplayViewModel, ViewerFeedbackViewModel, ViewerLegendViewModel, ViewerNavigationViewModel } from './viewerViewModels.js';
 import { useI18n } from '../i18n/context.js';
 
 const CAMERA_FAR_PADDING_METERS = 100;
@@ -200,6 +201,43 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
     planner.routeToDestination(place.id);
     setInteractionMessage(t('feedback.showingRoute', { place: publicPlaceName(place, locale, data.translations) }));
   };
+  const plannerView: PlannerViewModel = {
+    places: data.places.places,
+    translations: data.translations,
+    startId: planner.startId,
+    destinationId: planner.destinationId,
+    setStartId: (id) => selectPlannerPlace(id, 'start'),
+    setDestinationId: (id) => selectPlannerPlace(id, 'destination'),
+    swapPlaces: () => {
+      const start = planner.startId;
+      planner.setStartId(planner.destinationId);
+      planner.setDestinationId(start);
+      setInteractionMessage(t('feedback.swapped'));
+    },
+    clearRoute: () => {
+      planner.clearRoute();
+      resetAfterRouteClear();
+      setInteractionMessage(t('feedback.cleared'));
+    },
+    route: planner.route,
+    profile: planner.profile,
+    setProfile: planner.setProfile,
+    routeDirty: planner.routeDirty,
+    submitRoute: planner.submitRoute,
+  };
+  const navigationView: ViewerNavigationViewModel = {
+    floors: { floorIds, visibleFloors, routeFloorIds, activeFloor, floorViewMode, selectFloor, showStack, showRouteFloors, toggleCustomFloor },
+    camera: { rotationEnabled, setRotationEnabled, fitRoute, fitStation, zoomIn, zoomOut, showNorthView, showAngledView, cameraHeading, selectedStepIndex, selectStep },
+  };
+  const displayView: ViewerDisplayViewModel = {
+    layers: {
+      showOfficialNetwork, setShowOfficialNetwork, showFacilities, setShowFacilities, facilityCategories, enabledFacilityCategories,
+      toggleFacilityCategory, showAllFacilityCategories, clearAllFacilityCategories, resetFacilityCategories, showStructuralDetails, setShowStructuralDetails,
+    },
+    diagnostics: { debug, setDebug, showAllSourceLinks, setShowAllSourceLinks, showOfficialNodes, setShowOfficialNodes, showTwsi, setShowTwsi },
+  };
+  const feedbackView: ViewerFeedbackViewModel = { interactionMessage };
+  const legendView: ViewerLegendViewModel = { items: legendItems };
   return <div className="floor-viewer">
     <Canvas frameloop="demand" orthographic camera={{ position: [0, 120, 0.01], zoom: 1, near: 0.1, far: 3000 }} aria-label={t('app.viewerLabel')}>
       <color attach="background" args={["#08111f"]} />
@@ -211,26 +249,7 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
       <MapTouchControls controlsRef={orbitControlsRef} rotationEnabled={rotationEnabled} />
     </Canvas>
     <svg className="route-screen-overlay" aria-hidden="true"><path ref={routeHaloPathRef} className="route-screen-halo" /><path ref={transitionHaloPathRef} className="route-screen-transition-halo" /><path ref={routePathRef} className="route-screen-line" /><path ref={transitionPathRef} className="route-screen-transition-line" /></svg>
-    <ViewerControls
-      floorIds={floorIds} visibleFloors={visibleFloors} routeFloorIds={routeFloorIds} activeFloor={activeFloor} floorViewMode={floorViewMode} selectFloor={selectFloor} showStack={showStack} showRouteFloors={showRouteFloors} toggleCustomFloor={toggleCustomFloor}
-      debug={debug} setDebug={setDebug} showAllSourceLinks={showAllSourceLinks} setShowAllSourceLinks={setShowAllSourceLinks} places={data.places.places} translations={data.translations} startId={planner.startId} destinationId={planner.destinationId}
-      setStartId={(id) => selectPlannerPlace(id, 'start')} setDestinationId={(id) => selectPlannerPlace(id, 'destination')}
-      swapPlaces={() => { const start = planner.startId; planner.setStartId(planner.destinationId); planner.setDestinationId(start); setInteractionMessage(t('feedback.swapped')); }}
-      clearRoute={() => { planner.clearRoute(); resetAfterRouteClear(); setInteractionMessage(t('feedback.cleared')); }}
-      route={planner.route} profile={planner.profile} setProfile={planner.setProfile} routeDirty={planner.routeDirty} submitRoute={planner.submitRoute}
-      showOfficialNetwork={showOfficialNetwork} setShowOfficialNetwork={setShowOfficialNetwork} showOfficialNodes={showOfficialNodes} setShowOfficialNodes={setShowOfficialNodes}
-      showTwsi={showTwsi} setShowTwsi={setShowTwsi}
-      showFacilities={showFacilities} setShowFacilities={setShowFacilities} facilityCategories={facilityCategories} enabledFacilityCategories={enabledFacilityCategories}
-      toggleFacilityCategory={toggleFacilityCategory}
-      showAllFacilityCategories={showAllFacilityCategories} clearAllFacilityCategories={clearAllFacilityCategories} resetFacilityCategories={resetFacilityCategories}
-      showStructuralDetails={showStructuralDetails} setShowStructuralDetails={setShowStructuralDetails}
-      rotationEnabled={rotationEnabled} setRotationEnabled={setRotationEnabled}
-      fitRoute={fitRoute} fitStation={fitStation} zoomIn={zoomIn} zoomOut={zoomOut}
-      showNorthView={showNorthView} showAngledView={showAngledView}
-      cameraHeading={cameraHeading}
-      selectedStepIndex={selectedStepIndex} onStepSelect={selectStep} interactionMessage={interactionMessage}
-      legendItems={legendItems}
-    />
+    <ViewerControls planner={plannerView} navigation={navigationView} display={displayView} feedback={feedbackView} legend={legendView} />
   </div>;
 }
 

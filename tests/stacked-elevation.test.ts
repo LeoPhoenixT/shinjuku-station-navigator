@@ -17,7 +17,7 @@ describe('stacked floor display elevation', () => {
   });
 
   it('keeps every floor detailed in the default stack', () => {
-    expect(partitionVisibleFloors(['B1', 'G', '1'], 'G', [], 'stack')).toEqual({
+    expect(partitionVisibleFloors(['B1', 'G', '1'], 'G', ['B1', 'G'], 'stack')).toEqual({
       activeFloors: ['B1', 'G', '1'],
       contextFloors: [],
     });
@@ -31,6 +31,20 @@ describe('stacked floor display elevation', () => {
     expect(partitionVisibleFloors(['B1', 'G', '1'], 'G', [], 'focused')).toEqual({
       activeFloors: ['G'],
       contextFloors: ['B1', '1'],
+    });
+  });
+
+  it('keeps only the selected floor detailed in focused mode when a route is active', () => {
+    expect(partitionVisibleFloors(['B1', 'G', '1'], '1', ['B1', 'G'], 'focused')).toEqual({
+      activeFloors: ['1'],
+      contextFloors: ['B1', 'G'],
+    });
+  });
+
+  it('keeps each visible floor detailed in custom mode when a route is active', () => {
+    expect(partitionVisibleFloors(['B1', '1'], 'B1', ['G'], 'custom')).toEqual({
+      activeFloors: ['B1', '1'],
+      contextFloors: [],
     });
   });
 

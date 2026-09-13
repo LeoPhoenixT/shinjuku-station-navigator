@@ -30,6 +30,12 @@ export interface GraphValidationReport {
 const NEAR_DUPLICATE_TOLERANCE_METERS = 0.05;
 
 function components(graph: RoutingGraph): ConnectedComponentReport[] {
+  const adjacency = new Map(graph.nodes.map((node) => [node.id, new Set<string>()]));
+  for (const edge of graph.edges) {
+    if (!adjacency.has(edge.from) || !adjacency.has(edge.to)) continue;
+    adjacency.get(edge.from)?.add(edge.to);
+    adjacency.get(edge.to)?.add(edge.from);
+  }
   const visited = new Set<string>();
   const reports: ConnectedComponentReport[] = [];
   for (const node of graph.nodes) {
@@ -41,17 +47,19 @@ function components(graph: RoutingGraph): ConnectedComponentReport[] {
       const current = stack.pop();
       if (!current) continue;
       nodeIds.push(current);
-      for (const edge of graph.adjacency[current] ?? []) {
-        if (!visited.has(edge.to)) {
-          visited.add(edge.to);
-          stack.push(edge.to);
+      for (const neighbor of adjacency.get(current) ?? []) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          stack.push(neighbor);
         }
       }
     }
     nodeIds.sort((a, b) => a.localeCompare(b));
-    reports.push({ id: reports.length + 1, nodeIds });
+    reports.push({ id: 0, nodeIds });
   }
-  return reports.sort((a, b) => b.nodeIds.length - a.nodeIds.length || a.nodeIds[0].localeCompare(b.nodeIds[0]));
+  return reports
+    .sort((a, b) => b.nodeIds.length - a.nodeIds.length || a.nodeIds[0].localeCompare(b.nodeIds[0]))
+    .map((report, index) => ({ ...report, id: index + 1 }));
 }
 
 export function validateGraph(graph: RoutingGraph): GraphValidationReport {

@@ -9,9 +9,20 @@ import { parseNamedPlaces } from '../src/schema/processed';
 import { parsePlaceTranslationSource, parsePlaceTranslations, type PlaceTranslationSource } from '../src/schema/placeTranslations';
 
 const namedPlaces = parseNamedPlaces(JSON.parse(readFileSync('public/data/processed/shinjuku-b1-named-places.json', 'utf8')));
-const translations = parsePlaceTranslations(JSON.parse(readFileSync('public/data/processed/shinjuku-place-translations.json', 'utf8')), namedPlaces);
+const translationsValue: unknown = JSON.parse(readFileSync('public/data/processed/shinjuku-place-translations.json', 'utf8'));
+const translations = parsePlaceTranslations(translationsValue, namedPlaces);
 const source = JSON.parse(readFileSync('data/place-translations.source.json', 'utf8')) as PlaceTranslationSource;
 const temporaryDirectories: string[] = [];
+
+type TranslationFixture = {
+  statistics: {
+    sourceCounts: Record<string, unknown>;
+  };
+};
+
+function translationFixture(): TranslationFixture {
+  return structuredClone(translationsValue) as TranslationFixture;
+}
 
 afterEach(() => {
   temporaryDirectories.splice(0).forEach((directory) => rmSync(directory, { recursive: true, force: true }));
@@ -23,6 +34,28 @@ describe('Phase 2 place translations', () => {
     expect(translations.areas).toHaveLength(new Set(namedPlaces.places.filter(({ routable }) => routable).map(({ sourceFacility }) => sourceFacility)).size);
     expect(translations.places.filter(({ status }) => status === 'pending').every(({ en }) => en === undefined)).toBe(true);
     expect(translations.places.filter(({ status }) => status !== 'pending').every(({ en }) => Boolean(en))).toBe(true);
+  });
+
+  it('accepts source counts when their JSON key order differs', () => {
+    const fixture = translationFixture();
+    fixture.statistics.sourceCounts = Object.fromEntries(Object.entries(fixture.statistics.sourceCounts).reverse());
+
+    expect(parsePlaceTranslations(fixture, namedPlaces).statistics.sourceCounts).toEqual(translations.statistics.sourceCounts);
+  });
+
+  it('rejects missing, extra, incorrect, invalid-type, and non-finite source counts', () => {
+    const sourceKey = Object.keys(translationFixture().statistics.sourceCounts)[0];
+    const expectRejected = (mutate: (sourceCounts: Record<string, unknown>) => void, message: RegExp) => {
+      const fixture = translationFixture();
+      mutate(fixture.statistics.sourceCounts);
+      expect(() => parsePlaceTranslations(fixture, namedPlaces)).toThrow(message);
+    };
+
+    expectRejected((sourceCounts) => { delete sourceCounts[sourceKey]; }, new RegExp(`sourceCounts is missing count ${sourceKey}`));
+    expectRejected((sourceCounts) => { sourceCounts.unexpected = 0; }, /sourceCounts contains unexpected count unexpected/);
+    expectRejected((sourceCounts) => { sourceCounts[sourceKey] = 0; }, new RegExp(`sourceCounts\\.${sourceKey} does not match translation records`));
+    expectRejected((sourceCounts) => { sourceCounts[sourceKey] = 'wrong'; }, new RegExp(`sourceCounts\\.${sourceKey} must be a non-negative integer`));
+    expectRejected((sourceCounts) => { sourceCounts[sourceKey] = Number.NaN; }, new RegExp(`sourceCounts\\.${sourceKey} must be a non-negative integer`));
   });
 
   it('rejects unknown IDs, duplicate IDs, unsupported locale keys, and Japanese source mismatches', () => {

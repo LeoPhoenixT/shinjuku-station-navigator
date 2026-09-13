@@ -7,11 +7,48 @@ import { parseNamedPlaces, parseOfficialNetwork } from '../src/schema/processed'
 import { parseReviewedCustomNetwork } from '../src/schema/reviewedCustomNetwork';
 
 const official = parseOfficialNetwork(JSON.parse(readFileSync('public/data/processed/jr-shinjuku-ticket-gates-b1-official-network.json', 'utf8')) as unknown);
-const reviewed = parseReviewedCustomNetwork(JSON.parse(readFileSync('public/data/processed/shinjuku-reviewed-custom-network.json', 'utf8')) as unknown, official);
+const reviewedValue: unknown = JSON.parse(readFileSync('public/data/processed/shinjuku-reviewed-custom-network.json', 'utf8'));
+const reviewed = parseReviewedCustomNetwork(reviewedValue, official);
 const places = parseNamedPlaces(JSON.parse(readFileSync('public/data/processed/shinjuku-b1-named-places.json', 'utf8')) as unknown, official, reviewed).places;
 const graph = mergeReviewedCustomGraph(buildOfficialGraph(official), reviewed);
 
+type ReviewedNetworkFixture = {
+  coordinateSystem: Record<string, unknown>;
+};
+
+function reviewedNetworkFixture(): ReviewedNetworkFixture {
+  return structuredClone(reviewedValue) as ReviewedNetworkFixture;
+}
+
+function reverseKeys(value: Record<string, unknown>): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(value).reverse());
+}
+
 describe('reviewed custom JR B1 topology', () => {
+  it('accepts a coordinate system when its JSON key order differs', () => {
+    const fixture = reviewedNetworkFixture();
+    const coordinateSystem = reverseKeys(fixture.coordinateSystem);
+    coordinateSystem.origin = reverseKeys(coordinateSystem.origin as Record<string, unknown>);
+    coordinateSystem.axes = reverseKeys(coordinateSystem.axes as Record<string, unknown>);
+    fixture.coordinateSystem = coordinateSystem;
+
+    expect(parseReviewedCustomNetwork(fixture, official).coordinateSystem).toEqual(official.coordinateSystem);
+  });
+
+  it('rejects missing, extra, mismatched, invalid-type, and non-finite coordinate-system fields', () => {
+    const expectRejected = (mutate: (coordinateSystem: Record<string, unknown>) => void, message: RegExp) => {
+      const fixture = reviewedNetworkFixture();
+      mutate(fixture.coordinateSystem);
+      expect(() => parseReviewedCustomNetwork(fixture, official)).toThrow(message);
+    };
+
+    expectRejected((coordinateSystem) => { delete coordinateSystem.units; }, /coordinateSystem is missing required key units/);
+    expectRejected((coordinateSystem) => { coordinateSystem.unexpected = 'value'; }, /coordinateSystem contains unsupported key unexpected/);
+    expectRejected((coordinateSystem) => { coordinateSystem.units = 'feet'; }, /coordinateSystem.units must match official network coordinate system/);
+    expectRejected((coordinateSystem) => { (coordinateSystem.axes as Record<string, unknown>).x = 1; }, /coordinateSystem.axes.x must be a non-empty string/);
+    expectRejected((coordinateSystem) => { (coordinateSystem.origin as Record<string, unknown>).lon = Number.POSITIVE_INFINITY; }, /coordinateSystem.origin.lon must be a finite number/);
+  });
+
   it('models the reviewed turns and West branch junction as explicit nodes', () => {
     expect(reviewed.nodes).toHaveLength(6);
     expect(reviewed.edges).toHaveLength(7);

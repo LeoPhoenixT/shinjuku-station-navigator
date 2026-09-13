@@ -61,6 +61,8 @@ Map settings include:
 - Free rotation
 - Developer diagnostics
 
+The settings surface is a non-modal dialog (`aria-modal="false"`). Opening it moves focus to its Done/close button; Escape closes it; closing restores focus to the settings summary when that trigger still exists. It deliberately has no focus trap, so native keyboard use of its disclosures and checkboxes remains unchanged.
+
 ### Interface language
 
 The language selector is under **Map settings → Language**. English is the default and the selected language is restored on later visits. It changes application-owned visible text, accessible labels, categories, floor names, feedback, warnings, and complete direction sentences immediately.

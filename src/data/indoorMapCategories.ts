@@ -1,3 +1,5 @@
+import type { NamedPlaceRecord } from '../schema/processed.js';
+
 export type IndoorMapCategoryLayer = 'Space' | 'Fixture' | 'Facility';
 
 export type IndoorMapSemanticRole =
@@ -237,6 +239,71 @@ export const FACILITY_CATEGORIES = [
   facility('F108', '出口', 'Exit', 'transport', 'exit', true, true, true, 40),
   facility('F109', 'インターホン', 'Interphone', 'safety', 'safety', true, true, true, 40),
 ] as const satisfies readonly IndoorMapCategoryDefinition[];
+
+export type FacilityNamedPlacePolicy =
+  | { namedPlaceCategory: NamedPlaceRecord['category']; exclusionReason?: never }
+  | { namedPlaceCategory?: never; exclusionReason: 'outside-current-named-place-taxonomy' };
+
+/**
+ * This explicit registry is the sole promotion decision for every current
+ * destination-eligible Facility code. A new eligible code must be assigned a
+ * named-place category or an exclusion before it can be used by the builder.
+ */
+export const FACILITY_NAMED_PLACE_POLICIES: Readonly<Record<string, FacilityNamedPlacePolicy>> = {
+  F001: { namedPlaceCategory: 'toilet' },
+  F002: { namedPlaceCategory: 'toilet' },
+  F003: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F004: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F005: { namedPlaceCategory: 'toilet' },
+  F006: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F007: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F008: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F009: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F010: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F011: { namedPlaceCategory: 'stairs' },
+  F012: { namedPlaceCategory: 'elevator' },
+  F013: { namedPlaceCategory: 'escalator' },
+  F014: { namedPlaceCategory: 'slope' },
+  F015: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F017: { namedPlaceCategory: 'entrance' },
+  F018: { namedPlaceCategory: 'information' },
+  F019: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F020: { namedPlaceCategory: 'waiting-room' },
+  F021: { namedPlaceCategory: 'nursing-room' },
+  F022: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F023: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F024: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F025: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F026: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F027: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F028: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F029: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F030: { namedPlaceCategory: 'atm' },
+  F031: { namedPlaceCategory: 'locker' },
+  F035: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F036: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F038: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F039: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F040: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F041: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F043: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F044: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F045: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F101: { namedPlaceCategory: 'ticket-office' },
+  F102: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F103: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F105: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F106: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F107: { exclusionReason: 'outside-current-named-place-taxonomy' },
+  F108: { namedPlaceCategory: 'exit' },
+  F109: { exclusionReason: 'outside-current-named-place-taxonomy' },
+};
+
+export function resolveFacilityNamedPlacePolicy(sourceCode: unknown): FacilityNamedPlacePolicy | undefined {
+  const definition = FACILITY_CATEGORIES.find(({ code }) => code === normalizeIndoorMapCategoryCode(sourceCode));
+  if (!definition?.destinationEligible) return undefined;
+  return FACILITY_NAMED_PLACE_POLICIES[definition.code];
+}
 
 export const INDOOR_MAP_CATEGORIES: readonly IndoorMapCategoryDefinition[] = [
   ...SPACE_CATEGORIES,
