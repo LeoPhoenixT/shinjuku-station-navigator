@@ -5,6 +5,7 @@ import { TOUCH, Vector3 } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { floorElevationMeters } from '../data/floors.js';
 import { useRoutePlanner } from '../features/route-planner/useRoutePlanner.js';
+import { displayedRouteEndpoints } from '../features/route-planner/displayedRouteEndpoints.js';
 import { buildGraphFromProcessedData } from '../graph/buildGraph.js';
 import { buildOfficialGraph } from '../graph/buildOfficialGraph.js';
 import { mergeReviewedCustomGraph } from '../graph/buildReviewedCustomGraph.js';
@@ -95,6 +96,7 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
   const twsiGraph = useMemo(() => buildGraphFromProcessedData(data.floor), [data.floor]);
   const facilityMarkerCandidates = useMemo(() => buildFacilityMarkerCandidates(data.floor.features, routingGraph.nodes.map((node) => ({ id: node.id, floorId: node.floorId, x: node.x, z: node.z }))), [data.floor.features, routingGraph.nodes]);
   const planner = useRoutePlanner(data.network, routingGraph, data.places.places);
+  const markerEndpoints = displayedRouteEndpoints(planner.route, planner.startId, planner.destinationId);
   const initialDestinationFloor = data.places.places.find(({ id }) => id === planner.destinationId)?.floorId;
   const {
     interactionMessage,
@@ -179,9 +181,9 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
   }, [routingGraph.edges, routingGraph.nodes, visibleFloors]);
   const legendItems = useMemo(() => buildMapLegendItems({
     features: data.floor.features, facilityCandidates: filteredFacilityCandidates, places: data.places.places, visibleFloors, route: planner.route,
-    startId: planner.startId, destinationId: planner.destinationId, showFacilities, showStructuralDetails, showOfficialNetwork, networkContexts: visibleNetworkState.contexts, hasOneWayNetwork: visibleNetworkState.hasOneWay, debug, showAllSourceLinks, showTwsi,
+    startId: markerEndpoints.startId, destinationId: markerEndpoints.destinationId, showFacilities, showStructuralDetails, showOfficialNetwork, networkContexts: visibleNetworkState.contexts, hasOneWayNetwork: visibleNetworkState.hasOneWay, debug, showAllSourceLinks, showTwsi,
     locale,
-  }), [data.floor.features, data.places.places, debug, filteredFacilityCandidates, locale, planner.destinationId, planner.route, planner.startId, showAllSourceLinks, showFacilities, showOfficialNetwork, showStructuralDetails, showTwsi, visibleFloors, visibleNetworkState]);
+  }), [data.floor.features, data.places.places, debug, filteredFacilityCandidates, locale, markerEndpoints.destinationId, markerEndpoints.startId, planner.route, showAllSourceLinks, showFacilities, showOfficialNetwork, showStructuralDetails, showTwsi, visibleFloors, visibleNetworkState]);
 
   const selectPlannerPlace = (id: string, target: 'start' | 'destination') => {
     if (target === 'start') planner.setStartId(id); else planner.setDestinationId(id);
@@ -243,7 +245,7 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
       <color attach="background" args={["#08111f"]} />
       <FitMapCamera bounds={cameraBounds} datasetBounds={data.floor.statistics.bounds} revision={cameraRevision} stacked={stackedFloors} orientation={cameraOrientation} zoomMultiplier={zoomMultiplier} />
       <CameraHeadingReporter onHeadingChange={setCameraHeading} />
-      <MapScene activeFloor={activeFloor} floorViewMode={floorViewMode} routeFloorIds={routeFloorIds} visibleFloors={visibleFloors} floor={data.floor} officialNetwork={data.network} routingGraph={routingGraph} twsiGraph={twsiGraph} places={data.places.places} translations={data.translations} facilityMarkerCandidates={facilityMarkerCandidates} route={planner.route} startId={planner.startId} destinationId={planner.destinationId} highlightedRouteEdgeIds={highlightedEdgeIds} debug={debug} showAllSourceLinks={showAllSourceLinks} showOfficialNetwork={showOfficialNetwork} showOfficialNodes={showOfficialNodes} showTwsi={showTwsi} showFacilities={showFacilities} enabledFacilityCategories={enabledFacilityCategories} showGateLabels={showFacilities && enabledFacilityCategories.has(GATE_CATEGORY_CODE)} showStructuralDetails={showStructuralDetails} onFacilityRouteAction={selectFacilityRouteAction} />
+      <MapScene activeFloor={activeFloor} floorViewMode={floorViewMode} routeFloorIds={routeFloorIds} visibleFloors={visibleFloors} floor={data.floor} officialNetwork={data.network} routingGraph={routingGraph} twsiGraph={twsiGraph} places={data.places.places} translations={data.translations} facilityMarkerCandidates={facilityMarkerCandidates} route={planner.route} startId={markerEndpoints.startId} destinationId={markerEndpoints.destinationId} highlightedRouteEdgeIds={highlightedEdgeIds} debug={debug} showAllSourceLinks={showAllSourceLinks} showOfficialNetwork={showOfficialNetwork} showOfficialNodes={showOfficialNodes} showTwsi={showTwsi} showFacilities={showFacilities} enabledFacilityCategories={enabledFacilityCategories} showGateLabels={showFacilities && enabledFacilityCategories.has(GATE_CATEGORY_CODE)} showStructuralDetails={showStructuralDetails} onFacilityRouteAction={selectFacilityRouteAction} />
       <RouteScreenOverlay route={planner.route} visibleFloors={visibleFloors} floor={data.floor} routingGraph={routingGraph} haloPathRef={routeHaloPathRef} routePathRef={routePathRef} transitionHaloPathRef={transitionHaloPathRef} transitionPathRef={transitionPathRef} />
       <OrbitControls ref={orbitControlsRef} key={`${cameraRevision}:${visibleFloors.join(',')}:${activeFloor}`} makeDefault target={[cameraCenter.x, cameraCenter.y, cameraCenter.z]} enableRotate={rotationEnabled} zoomSpeed={0.55} minZoom={0.2} maxZoom={24} maxPolarAngle={MAX_CAMERA_POLAR_ANGLE} touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_PAN }} />
       <MapTouchControls controlsRef={orbitControlsRef} rotationEnabled={rotationEnabled} />

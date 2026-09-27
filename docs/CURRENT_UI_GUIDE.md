@@ -27,6 +27,8 @@ It provides:
 - Clear route
 - Share route
 
+Share route is available after a route has been submitted successfully and there are no unsubmitted endpoint or profile changes. The map's endpoint markers and legend follow the displayed submitted route while a different draft is being edited; without a displayed route, they show the draft endpoints.
+
 The searchable catalog contains the original named openings and spaces plus reviewed Facility destinations. Opening an empty search shows the first 100 deterministic results and asks for a name, area, or category when more exist; typing searches the full catalog. The index always includes authoritative Japanese, reviewed/specification English, both alias sets, both category languages, and raw/reviewed area terms, so users can search in either language without changing the interface locale.
 
 When a valid route is calculated, the planner collapses into a compact summary. **Edit route** reopens it.

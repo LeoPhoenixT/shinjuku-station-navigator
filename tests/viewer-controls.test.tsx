@@ -117,6 +117,25 @@ describe('viewer controls', () => {
     expect(options[0]).toHaveTextContent('East toilet');
   });
 
+  it('keeps category shortcuts open while focus moves within search and closes on Escape or outside blur', () => {
+    renderControls();
+    const input = screen.getByLabelText('Search destination place');
+    fireEvent.focus(input);
+    const categories = screen.getByRole('group', { name: 'Destination categories' });
+    const toilets = within(categories).getByRole('button', { name: 'Toilets' });
+    fireEvent.blur(input, { relatedTarget: toilets });
+    fireEvent.focus(toilets);
+    expect(categories).toBeInTheDocument();
+    fireEvent.click(toilets);
+    expect(toilets).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.keyDown(toilets, { key: 'Escape' });
+    expect(screen.queryByRole('group', { name: 'Destination categories' })).not.toBeInTheDocument();
+    expect(input).toHaveFocus();
+    fireEvent.focus(input);
+    fireEvent.blur(input, { relatedTarget: document.body });
+    expect(screen.queryByRole('group', { name: 'Destination categories' })).not.toBeInTheDocument();
+  });
+
   it('clears both route endpoints from one action', () => {
     const props = renderControls();
     fireEvent.click(screen.getByRole('button', { name: 'Clear route' }));
@@ -327,10 +346,23 @@ describe('viewer controls', () => {
   it('copies the complete current route URL with transient feedback', async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
-    renderControls();
+    renderControls({ route: okRoute });
+    fireEvent.click(screen.getByRole('button', { name: 'Edit route' }));
     fireEvent.click(screen.getByRole('button', { name: 'Share route' }));
     await waitFor(() => expect(writeText).toHaveBeenCalledWith(window.location.href));
-    expect(screen.getByRole('status')).toHaveTextContent('Route link copied');
+    expect(screen.getByText('Route link copied.')).toBeInTheDocument();
+  });
+
+  it('cannot share unsubmitted endpoints or a changed route draft', () => {
+    const clipboard = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: clipboard } });
+    const view = render(<ViewerControls {...viewerControlsProps(renderProps(false, { route: { status: 'invalid-place', placeId: '', reason: 'not-found' }, routeDirty: true }))} />);
+    const share = screen.getByRole('button', { name: 'Share route' });
+    expect(share).toBeDisabled();
+    view.rerender(<ViewerControls {...viewerControlsProps(renderProps(false, { route: okRoute, routeDirty: true }))} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Edit route' }));
+    expect(screen.getByRole('button', { name: 'Share route' })).toBeDisabled();
+    expect(clipboard).not.toHaveBeenCalled();
   });
 
   it('keeps only one major overlay expanded on narrow screens', () => {

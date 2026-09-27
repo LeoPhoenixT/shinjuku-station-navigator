@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useMemo, useState, type KeyboardEvent } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { buildPlaceIdIndex, buildPlaceSearchIndex, groupPlacesByFloorArea, placeDisplayName, type PlaceSearchIndex } from '../features/route-planner/placeSearch.js';
 import { categoryDisplayName, placeSecondaryText, publicPlaceName } from '../places/placePresentation.js';
 import type { NamedPlaceRecord } from '../schema/processed.js';
@@ -34,6 +34,7 @@ function PlaceSearchInput({ kind, searchIndex, translations, value, onChange }: 
   const searchLabel = locale === 'en' ? label.toLocaleLowerCase('en') : label;
   const listId = useId();
   const inputId = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
   const selected = searchIndex.findById(value);
   const [query, setQuery] = useState(selected ? placeDisplayName(selected, locale, translations) : value);
   const [open, setOpen] = useState(false);
@@ -68,9 +69,6 @@ function PlaceSearchInput({ kind, searchIndex, translations, value, onChange }: 
     } else if (event.key === 'Enter' && open && matches[activeIndex]) {
       event.preventDefault();
       choose(matches[activeIndex]);
-    } else if (event.key === 'Escape') {
-      setOpen(false);
-      setQuery(selected ? placeDisplayName(selected, locale, translations) : value);
     }
   };
 
@@ -78,8 +76,18 @@ function PlaceSearchInput({ kind, searchIndex, translations, value, onChange }: 
     ['gate', t('search.gates')], ['exit', t('search.exits')], ['toilet', t('search.toilets')], ['elevator', t('search.elevators')], ['locker', t('search.lockers')],
   ] as const).filter(([candidate]) => searchIndex.categories.includes(candidate));
 
-  return <div className="place-search"><label htmlFor={inputId}>{label}</label>
+  return <div className="place-search" onBlur={(event) => {
+    if (event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)) return;
+    setOpen(false);
+    setQuery(selectedText);
+  }} onKeyDown={(event) => {
+    if (event.key !== 'Escape') return;
+    inputRef.current?.focus();
+    setOpen(false);
+    setQuery(selectedText);
+  }}><label htmlFor={inputId}>{label}</label>
     <input
+      ref={inputRef}
       id={inputId}
       type="search"
       role="combobox"
@@ -100,10 +108,6 @@ function PlaceSearchInput({ kind, searchIndex, translations, value, onChange }: 
         if (next.length === 0) onChange('');
         const exact = searchIndex.findByDisplayName(next, locale);
         if (exact) onChange(exact.id);
-      }}
-      onBlur={() => {
-        setOpen(false);
-        setQuery(selected ? placeDisplayName(selected, locale, translations) : value);
       }}
       autoComplete="off"
     />
@@ -205,7 +209,7 @@ export function ViewerControls(props: ViewerControlsProps) {
             <label className="profile-control"><span>{t('planner.routeField')}</span><select aria-label={t('profile.label')} value={planner.profile} onChange={(event) => planner.setProfile(event.target.value as PlannerViewModel['profile'])}><option value="shortest">{t('profile.shortest')}</option><option value="accessible">{t('profile.accessible')}</option><option value="avoid-stairs">{t('profile.avoidStairs')}</option><option value="prefer-elevator">{t('profile.preferElevator')}</option><option value="fewest-floor-changes">{t('profile.fewestFloorChanges')}</option></select></label>
             <button type="button" className="submit-route" onClick={planner.submitRoute} disabled={!planner.startId || !planner.destinationId || !planner.routeDirty}>{t(planner.route.status === 'ok' ? 'planner.actions.update' : 'planner.actions.show')}</button>
             <button type="button" className="clear-route" onClick={planner.clearRoute} disabled={!planner.startId && !planner.destinationId && planner.route.status !== 'ok'}>{t('planner.actions.clear')}</button>
-            <button type="button" className="share-route" onClick={() => void copyRouteLink()} disabled={!planner.startId || !planner.destinationId}>{t('planner.actions.share')}</button>
+            <button type="button" className="share-route" onClick={() => void copyRouteLink()} disabled={planner.route.status !== 'ok' || planner.routeDirty}>{t('planner.actions.share')}</button>
           </div>
           <p className={`planner-status ${planner.route.status === 'ok' || emptyRequest ? '' : 'planner-status-error'}`} role={planner.route.status === 'ok' || emptyRequest ? 'status' : 'alert'}>{routeMessage(planner.route, locale)}</p>
         </div>}
