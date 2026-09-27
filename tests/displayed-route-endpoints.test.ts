@@ -6,10 +6,10 @@ describe('displayed route endpoints', () => {
   const route = { status: 'ok', start: { id: 'A' }, destination: { id: 'B' } } as RoutePlan;
 
   it('keeps visible route markers on submitted endpoints while the draft changes', () => {
-    expect(displayedRouteEndpoints(route, 'C', 'B')).toEqual({ startId: 'A', destinationId: 'B' });
+    expect(displayedRouteEndpoints(route, { startId: 'C', destinationId: 'B' })).toEqual({ startId: 'A', destinationId: 'B' });
   });
 
   it('shows draft markers when there is no displayed route', () => {
-    expect(displayedRouteEndpoints({ status: 'invalid-place', placeId: '', reason: 'not-found' }, 'C', '')).toEqual({ startId: 'C', destinationId: '' });
+    expect(displayedRouteEndpoints({ status: 'invalid-place', placeId: '', reason: 'not-found' }, { startId: 'C', destinationId: '' })).toEqual({ startId: 'C', destinationId: '' });
   });
 });

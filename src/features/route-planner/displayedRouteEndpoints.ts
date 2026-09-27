@@ -1,6 +1,6 @@
 import type { RoutePlan } from '../../routing/routeService.js';
 
-export function displayedRouteEndpoints(route: RoutePlan, startId: string, destinationId: string): { startId: string; destinationId: string } {
-  if (route.status === 'ok') return { startId: route.start.id, destinationId: route.destination.id };
-  return { startId, destinationId };
+export function displayedRouteEndpoints(displayedRoute: RoutePlan, draft: { readonly startId: string; readonly destinationId: string }): { startId: string; destinationId: string } {
+  if (displayedRoute.status === 'ok') return { startId: displayedRoute.start.id, destinationId: displayedRoute.destination.id };
+  return { startId: draft.startId, destinationId: draft.destinationId };
 }

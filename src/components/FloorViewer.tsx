@@ -96,8 +96,8 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
   const twsiGraph = useMemo(() => buildGraphFromProcessedData(data.floor), [data.floor]);
   const facilityMarkerCandidates = useMemo(() => buildFacilityMarkerCandidates(data.floor.features, routingGraph.nodes.map((node) => ({ id: node.id, floorId: node.floorId, x: node.x, z: node.z }))), [data.floor.features, routingGraph.nodes]);
   const planner = useRoutePlanner(data.network, routingGraph, data.places.places);
-  const markerEndpoints = displayedRouteEndpoints(planner.route, planner.startId, planner.destinationId);
-  const initialDestinationFloor = data.places.places.find(({ id }) => id === planner.destinationId)?.floorId;
+  const markerEndpoints = displayedRouteEndpoints(planner.displayedRoute, planner.draft);
+  const initialDestinationFloor = data.places.places.find(({ id }) => id === planner.draft.destinationId)?.floorId;
   const {
     interactionMessage,
     setInteractionMessage,
@@ -110,7 +110,7 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
   const navigation = useViewerNavigation({
     floor: data.floor,
     graph: routingGraph,
-    route: planner.route,
+    route: planner.displayedRoute,
     floorIds,
     allFloorIds,
     initialDestinationFloor,
@@ -180,23 +180,23 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
     return { contexts: [...new Set(edges.map((edge) => classifyNetworkEdgeContext(edge, nodes)))], hasOneWay: edges.some(({ direction }) => direction !== 'both') };
   }, [routingGraph.edges, routingGraph.nodes, visibleFloors]);
   const legendItems = useMemo(() => buildMapLegendItems({
-    features: data.floor.features, facilityCandidates: filteredFacilityCandidates, places: data.places.places, visibleFloors, route: planner.route,
+    features: data.floor.features, facilityCandidates: filteredFacilityCandidates, places: data.places.places, visibleFloors, route: planner.displayedRoute,
     startId: markerEndpoints.startId, destinationId: markerEndpoints.destinationId, showFacilities, showStructuralDetails, showOfficialNetwork, networkContexts: visibleNetworkState.contexts, hasOneWayNetwork: visibleNetworkState.hasOneWay, debug, showAllSourceLinks, showTwsi,
     locale,
-  }), [data.floor.features, data.places.places, debug, filteredFacilityCandidates, locale, markerEndpoints.destinationId, markerEndpoints.startId, planner.route, showAllSourceLinks, showFacilities, showOfficialNetwork, showStructuralDetails, showTwsi, visibleFloors, visibleNetworkState]);
+  }), [data.floor.features, data.places.places, debug, filteredFacilityCandidates, locale, markerEndpoints.destinationId, markerEndpoints.startId, planner.displayedRoute, showAllSourceLinks, showFacilities, showOfficialNetwork, showStructuralDetails, showTwsi, visibleFloors, visibleNetworkState]);
 
   const selectPlannerPlace = (id: string, target: 'start' | 'destination') => {
-    if (target === 'start') planner.setStartId(id); else planner.setDestinationId(id);
+    if (target === 'start') planner.draft.setStartId(id); else planner.draft.setDestinationId(id);
     clearInteractionMessage();
   };
   const selectFacilityRouteAction = (place: (typeof data.places.places)[number], target: 'start' | 'destination') => {
     if (target === 'start') {
-      planner.setStartId(place.id);
+      planner.draft.setStartId(place.id);
       setInteractionMessage(t('feedback.startSet', { place: publicPlaceName(place, locale, data.translations) }));
       return;
     }
-    if (!planner.startId) {
-      planner.setDestinationId(place.id);
+    if (!planner.draft.startId) {
+      planner.draft.setDestinationId(place.id);
       setInteractionMessage(t('feedback.destinationNeedsStart', { place: publicPlaceName(place, locale, data.translations) }));
       return;
     }
@@ -206,14 +206,16 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
   const plannerView: PlannerViewModel = {
     places: data.places.places,
     translations: data.translations,
-    startId: planner.startId,
-    destinationId: planner.destinationId,
-    setStartId: (id) => selectPlannerPlace(id, 'start'),
-    setDestinationId: (id) => selectPlannerPlace(id, 'destination'),
+    draft: {
+      ...planner.draft,
+      setStartId: (id) => selectPlannerPlace(id, 'start'),
+      setDestinationId: (id) => selectPlannerPlace(id, 'destination'),
+    },
+    displayedRoute: planner.displayedRoute,
     swapPlaces: () => {
-      const start = planner.startId;
-      planner.setStartId(planner.destinationId);
-      planner.setDestinationId(start);
+      const start = planner.draft.startId;
+      planner.draft.setStartId(planner.draft.destinationId);
+      planner.draft.setDestinationId(start);
       setInteractionMessage(t('feedback.swapped'));
     },
     clearRoute: () => {
@@ -221,10 +223,6 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
       resetAfterRouteClear();
       setInteractionMessage(t('feedback.cleared'));
     },
-    route: planner.route,
-    profile: planner.profile,
-    setProfile: planner.setProfile,
-    routeDirty: planner.routeDirty,
     submitRoute: planner.submitRoute,
   };
   const navigationView: ViewerNavigationViewModel = {
@@ -245,8 +243,8 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
       <color attach="background" args={["#08111f"]} />
       <FitMapCamera bounds={cameraBounds} datasetBounds={data.floor.statistics.bounds} revision={cameraRevision} stacked={stackedFloors} orientation={cameraOrientation} zoomMultiplier={zoomMultiplier} />
       <CameraHeadingReporter onHeadingChange={setCameraHeading} />
-      <MapScene activeFloor={activeFloor} floorViewMode={floorViewMode} routeFloorIds={routeFloorIds} visibleFloors={visibleFloors} floor={data.floor} officialNetwork={data.network} routingGraph={routingGraph} twsiGraph={twsiGraph} places={data.places.places} translations={data.translations} facilityMarkerCandidates={facilityMarkerCandidates} route={planner.route} startId={markerEndpoints.startId} destinationId={markerEndpoints.destinationId} highlightedRouteEdgeIds={highlightedEdgeIds} debug={debug} showAllSourceLinks={showAllSourceLinks} showOfficialNetwork={showOfficialNetwork} showOfficialNodes={showOfficialNodes} showTwsi={showTwsi} showFacilities={showFacilities} enabledFacilityCategories={enabledFacilityCategories} showGateLabels={showFacilities && enabledFacilityCategories.has(GATE_CATEGORY_CODE)} showStructuralDetails={showStructuralDetails} onFacilityRouteAction={selectFacilityRouteAction} />
-      <RouteScreenOverlay route={planner.route} visibleFloors={visibleFloors} floor={data.floor} routingGraph={routingGraph} haloPathRef={routeHaloPathRef} routePathRef={routePathRef} transitionHaloPathRef={transitionHaloPathRef} transitionPathRef={transitionPathRef} />
+      <MapScene activeFloor={activeFloor} floorViewMode={floorViewMode} routeFloorIds={routeFloorIds} visibleFloors={visibleFloors} floor={data.floor} officialNetwork={data.network} routingGraph={routingGraph} twsiGraph={twsiGraph} places={data.places.places} translations={data.translations} facilityMarkerCandidates={facilityMarkerCandidates} route={planner.displayedRoute} startId={markerEndpoints.startId} destinationId={markerEndpoints.destinationId} highlightedRouteEdgeIds={highlightedEdgeIds} debug={debug} showAllSourceLinks={showAllSourceLinks} showOfficialNetwork={showOfficialNetwork} showOfficialNodes={showOfficialNodes} showTwsi={showTwsi} showFacilities={showFacilities} enabledFacilityCategories={enabledFacilityCategories} showGateLabels={showFacilities && enabledFacilityCategories.has(GATE_CATEGORY_CODE)} showStructuralDetails={showStructuralDetails} onFacilityRouteAction={selectFacilityRouteAction} />
+      <RouteScreenOverlay route={planner.displayedRoute} visibleFloors={visibleFloors} floor={data.floor} routingGraph={routingGraph} haloPathRef={routeHaloPathRef} routePathRef={routePathRef} transitionHaloPathRef={transitionHaloPathRef} transitionPathRef={transitionPathRef} />
       <OrbitControls ref={orbitControlsRef} key={`${cameraRevision}:${visibleFloors.join(',')}:${activeFloor}`} makeDefault target={[cameraCenter.x, cameraCenter.y, cameraCenter.z]} enableRotate={rotationEnabled} zoomSpeed={0.55} minZoom={0.2} maxZoom={24} maxPolarAngle={MAX_CAMERA_POLAR_ANGLE} touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_PAN }} />
       <MapTouchControls controlsRef={orbitControlsRef} rotationEnabled={rotationEnabled} />
     </Canvas>
