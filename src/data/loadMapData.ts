@@ -5,13 +5,13 @@ import { parsePlaceTranslations, type PlaceTranslationsDataset } from '../schema
 
 export interface MapDatasets { floor: ProcessedDataset; network: OfficialNetworkDataset; reviewedNetwork: ReviewedCustomNetworkDataset; places: NamedPlacesDataset; translations: PlaceTranslationsDataset }
 
-const urls = {
-  floor: `${import.meta.env.BASE_URL}data/processed/shinjuku-full-map.json`,
-  network: `${import.meta.env.BASE_URL}data/processed/jr-shinjuku-ticket-gates-b1-official-network.json`,
-  reviewedNetwork: `${import.meta.env.BASE_URL}data/processed/shinjuku-reviewed-custom-network.json`,
-  places: `${import.meta.env.BASE_URL}data/processed/shinjuku-b1-named-places.json`,
-  translations: `${import.meta.env.BASE_URL}data/processed/shinjuku-place-translations.json`,
-};
+export function processedDataUrl(fileName: string, pageUrl = window.location.href, viteBaseUrl = import.meta.env.BASE_URL): string {
+  // The Japanese entry page lives one directory below the shared data assets.
+  const page = new URL(pageUrl);
+  const pageRoot = new URL(/\/ja\/(?:index\.html)?$/.test(page.pathname) ? '../' : './', page);
+  const baseUrl = new URL(viteBaseUrl, viteBaseUrl.startsWith('/') ? page.origin : pageRoot);
+  return new URL(`data/processed/${fileName}`, baseUrl).href;
+}
 
 async function json(url: string, signal?: AbortSignal): Promise<unknown> {
   const response = await fetch(url, { signal });
@@ -20,7 +20,13 @@ async function json(url: string, signal?: AbortSignal): Promise<unknown> {
 }
 
 export async function loadMapData(signal?: AbortSignal): Promise<MapDatasets> {
-  const [floorValue, networkValue, reviewedNetworkValue, placesValue, translationsValue] = await Promise.all([json(urls.floor, signal), json(urls.network, signal), json(urls.reviewedNetwork, signal), json(urls.places, signal), json(urls.translations, signal)]);
+  const [floorValue, networkValue, reviewedNetworkValue, placesValue, translationsValue] = await Promise.all([
+    json(processedDataUrl('shinjuku-full-map.json'), signal),
+    json(processedDataUrl('jr-shinjuku-ticket-gates-b1-official-network.json'), signal),
+    json(processedDataUrl('shinjuku-reviewed-custom-network.json'), signal),
+    json(processedDataUrl('shinjuku-b1-named-places.json'), signal),
+    json(processedDataUrl('shinjuku-place-translations.json'), signal),
+  ]);
   const floor = parseFloorDataset(floorValue);
   const network = parseOfficialNetwork(networkValue);
   const reviewedNetwork = parseReviewedCustomNetwork(reviewedNetworkValue, network);

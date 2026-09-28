@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { loadMapData } from '../src/data/loadMapData';
+import { loadMapData, processedDataUrl } from '../src/data/loadMapData';
 
 const values = [
   JSON.parse(readFileSync('public/data/processed/shinjuku-full-map.json', 'utf8')),
@@ -25,6 +25,29 @@ describe('map data loader', () => {
     expect(result.places.places.length).toBe(result.places.statistics.placeCount);
     expect(result.places.places.length).toBeGreaterThan(67);
     expect(result.translations.places.length).toBe(result.places.statistics.routablePlaceCount);
+  });
+
+  it.each(['/', '/ja/', '/ja/index.html'])('loads shared data from the site root at %s', async (pathname) => {
+    window.history.replaceState(null, '', pathname);
+    let index = 0;
+    const requestedUrls: string[] = [];
+    const fetchMock = vi.fn(async (url: string) => {
+      requestedUrls.push(url);
+      return new Response(JSON.stringify(values[index++]), { status: 200 });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    await loadMapData();
+    expect(fetchMock).toHaveBeenCalledTimes(5);
+    for (const url of requestedUrls) {
+      expect(new URL(url).pathname.startsWith('/data/processed/')).toBe(true);
+    }
+  });
+
+  it('resolves relative production assets under a deployment prefix', () => {
+    expect(processedDataUrl('shinjuku-full-map.json', 'https://example.test/prefix/ja/', './'))
+      .toBe('https://example.test/prefix/data/processed/shinjuku-full-map.json');
+    expect(processedDataUrl('shinjuku-full-map.json', 'https://example.test/prefix/', './'))
+      .toBe('https://example.test/prefix/data/processed/shinjuku-full-map.json');
   });
 
   it('surfaces HTTP and schema failures', async () => {

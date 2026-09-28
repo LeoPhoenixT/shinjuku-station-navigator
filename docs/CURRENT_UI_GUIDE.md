@@ -10,7 +10,7 @@ This document explains the current interface, what debug mode exposes, how the i
 
 ### Route planner
 
-The route planner is implemented in `src/components/ViewerControls.tsx`.
+The route planner controls are composed in `src/components/ViewerControls.tsx`. Each endpoint search is handled by `src/components/PlaceSearchInput.tsx`; `src/features/route-planner/useRoutePlanner.ts` owns the editable draft and displayed route.
 
 It provides:
 
@@ -27,7 +27,11 @@ It provides:
 - Clear route
 - Share route
 
+Share route is available after a route has been submitted successfully and there are no unsubmitted endpoint or profile changes. The map's endpoint markers and legend follow the displayed submitted route while a different draft is being edited; without a displayed route, they show the draft endpoints.
+
 The searchable catalog contains the original named openings and spaces plus reviewed Facility destinations. Opening an empty search shows the first 100 deterministic results and asks for a name, area, or category when more exist; typing searches the full catalog. The index always includes authoritative Japanese, reviewed/specification English, both alias sets, both category languages, and raw/reviewed area terms, so users can search in either language without changing the interface locale.
+
+Five category shortcuts narrow the current search results to gates, exits, toilets, elevators, or lockers when those categories are present. They are search shortcuts, not a complete category-filter system.
 
 When a valid route is calculated, the planner collapses into a compact summary. **Edit route** reopens it.
 
@@ -40,6 +44,7 @@ The map toolbar is implemented in `src/components/MapToolbar.tsx`.
 Floor controls include:
 
 - **Stack** to show every floor
+- **Route floors** to emphasize floors on the displayed route while keeping the other visible floors as context
 - Independent controls for each floor
 - A safeguard that keeps at least one floor visible
 
@@ -69,7 +74,7 @@ The language selector is under **Map settings → Language**. English is the def
 
 Route endpoints, profile, selected step, geometry, and shareable URL remain unchanged during a language switch. Japanese mode uses authoritative or explicitly reviewed Japanese place and area text. English mode uses reviewed/specification English where available and visibly falls back to Japanese for pending records. The committed coverage report lists every pending stable place ID.
 
-Possible enhancements include a floor slider, a **Route floors only** action, a dedicated camera reset, a perspective/orthographic switch, and persistence of map preferences.
+Possible enhancements include a floor slider, a control to hide non-route floors entirely, a dedicated camera reset, a perspective/orthographic switch, and persistence of map preferences.
 
 ### Route directions
 
@@ -81,12 +86,13 @@ The route sheet displays:
 - Floor transitions
 - Accessibility warnings
 - Expand/collapse controls
+- Previous and next step controls
 
 Selecting an instruction highlights its official-network geometry in yellow, reveals its destination floor if necessary, and fits the camera around that step.
 
 Semantic instruction generation is implemented in `src/routing/routeInstructions.ts`. Locale-specific sentence formatting is implemented in `src/i18n/formatters.ts`, and the directions interface is implemented in `src/components/RouteSheet.tsx`.
 
-Possible enhancements include previous/next navigation, journey-progress mode, entrance photographs, landmark-based instructions, and richer transition details.
+Possible enhancements include journey-progress mode, entrance photographs, landmark-based instructions, and richer transition details.
 
 ## Debug mode
 
@@ -216,7 +222,7 @@ Route colors are:
 
 Rendering is on demand, so the canvas does not continuously redraw while idle. The SVG overlay caches camera and geometry state to avoid unnecessary projection and DOM updates.
 
-Route visibility follows the selected floors in both isolated and partial-stack views. Same-floor route geometry is shown only when its floor is visible. A green transition is shown only when both of its endpoint floors are visible, preventing route lines from floating on hidden levels. The WebGL route and SVG overlay share the same filtered orange geometry.
+Route visibility follows the selected floors in both isolated and partial-stack views. Same-floor route geometry is shown only when its floor is visible. A green transition is shown only when both of its endpoint floors are visible, preventing route lines from floating on hidden levels. The WebGL route and SVG overlay share the same filtered orange geometry. Light route-direction arrows appear on visible same-floor route links at least 10 m long.
 
 Relevant modules are:
 
@@ -226,9 +232,7 @@ Relevant modules are:
 
 Remaining route-rendering enhancements include:
 
-- Simplifying duplicate and nearly collinear points
 - Simplifying duplicate and nearly collinear route points
-- Adding route-direction arrows
 
 ## Data and routing flow
 
@@ -264,9 +268,9 @@ The main viewer orchestration is implemented in `src/components/FloorViewer.tsx`
 
 ### User experience
 
-1. Add **Route floors only**.
+1. Add an option to hide non-route floors entirely.
 2. Improve instruction navigation and transition presentation.
-3. Add destination-category filters.
+3. Add complete destination-category filters beyond the current search shortcuts.
 4. Add meaningful operator and area styling once category semantics are validated.
 5. Add route alternatives.
 6. Add a mobile step-by-step navigation mode.

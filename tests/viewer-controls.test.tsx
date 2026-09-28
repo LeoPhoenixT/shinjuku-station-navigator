@@ -4,14 +4,9 @@ import { ViewerControls } from '../src/components/ViewerControls';
 import type { ViewerControlsProps } from '../src/components/ViewerControls';
 import { placeDisplayName } from '../src/features/route-planner/placeSearch';
 import { LocaleProvider } from '../src/i18n/LocaleProvider';
-import type { NamedPlaceRecord } from '../src/schema/processed';
+import { places } from './fixtures/places';
 
-const places: NamedPlaceRecord[] = [
-  { id: 'start', sourceId: 's', sourceFacility: 'JR', sourceFile: 'a', sourceRecord: 1, name: 'Start gate', category: 'gate', floorId: 'B1', coordinates: [0, 0, 0], routable: true, access: { nodeId: 'n1', distanceMeters: 1, confidence: 'high', reviewStatus: 'automatic', accessibility: 'unknown', componentId: 0, geometry: [[0, 0, 0], [1, 0, 0]] } },
-  { id: 'end', sourceId: 'e', sourceFacility: 'JR', sourceFile: 'b', sourceRecord: 2, name: 'End gate', category: 'gate', floorId: 'B1', coordinates: [2, 0, 0], routable: true, access: { nodeId: 'n2', distanceMeters: 1, confidence: 'high', reviewStatus: 'automatic', accessibility: 'unknown', componentId: 0, geometry: [[2, 0, 0], [1, 0, 0]] } },
-  { id: 'metro', sourceId: 'm', sourceFacility: 'Metro east area', sourceFile: 'c', sourceRecord: 3, name: 'Metro gate', category: 'gate', floorId: 'B2', coordinates: [4, -10, 0], routable: true, access: { nodeId: 'n3', distanceMeters: 1, confidence: 'high', reviewStatus: 'automatic', accessibility: 'unknown', componentId: 0, geometry: [[4, -10, 0], [3, -10, 0]] } },
-  { id: 'toilet', sourceId: 't', sourceFacility: 'JR', sourceFile: 'd', sourceRecord: 4, name: 'East toilet', category: 'toilet', floorId: 'B1', coordinates: [5, 0, 0], routable: true, access: { nodeId: 'n4', distanceMeters: 1, confidence: 'high', reviewStatus: 'reviewed', accessibility: 'yes', componentId: 0, geometry: [[5, 0, 0], [4, 0, 0]] } },
-];
+
 
 const outsideRoute = { status: 'outside-coverage' as const, start: places[0], destination: places[1], reason: 'different-components-in-bounded-extraction' as const };
 const okRoute = { status: 'ok' as const, start: places[0], destination: places[1], profile: 'accessible' as const, warnings: [{ code: 'accessibility-fields-unknown' as const, fields: ['width'] }], steps: [{ kind: 'continue' as const, distanceMeters: 2, floorFrom: 'B1', floorTo: 'B1', edgeIds: ['e'] }], network: { nodeIds: ['n1', 'n2'], edgeIds: ['e'], distanceMeters: 2, totalCost: 2 }, accessDistanceMeters: 2, totalDistanceMeters: 4, legs: [] };
@@ -33,8 +28,13 @@ function renderProps(debug = false, overrides = {}) {
 function viewerControlsProps(props: ReturnType<typeof renderProps>): ViewerControlsProps {
   return {
     planner: {
-      places: props.places, startId: props.startId, destinationId: props.destinationId, setStartId: props.setStartId, setDestinationId: props.setDestinationId,
-      swapPlaces: props.swapPlaces, clearRoute: props.clearRoute, route: props.route, profile: props.profile, setProfile: props.setProfile, routeDirty: props.routeDirty, submitRoute: props.submitRoute,
+      places: props.places,
+      draft: {
+        startId: props.startId, destinationId: props.destinationId, profile: props.profile, dirty: props.routeDirty,
+        setStartId: props.setStartId, setDestinationId: props.setDestinationId, setProfile: props.setProfile,
+      },
+      displayedRoute: props.route,
+      swapPlaces: props.swapPlaces, clearRoute: props.clearRoute, submitRoute: props.submitRoute,
     },
     navigation: {
       floors: { floorIds: props.floorIds, visibleFloors: props.visibleFloors, routeFloorIds: props.routeFloorIds, activeFloor: props.activeFloor, floorViewMode: props.floorViewMode, selectFloor: props.selectFloor, showStack: props.showStack, showRouteFloors: props.showRouteFloors, toggleCustomFloor: props.toggleCustomFloor },
@@ -63,31 +63,8 @@ describe('viewer controls', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('supported bounded coverage');
   });
 
-  it('supports keyboard selection in the named-place combobox', () => {
-    const props = renderControls();
-    const startSearch = screen.getByLabelText('Search start place');
-    fireEvent.focus(startSearch);
-    fireEvent.change(startSearch, { target: { value: 'End gate' } });
-    expect(screen.getByRole('option', { name: /End gate/i })).toBeInTheDocument();
-    fireEvent.keyDown(startSearch, { key: 'Enter' });
-    expect(props.setStartId).toHaveBeenCalledWith('end');
-  });
 
-  it('groups searchable places by floor, area, and category', () => {
-    renderControls();
-    fireEvent.focus(screen.getByLabelText('Search start place'));
-    expect(screen.getByRole('group', { name: 'Floor B1 · JR · Gate' })).toBeInTheDocument();
-    expect(screen.getByRole('group', { name: 'Floor B2 · Metro east area · Gate' })).toBeInTheDocument();
-  });
 
-  it('clears an endpoint and shows every grouped option for an empty search', () => {
-    const props = renderControls();
-    const startSearch = screen.getByLabelText('Search start place');
-    fireEvent.change(startSearch, { target: { value: '' } });
-    expect(props.setStartId).toHaveBeenCalledWith('');
-    expect(within(screen.getByRole('listbox')).getAllByRole('option')).toHaveLength(4);
-    expect(screen.getByRole('group', { name: 'Floor B2 · Metro east area · Gate' })).toBeInTheDocument();
-  });
 
   it('rebuilds the place index for a new places identity while preserving combobox semantics', () => {
     const props = renderProps();
@@ -108,14 +85,7 @@ describe('viewer controls', () => {
     expect(screen.getByRole('option', { name: /Reindexed place/i })).toBeInTheDocument();
   });
 
-  it('filters destination discovery through category shortcuts', () => {
-    renderControls();
-    fireEvent.focus(screen.getByLabelText('Search destination place'));
-    fireEvent.click(within(screen.getByRole('group', { name: 'Destination categories' })).getByRole('button', { name: 'Toilets' }));
-    const options = within(screen.getByRole('listbox')).getAllByRole('option');
-    expect(options).toHaveLength(1);
-    expect(options[0]).toHaveTextContent('East toilet');
-  });
+
 
   it('clears both route endpoints from one action', () => {
     const props = renderControls();
@@ -246,13 +216,13 @@ describe('viewer controls', () => {
     expect(within(screen.getByRole('group', { name: 'Marker categories' })).getByRole('checkbox', { name: /Toilet/ })).toBeDisabled();
   });
 
-  it('shows only route floors when a route is available', () => {
+  it('disables route-floor emphasis without a route', () => {
     const unavailable = renderControls();
     expect(screen.getByRole('button', { name: 'Route floors' })).toBeDisabled();
     unavailable.showRouteFloors.mockClear();
   });
 
-  it('activates the route-floor view for a valid route', () => {
+  it('activates route-floor emphasis for a valid route', () => {
     const props = renderControls({ route: okRoute });
     fireEvent.click(screen.getByRole('button', { name: 'Route floors' }));
     expect(props.showRouteFloors).toHaveBeenCalledOnce();
@@ -327,10 +297,23 @@ describe('viewer controls', () => {
   it('copies the complete current route URL with transient feedback', async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
-    renderControls();
+    renderControls({ route: okRoute });
+    fireEvent.click(screen.getByRole('button', { name: 'Edit route' }));
     fireEvent.click(screen.getByRole('button', { name: 'Share route' }));
     await waitFor(() => expect(writeText).toHaveBeenCalledWith(window.location.href));
-    expect(screen.getByRole('status')).toHaveTextContent('Route link copied');
+    expect(screen.getByText('Route link copied.')).toBeInTheDocument();
+  });
+
+  it('cannot share unsubmitted endpoints or a changed route draft', () => {
+    const clipboard = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: clipboard } });
+    const view = render(<ViewerControls {...viewerControlsProps(renderProps(false, { route: { status: 'invalid-place', placeId: '', reason: 'not-found' }, routeDirty: true }))} />);
+    const share = screen.getByRole('button', { name: 'Share route' });
+    expect(share).toBeDisabled();
+    view.rerender(<ViewerControls {...viewerControlsProps(renderProps(false, { route: okRoute, routeDirty: true }))} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Edit route' }));
+    expect(screen.getByRole('button', { name: 'Share route' })).toBeDisabled();
+    expect(clipboard).not.toHaveBeenCalled();
   });
 
   it('keeps only one major overlay expanded on narrow screens', () => {

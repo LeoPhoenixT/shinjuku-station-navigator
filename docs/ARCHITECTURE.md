@@ -54,15 +54,15 @@ This layer imports neither React nor Three.js. Tests can therefore prove directi
 
 ### Application state and UI
 
-- `src/features/route-planner/useRoutePlanner.ts` owns editable and submitted route requests and URL synchronization.
+- `src/features/route-planner/useRoutePlanner.ts` owns the editable `draft`, the submitted request behind `displayedRoute`, and URL synchronization. Draft edits do not update the displayed route or URL until submitted. `displayedRouteEndpoints.ts` chooses submitted endpoints for markers when a route is displayed, otherwise draft endpoints.
 - `src/hooks/useViewerNavigation.ts` owns floor visibility, camera view state, and route-step focus.
 - `src/hooks/useMapDisplayPreferences.ts` owns layer and facility-marker preferences.
 - `src/hooks/useMapInteractionMessage.ts` owns transient map feedback.
 - `src/i18n/LocaleProvider.tsx` owns the `en`/`ja` UI locale, versioned browser persistence, and the document language.
 - `src/i18n/catalogs/` contains compile-time-aligned UI catalogs; `src/i18n/formatters.ts` turns route steps, warnings, floors, categories, and estimates into localized presentation text.
 - `src/components/FloorViewer.tsx` is the composition root that connects these view models.
-- `src/components/viewerViewModels.ts` defines small readonly planner, navigation, display, feedback, and legend contracts; `FloorViewer` composes them and each control receives only its local dependency group.
-- `src/components/ViewerControls.tsx` and the smaller toolbar/sheet/legend components provide accessible controls. ViewerControls builds one immutable bilingual place-search index per places/translations identity and shares it between start and destination search; its `id -> index` lookup avoids per-option linear scans.
+- `src/components/viewerViewModels.ts` defines small readonly planner, navigation, display, feedback, and legend contracts; its planner contract separates the editable `draft` from `displayedRoute`. `FloorViewer` composes these contracts and each control receives only its local dependency group.
+- `src/components/ViewerControls.tsx` composes the planner, toolbar, directions sheet, and legend. It builds one immutable bilingual place-search index per places/translations identity and shares it between start and destination inputs. `src/components/PlaceSearchInput.tsx` owns the search query, category shortcuts, option selection, and focus behavior; its `id -> index` lookup avoids per-option linear scans.
 
 Stable place IDs and the route profile are encoded in the URL. Graph node IDs remain an internal detail.
 

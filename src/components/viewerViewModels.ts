@@ -1,5 +1,4 @@
-import type { RoutingProfile } from '../routing/pathfinding.js';
-import type { RoutePlan } from '../routing/routeService.js';
+import type { RoutePlannerDraft, RoutePlannerState } from '../features/route-planner/useRoutePlanner.js';
 import type { PlaceTranslationsDataset } from '../schema/placeTranslations.js';
 import type { NamedPlaceRecord } from '../schema/processed.js';
 import type { FloorViewMode } from '../map/displayPreferences.js';
@@ -8,16 +7,10 @@ import type { MapLegendItem } from '../map/mapLegend.js';
 export interface PlannerViewModel {
   readonly places: NamedPlaceRecord[];
   readonly translations?: PlaceTranslationsDataset;
-  readonly startId: string;
-  readonly destinationId: string;
-  readonly setStartId: (id: string) => void;
-  readonly setDestinationId: (id: string) => void;
+  readonly draft: RoutePlannerDraft;
+  readonly displayedRoute: RoutePlannerState['displayedRoute'];
   readonly swapPlaces: () => void;
   readonly clearRoute: () => void;
-  readonly route: RoutePlan;
-  readonly profile: RoutingProfile;
-  readonly setProfile: (profile: RoutingProfile) => void;
-  readonly routeDirty: boolean;
   readonly submitRoute: () => void;
 }
 

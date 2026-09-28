@@ -5,18 +5,22 @@ import { planRoute, type RoutePlan } from '../../routing/routeService.js';
 import { readRouteUrl, writeRouteUrl } from './routeUrlState.js';
 import type { RoutingProfile } from '../../routing/pathfinding.js';
 
+export interface RoutePlannerDraft {
+  readonly startId: string;
+  readonly destinationId: string;
+  readonly profile: RoutingProfile;
+  readonly dirty: boolean;
+  readonly setStartId: (id: string) => void;
+  readonly setDestinationId: (id: string) => void;
+  readonly setProfile: (profile: RoutingProfile) => void;
+}
+
 export interface RoutePlannerState {
-  startId: string;
-  destinationId: string;
-  setStartId: (id: string) => void;
-  setDestinationId: (id: string) => void;
-  route: RoutePlan;
-  profile: RoutingProfile;
-  setProfile: (profile: RoutingProfile) => void;
-  routeDirty: boolean;
-  submitRoute: () => void;
-  clearRoute: () => void;
-  routeToDestination: (destinationId: string) => void;
+  readonly draft: RoutePlannerDraft;
+  readonly displayedRoute: RoutePlan;
+  readonly submitRoute: () => void;
+  readonly clearRoute: () => void;
+  readonly routeToDestination: (destinationId: string) => void;
 }
 
 export function useRoutePlanner(network: OfficialNetworkDataset, graph: RoutingGraph, places: NamedPlaceRecord[]): RoutePlannerState {
@@ -27,7 +31,7 @@ export function useRoutePlanner(network: OfficialNetworkDataset, graph: RoutingG
   const [profile, setProfile] = useState<RoutingProfile>(request.profile);
   const [submitted, setSubmitted] = useState(request);
   const routeDirty = startId !== submitted.startId || destinationId !== submitted.destinationId || profile !== submitted.profile;
-  const route = useMemo(() => planRoute(network, graph, places, submitted.startId, submitted.destinationId, submitted.profile), [network, graph, places, submitted]);
+  const displayedRoute = useMemo(() => planRoute(network, graph, places, submitted.startId, submitted.destinationId, submitted.profile), [network, graph, places, submitted]);
 
   useEffect(() => {
     const search = writeRouteUrl(submitted);
@@ -59,5 +63,11 @@ export function useRoutePlanner(network: OfficialNetworkDataset, graph: RoutingG
     setSubmitted(next);
   };
 
-  return { startId, destinationId, setStartId, setDestinationId, route, profile, setProfile, routeDirty, submitRoute, clearRoute, routeToDestination };
+  return {
+    draft: { startId, destinationId, profile, dirty: routeDirty, setStartId, setDestinationId, setProfile },
+    displayedRoute,
+    submitRoute,
+    clearRoute,
+    routeToDestination,
+  };
 }
