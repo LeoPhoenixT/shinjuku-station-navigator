@@ -13,12 +13,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: 22
+          node-version: '24.22.1'
           cache: npm
 
       - name: Install dependencies
@@ -36,6 +36,9 @@ jobs:
       - name: Audit production dependencies
         run: npm run audit:prod
 
+      - name: Audit all dependencies
+        run: npm run audit:all
+
       - name: Verify processed release data
         run: npm run release:verify
 
@@ -44,12 +47,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: 22
+          node-version: '24.22.1'
           cache: npm
 
       - name: Install dependencies
@@ -66,12 +69,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: 22
+          node-version: '24.22.1'
           cache: npm
 
       - name: Install dependencies
@@ -83,8 +86,24 @@ jobs:
       - name: Start container
         run: docker run --detach --name shinjuku-station-navigator --publish 8080:8080 shinjuku-station-navigator:local
 
+      - name: Verify nginx configuration and runtime tools
+        run: |
+          docker exec shinjuku-station-navigator nginx -t
+          docker exec shinjuku-station-navigator sh -c '! command -v node && ! command -v curl'
+
       - name: Verify container
         run: npm run container:verify -- http://127.0.0.1:8080
+
+      - name: Verify Docker health check
+        run: |
+          for attempt in {1..30}; do
+            status=$(docker inspect --format '{{.State.Health.Status}}' shinjuku-station-navigator)
+            if [ "$status" = healthy ]; then exit 0; fi
+            if [ "$status" = unhealthy ]; then break; fi
+            sleep 1
+          done
+          docker inspect --format '{{json .State.Health}}' shinjuku-station-navigator
+          exit 1
 
       - name: Show container logs on failure
         if: failure()

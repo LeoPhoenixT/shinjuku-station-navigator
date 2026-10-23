@@ -128,6 +128,6 @@ Accessibility is conservative:
 - `npm run audit:prod` — production dependency vulnerability gate.
 - `npm run docker:build` and `npm run container:verify` — production server verification.
 
-CI enforces these in application, browser, and container jobs. Dependency updates are reviewed and applied intentionally rather than opened automatically.
+CI enforces these in application, browser, and container jobs, including an all-dependency security audit. Dependabot opens weekly npm, Docker, and GitHub Actions update PRs; updates require review and are never merged automatically.
 
 `npm run release:verify` also writes the untracked `reports/current-release-status.md` page from the current artifact so live counts and measurements do not have to be copied into long-lived architecture documents.

@@ -8,7 +8,8 @@ For the current module layout and design boundaries, read [ARCHITECTURE.md](ARCH
 
 ## Prerequisites
 
-- Node.js 22 or newer
+- A supported, patched Node.js line: `^22.23.4 || ^24.22.1 || ^26.12.1`.
+  CI and Docker builds use Node.js 24.22.1 (security baseline: 2026-10-23).
 - npm
 - Docker only when validating the production container
 - The MLIT R2 Shapefile package only when inspecting or regenerating source-derived data
@@ -131,6 +132,7 @@ npm run lint
 npm test
 npm run release:verify
 npm run audit:prod
+npm run audit:all
 ```
 
 For data-pipeline changes with the local raw package:
@@ -169,6 +171,22 @@ docker build --build-arg NODE_MAX_OLD_SPACE_SIZE=1024 --tag shinjuku-station-nav
 Vite cannot bundle this application reliably inside a hard 512 MB memory limit. For a 512 MB VPS, build and publish the image in CI and pull it on the VPS, or provide enough swap/build memory. Raising the heap above the machine's available RAM without swap can cause the operating system to terminate the build.
 
 If an optional input or environment is unavailable, report that check as not applicable rather than implying it passed.
+
+## Security maintenance
+
+Dependabot proposes weekly npm, Docker image/digest, and GitHub Actions updates.
+npm and Docker major upgrades require a separate deliberate review. Updates are
+never merged automatically. CI audits both production and development dependencies.
+The production image contains nginx and static assets; Node.js, Vite, and Vitest
+are build/development tools and are not production web servers.
+
+Keep the reviewed image tags and digests together in `Dockerfile`. When refreshing
+the Node security baseline, update `engines.node`, CI's `node-version`, and this
+guide together. GitHub Actions are pinned to full commit SHAs; their bundled Node
+runtime is managed by GitHub and is independent of `actions/setup-node`.
+
+Record advisory references, exposure assessment, validation limits, and rollout
+steps in the pull request description.
 
 ## Completion checklist
 
