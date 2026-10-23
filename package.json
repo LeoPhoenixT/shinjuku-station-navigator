@@ -37,7 +37,7 @@
     "release:verify": "npm run build && tsc -p tsconfig.scripts.json && node dist-scripts/scripts/verify-deployment.js"
   },
   "dependencies": {
-    "@react-three/drei": "^10.0.0",
+    "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
