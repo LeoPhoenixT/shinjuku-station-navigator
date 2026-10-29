@@ -144,6 +144,8 @@ Normal mode exposes routable curated places. Debug mode can also expose low-conf
 
 The main scene is implemented in `src/map/MapScene.tsx`.
 
+Optional pedestrian-network, source-link, TWSI, and Drawing layers mount through `src/map/sceneOptionalLayers.tsx` only when visible, avoiding geometry preparation for disabled layers. Their colors, elevations, and rendering order follow the same presentation rules below.
+
 The approximate rendering order is:
 
 1. Floor slabs

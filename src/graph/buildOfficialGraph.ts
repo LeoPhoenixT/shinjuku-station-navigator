@@ -1,12 +1,9 @@
+import { buildAdjacency } from './adjacency.js';
 import type { OfficialNetworkDataset } from '../types/officialNetwork.js';
 import type { GraphEdge, GraphNode, RoutingGraph } from './types.js';
 
 function edgeKind(kind: OfficialNetworkDataset['edges'][number]['kind']): GraphEdge['kind'] {
   return kind === 'stairs' ? 'stairs' : kind;
-}
-
-function reverseEdge(edge: GraphEdge): GraphEdge {
-  return { ...edge, id: `${edge.id}:reverse`, from: edge.to, to: edge.from, floorFrom: edge.floorTo, floorTo: edge.floorFrom, geometry: [...edge.geometry].reverse() };
 }
 
 function sourceCode(edge: OfficialNetworkDataset['edges'][number], field: string): string {
@@ -69,11 +66,6 @@ export function buildOfficialGraph(dataset: OfficialNetworkDataset): RoutingGrap
     floorTo: sourceNodes.get(edge.to)?.floorId ?? edge.floorTo,
     geometry: edge.geometry,
   })).sort((a, b) => a.id.localeCompare(b.id));
-  const adjacency: Record<string, GraphEdge[]> = Object.fromEntries(nodes.map(({ id }) => [id, []]));
-  for (const edge of edges) {
-    if (edge.direction !== 'reverse') adjacency[edge.from]?.push(edge);
-    if (edge.direction !== 'forward') adjacency[edge.to]?.push(reverseEdge(edge));
-  }
-  for (const list of Object.values(adjacency)) list.sort((a, b) => a.to.localeCompare(b.to) || a.id.localeCompare(b.id));
+  const adjacency = buildAdjacency(nodes, edges);
   return { nodes, edges, adjacency, rejectedEdges: [] };
 }

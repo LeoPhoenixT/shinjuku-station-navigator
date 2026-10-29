@@ -46,9 +46,12 @@ Invalid schema versions, malformed geometry, duplicate identifiers, or broken gr
 ### Graph and routing domain
 
 - `src/graph/` builds plain TypeScript routing graphs from official and separately reviewed data.
+- Official and reviewed converters share directed adjacency construction in `src/graph/adjacency.ts`; their source conversion and provenance remain separate.
 - `src/routing/pathfinding.ts` implements Dijkstra and admissible A* plus routing profiles.
 - `src/routing/routeService.ts` turns place IDs into explicit domain outcomes: `ok`, `invalid-place`, `outside-coverage`, or `unreachable`.
 - `src/routing/routeInstructions.ts` converts edge traversal into locale-independent semantic steps.
+
+`src/routing/routeEdges.ts` resolves permitted route traversal through adjacency, preserving oriented geometry and floor endpoints. Route planning resolves these edges once and shares them across instructions, geometry, and accessibility warnings. A* prepares its node lookup and profile penalty once per search; Dijkstra retains its independent search loop for correctness comparisons.
 
 This layer imports neither React nor Three.js. Tests can therefore prove directionality, accessibility policy, cost, optimality, and instructions without a browser.
 
@@ -71,6 +74,7 @@ Locale is deliberately not encoded in route URLs. Changing language rerenders th
 ### Map presentation
 
 - `src/map/MapScene.tsx` retains scene composition, selection derivation, and React resource ownership. `src/map/sceneGeometry.ts` contains pure geometry/data selection; `sceneLayers.tsx`, `sceneLinePrimitives.tsx`, and `sceneMarkerLayers.tsx` group floor/space/fixture, line/network/route, and marker/place rendering respectively.
+- `src/map/sceneOptionalLayers.tsx` owns conditionally mounted pedestrian-network, source-link, TWSI, and Drawing layers. Their geometry is prepared only while the layer is visible; debug-only layers also require debug mode.
 - Facility-marker candidates are prepared once by the viewer and shared with the scene and legend.
 - Repeated geometry uses merged meshes, instancing, and GPU line primitives.
 - The selected route appears in both the 3D scene and a camera-projected SVG overlay.
@@ -130,4 +134,4 @@ Accessibility is conservative:
 
 CI enforces these in application, browser, and container jobs, including an all-dependency security audit. Dependabot opens weekly npm, Docker, and GitHub Actions update PRs; updates require review and are never merged automatically.
 
-`npm run release:verify` also writes the untracked `reports/current-release-status.md` page from the current artifact so live counts and measurements do not have to be copied into long-lived architecture documents.
+`npm run release:verify` parses the five runtime datasets from `dist/data/processed/`, so schema checks, route benchmarking, and the untracked `reports/current-release-status.md` page all describe the deployed artifact. The legacy B1 data file remains covered by asset-presence and size checks. Live counts and measurements do not have to be copied into long-lived architecture documents.

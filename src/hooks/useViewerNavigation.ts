@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { RoutingGraph } from '../graph/types.js';
 import { boundsForFloors, boundsForRoute, boundsForRouteStep } from '../map/mapBounds.js';
 import type { FloorViewMode } from '../map/displayPreferences.js';
@@ -85,47 +85,34 @@ export function useViewerNavigation({
 
   const reviseCamera = () => setCameraRevision((value) => value + 1);
 
+  const focusCamera = useCallback((mode: CameraMode, stepIndex?: number) => {
+    setCameraMode(mode);
+    setSelectedStepIndex(stepIndex);
+    setZoomMultiplier(1);
+    setCameraRevision((value) => value + 1);
+  }, []);
+
   useEffect(() => {
-    setCameraMode(route.status === 'ok' ? 'route' : 'station');
-    setSelectedStepIndex(undefined);
-    setZoomMultiplier(1);
-    reviseCamera();
-  }, [route]);
+    focusCamera(route.status === 'ok' ? 'route' : 'station');
+  }, [focusCamera, route]);
 
-  const fitRoute = () => {
-    setCameraMode(route.status === 'ok' ? 'route' : 'station');
-    setSelectedStepIndex(undefined);
-    setZoomMultiplier(1);
-    reviseCamera();
-  };
-
-  const fitStation = () => {
-    setCameraMode('station');
-    setSelectedStepIndex(undefined);
-    setZoomMultiplier(1);
-    reviseCamera();
-  };
+  const fitRoute = () => focusCamera(route.status === 'ok' ? 'route' : 'station');
+  const fitStation = () => focusCamera('station');
 
   const selectFloor = (floorId: string) => {
     if (!allFloorIds.includes(floorId)) return;
     setVisibleFloors(allFloorIds);
     setActiveFloor(floorId);
     setFloorViewMode('focused');
-    setCameraMode('station');
     setCameraOrientation(allFloorIds.length > 1 ? 'angled' : 'north');
-    setSelectedStepIndex(undefined);
-    setZoomMultiplier(1);
-    reviseCamera();
+    focusCamera('station');
   };
 
   const showStack = () => {
     setVisibleFloors(allFloorIds);
     setFloorViewMode('stack');
-    setCameraMode(route.status === 'ok' ? 'route' : 'station');
     setCameraOrientation('angled');
-    setSelectedStepIndex(undefined);
-    setZoomMultiplier(1);
-    reviseCamera();
+    focusCamera(route.status === 'ok' ? 'route' : 'station');
   };
 
   const toggleCustomFloor = (floorId: string) => {
@@ -140,11 +127,8 @@ export function useViewerNavigation({
     setVisibleFloors(nextFloors);
     setActiveFloor(nextFloors.includes(activeFloor) ? activeFloor : nextFloors[0]);
     setFloorViewMode('custom');
-    setCameraMode('station');
     setCameraOrientation(nextFloors.length > 1 ? 'angled' : 'north');
-    setSelectedStepIndex(undefined);
-    setZoomMultiplier(1);
-    reviseCamera();
+    focusCamera('station');
   };
 
   const showRouteFloors = () => {
@@ -155,16 +139,12 @@ export function useViewerNavigation({
     setActiveFloor((current) => (
       routeFloorIds.includes(current) && floorIds.includes(current) ? current : preferredActiveFloor
     ));
-    setCameraMode('route');
     setCameraOrientation(allFloorIds.length > 1 ? 'angled' : 'north');
-    setSelectedStepIndex(undefined);
-    setZoomMultiplier(1);
-    reviseCamera();
+    focusCamera('route');
   };
 
   const selectStep = (index: number) => {
     if (route.status !== 'ok' || !route.steps[index]) return;
-    setSelectedStepIndex(index);
     const floorId = route.steps[index].floorTo;
     setActiveFloor(floorId);
     setVisibleFloors((current) => (
@@ -172,9 +152,7 @@ export function useViewerNavigation({
         ? current
         : allFloorIds.filter((candidate) => current.includes(candidate) || candidate === floorId)
     ));
-    setCameraMode('step');
-    setZoomMultiplier(1);
-    reviseCamera();
+    focusCamera('step', index);
   };
 
   const resetAfterRouteClear = () => {

@@ -5,7 +5,7 @@ import { formatRouteInstruction } from '../src/i18n/formatters';
 import type { NamedPlaceRecord } from '../src/schema/processed';
 
 function place(id: string, name: string, floorId: string, nodeId: string, access: number): NamedPlaceRecord {
-  return { id, sourceId: id, sourceFacility: 'fixture', sourceFile: 'fixture', sourceRecord: 0, name, category: 'gate', floorId, coordinates: [0, 0, 0], routable: true, access: { nodeId, distanceMeters: access, confidence: 'high', reviewStatus: 'automatic', accessibility: 'unknown', componentId: 0, geometry: [[0, 0, 0], [0, 0, 0]] } };
+  return { id, sourceId: id, sourceFacility: 'fixture', sourceFile: 'fixture', sourceRecord: 0, sourceLayer: 'Opening', sourceCategoryCode: 'Opening', name, category: 'gate', floorId, coordinates: [0, 0, 0], routable: true, access: { nodeId, distanceMeters: access, confidence: 'high', reviewStatus: 'automatic', accessibility: 'unknown', componentId: 0, geometry: [[0, 0, 0], [0, 0, 0]] } };
 }
 
 function graph(): RoutingGraph {
