@@ -68,17 +68,12 @@ describe('Phase 5A human-named golden route', () => {
     expect(golden.route.networkDistanceMeters).toBeGreaterThan(0);
   });
 
-  it('makes A* agree with Dijkstra for the place attachments', () => {
-    const graph = buildOfficialGraph(network);
-    const start = places.places.find(({ id }) => id === golden.start.placeId)!;
-    const end = places.places.find(({ id }) => id === golden.destination.placeId)!;
-    expect(astar(graph, start.access.nodeId, end.access.nodeId)?.totalCost).toBe(dijkstra(graph, start.access.nodeId, end.access.nodeId)?.totalCost);
-  });
-
   it('matches Dijkstra for deterministic representative oracle cases', () => {
     const graph = buildOfficialGraph(network);
     const sameFloorStart = golden.route.nodeIds[0]!;
     const sameFloorDestination = golden.route.nodeIds[golden.route.nodeIds.length - 1]!;
+    expect(places.places.find(({ id }) => id === golden.start.placeId)?.access.nodeId).toBe(sameFloorStart);
+    expect(places.places.find(({ id }) => id === golden.destination.placeId)?.access.nodeId).toBe(sameFloorDestination);
     const crossFloorStart = crossFloorConnector.direction === 'reverse' ? crossFloorConnector.to : crossFloorConnector.from;
     const crossFloorDestination = crossFloorConnector.direction === 'reverse' ? crossFloorConnector.from : crossFloorConnector.to;
 
