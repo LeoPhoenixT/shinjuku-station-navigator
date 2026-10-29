@@ -2,10 +2,10 @@ import { describe, expect, it } from 'vitest';
 import { buildDefaultFacilityCategoryCodes, EXIT_CATEGORY_CODE, GATE_CATEGORY_CODE } from '../src/hooks/useMapDisplayPreferences';
 import { facilityMarkerMatchesPreferences, placeHasPermanentLabel } from '../src/map/displayPreferences';
 import type { FacilityMarkerCandidate } from '../src/map/facilityMarkers';
-import type { NamedPlaceRecord } from '../src/schema/processed';
+import { places } from './fixtures/places';
 
 const marker = { categoryCode: 'F012', priority: 1 } as FacilityMarkerCandidate;
-const place = { id: 'gate', routable: true, category: 'gate' } as NamedPlaceRecord;
+const place = { ...places[0], id: 'gate' };
 
 describe('map display preferences', () => {
   it('defaults the no-route overview to ticket gates and reviewed exits', () => {

@@ -12,15 +12,14 @@ import { formatMovement } from '../i18n/formatters.js';
 import { displayElevation } from './stackedElevation.js';
 import { wallEnvelopeSegments } from './wallEnvelope.js';
 import { routeDirectionCues, routePolylines, routeTransitionMarkers, routeTransitionPolylines } from './routeLineGeometry.js';
-import { networkDirectionArrows } from './networkDirectionGeometry.js';
 import { STRUCTURAL_LINE_STYLES } from './structuralLinePresentation.js';
 import type { FacilityMarkerCandidate } from './facilityMarkers.js';
 import type { FloorViewMode } from './displayPreferences.js';
-import { allSourceLinkSegments } from './debugNetwork.js';
 import { partitionVisibleFloors } from './viewerPresentation.js';
-import { emphasizedSpaceSegments, featureSegments, graphContextSegments, graphSegments, highlightedPolylines, outdoorFeatureSegments, sceneCenter } from './sceneGeometry.js';
+import { emphasizedSpaceSegments, featureSegments, highlightedPolylines, outdoorFeatureSegments, sceneCenter } from './sceneGeometry.js';
 import { ExtrudedLayer, SemanticFixtureLayer, SemanticSpaceLayer } from './sceneLayers.js';
 import { NetworkDirectionArrows, RouteLines, Segments, StructuralOverlay, WideSegments } from './sceneLinePrimitives.js';
+import { DrawingLayer, OfficialNetworkLayer, SourceLinksLayer, TwsiLayer } from './sceneOptionalLayers.js';
 import { FacilityMarkerLayer, PlaceLayer } from './sceneMarkerLayers.js';
 
 export interface MapSceneProps {
@@ -51,9 +50,6 @@ export interface MapSceneProps {
   onFacilityRouteAction: (place: NamedPlaceRecord, target: 'start' | 'destination') => void;
 }
 
-const WALKING_NETWORK_HEIGHT = 1.15;
-const WALKING_NETWORK_ARROW_HEIGHT = 1.55;
-
 export function MapScene(props: MapSceneProps) {
   const { locale, t } = useI18n();
   const stacked = props.visibleFloors.length > 1;
@@ -72,12 +68,6 @@ export function MapScene(props: MapSceneProps) {
   const contextOpeningSegments = useMemo(() => featureSegments(props.floor.features, 'Opening', contextFloors, stacked), [contextFloors, props.floor, stacked]);
   const floorEnvelopes = useMemo(() => wallEnvelopeSegments(props.floor.features, activeFloors, stacked), [activeFloors, props.floor, stacked]);
   const contextFloorEnvelopes = useMemo(() => wallEnvelopeSegments(props.floor.features, contextFloors, stacked), [contextFloors, props.floor, stacked]);
-  const officialContextSegments = useMemo(() => graphContextSegments(props.routingGraph, props.visibleFloors, stacked), [props.routingGraph, props.visibleFloors, stacked]);
-  const allSourceSegments = useMemo(() => allSourceLinkSegments(props.officialNetwork, props.visibleFloors, stacked), [props.officialNetwork, props.visibleFloors, stacked]);
-  const officialDirectionArrows = useMemo(() => networkDirectionArrows(props.routingGraph.edges, props.visibleFloors, stacked), [props.routingGraph.edges, props.visibleFloors, stacked]);
-  const twsiSegments = useMemo(() => graphSegments(props.twsiGraph, props.visibleFloors, stacked), [props.twsiGraph, props.visibleFloors, stacked]);
-  const activeDrawingSegments = useMemo(() => featureSegments(props.floor.features, 'Drawing', activeFloors, stacked), [activeFloors, props.floor.features, stacked]);
-  const contextDrawingSegments = useMemo(() => featureSegments(props.floor.features, 'Drawing', contextFloors, stacked), [contextFloors, props.floor.features, stacked]);
   const activeOutdoorSegments = useMemo(() => outdoorFeatureSegments(props.floor.features, activeFloors, stacked), [activeFloors, props.floor.features, stacked]);
   const contextOutdoorSegments = useMemo(() => outdoorFeatureSegments(props.floor.features, contextFloors, stacked), [contextFloors, props.floor.features, stacked]);
   const selectedRouteLines = useMemo(() => routePolylines(props.route, props.visibleFloors, stacked), [props.route, props.visibleFloors, stacked]);
@@ -104,21 +94,13 @@ export function MapScene(props: MapSceneProps) {
     <Segments segments={spaceSegments} color="#bae6fd" yOffset={0.45} opacity={0.62} />
     <WideSegments segments={verticalSpaceSegments} color="#e0f2fe" yOffset={0.7} lineWidth={1.8} opacity={0.86} depthTest renderOrder={2020} />
     <WideSegments segments={restrictedSpaceSegments} color="#fb7185" yOffset={0.7} lineWidth={2.5} opacity={0.94} depthTest renderOrder={2021} />
-    {props.showStructuralDetails && <>
-      <StructuralOverlay segments={contextDrawingSegments} style={STRUCTURAL_LINE_STYLES.drawingContext} />
-      <StructuralOverlay segments={activeDrawingSegments} style={STRUCTURAL_LINE_STYLES.drawingActive} />
-    </>}
+    {props.showStructuralDetails && <DrawingLayer features={props.floor.features} activeFloors={activeFloors} contextFloors={contextFloors} stacked={stacked} />}
     <StructuralOverlay segments={contextOutdoorSegments} style={STRUCTURAL_LINE_STYLES.outdoorContext} />
     <StructuralOverlay segments={activeOutdoorSegments} style={STRUCTURAL_LINE_STYLES.outdoorActive} />
     <StructuralOverlay segments={openingSegments} style={STRUCTURAL_LINE_STYLES.openingActive} />
-    {props.showOfficialNetwork && <>
-      <WideSegments segments={officialContextSegments.inside} color="#38bdf8" yOffset={WALKING_NETWORK_HEIGHT} lineWidth={1.4} opacity={0.9} depthTest={false} renderOrder={3000} />
-      <WideSegments segments={officialContextSegments.boundary} color="#f59e0b" yOffset={WALKING_NETWORK_HEIGHT + 0.03} lineWidth={1.4} opacity={0.9} depthTest={false} renderOrder={3001} />
-      <WideSegments segments={officialContextSegments.outside} color="#c084fc" yOffset={WALKING_NETWORK_HEIGHT + 0.06} lineWidth={1.4} opacity={0.9} depthTest={false} renderOrder={3002} />
-      <NetworkDirectionArrows arrows={officialDirectionArrows} yOffset={WALKING_NETWORK_ARROW_HEIGHT} />
-    </>}
-    {props.debug && props.showAllSourceLinks && <WideSegments segments={allSourceSegments} color="#22d3ee" yOffset={WALKING_NETWORK_HEIGHT + 0.08} lineWidth={1.2} opacity={0.72} depthTest={false} renderOrder={3009} />}
-    {props.debug && props.showTwsi && <Segments segments={twsiSegments} color="#84cc16" yOffset={0.38} />}
+    {props.showOfficialNetwork && <OfficialNetworkLayer graph={props.routingGraph} floors={props.visibleFloors} stacked={stacked} />}
+    {props.debug && props.showAllSourceLinks && <SourceLinksLayer network={props.officialNetwork} floors={props.visibleFloors} stacked={stacked} />}
+    {props.debug && props.showTwsi && <TwsiLayer graph={props.twsiGraph} floors={props.visibleFloors} stacked={stacked} />}
     <RouteLines lines={selectedRouteLines} color="#fb923c" lineWidth={6} yOffset={3.9} />
     <RouteLines lines={verticalRouteLines} color="#22c55e" lineWidth={7} yOffset={4} />
     <NetworkDirectionArrows arrows={routeDirectionArrows} color="#fff7ed" yOffset={4.55} scale={0.82} />

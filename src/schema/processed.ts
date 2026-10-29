@@ -74,10 +74,8 @@ export interface NamedPlaceRecord {
   sourceFacility: string;
   sourceFile: string;
   sourceRecord: number;
-  /** Required by the runtime dataset parser; optional only for lightweight in-memory test fixtures. */
-  sourceLayer?: 'Opening' | 'Space' | 'Facility' | 'Network';
-  /** Required by the runtime dataset parser; optional only for lightweight in-memory test fixtures. */
-  sourceCategoryCode?: string;
+  sourceLayer: 'Opening' | 'Space' | 'Facility' | 'Network';
+  sourceCategoryCode: string;
   name: string;
   aliases?: string[];
   category: 'gate' | 'connector' | 'toilet' | 'elevator' | 'escalator' | 'stairs' | 'slope' | 'entrance' | 'exit' | 'information' | 'waiting-room' | 'nursing-room' | 'atm' | 'locker' | 'ticket-office';

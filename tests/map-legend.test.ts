@@ -10,7 +10,7 @@ const feature = (id: string, layer: ProcessedFeature['layer'], floorId: string, 
 });
 
 const place = (id: string, floorId: string): NamedPlaceRecord => ({
-  id, sourceId: id, sourceFacility: 'fixture', sourceFile: 'fixture', sourceRecord: 1, name: id, category: 'gate', floorId, coordinates: [0, 0, 0], routable: true,
+  id, sourceId: id, sourceFacility: 'fixture', sourceFile: 'fixture', sourceRecord: 1, sourceLayer: 'Opening', sourceCategoryCode: 'Opening', name: id, category: 'gate', floorId, coordinates: [0, 0, 0], routable: true,
   access: { nodeId: id, distanceMeters: 0, confidence: 'high', reviewStatus: 'reviewed', accessibility: 'unknown', componentId: 0, geometry: [[0, 0, 0], [0, 0, 0]] },
 });
 

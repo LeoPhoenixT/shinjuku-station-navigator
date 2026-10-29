@@ -80,7 +80,7 @@ describe('Phase 1 internationalization', () => {
 
   it('formats floors, counts, every route step, and every warning in both locales', () => {
     const start: NamedPlaceRecord = {
-      id: 'start', sourceId: 'start', sourceFacility: 'JR', sourceFile: 'fixture', sourceRecord: 1,
+      id: 'start', sourceId: 'start', sourceFacility: 'JR', sourceFile: 'fixture', sourceRecord: 1, sourceLayer: 'Opening', sourceCategoryCode: 'Opening',
       name: '中央改札', category: 'gate', floorId: 'B1', coordinates: [0, 0, 0], routable: true,
       access: { nodeId: 'a', distanceMeters: 1, confidence: 'high', reviewStatus: 'reviewed', accessibility: 'unknown', componentId: 0, geometry: [[0, 0, 0], [1, 0, 0]] },
     };

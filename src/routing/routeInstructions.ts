@@ -1,3 +1,4 @@
+import { resolveRouteEdges } from './routeEdges.js';
 import type { GraphEdge, RoutingGraph } from '../graph/types.js';
 import type { NamedPlaceRecord } from '../schema/processed.js';
 import type { RouteResult } from './pathfinding.js';
@@ -12,14 +13,6 @@ export interface RouteStep {
   movement?: GraphEdge['kind'];
   edgeIds: string[];
   alreadyThere?: boolean;
-}
-
-function routeEdges(graph: RoutingGraph, route: RouteResult): GraphEdge[] {
-  return route.edgeIds.map((edgeId, index) => {
-    const edge = graph.adjacency[route.nodeIds[index]]?.find((candidate) => candidate.id.replace(/:reverse$/, '') === edgeId);
-    if (!edge) throw new Error(`Route edge ${edgeId} is missing from adjacency at ${route.nodeIds[index]}.`);
-    return edge;
-  });
 }
 
 function heading(edge: GraphEdge): number {
@@ -51,9 +44,13 @@ function groupEdges(edges: GraphEdge[]): EdgeGroup[] {
 }
 
 export function buildRouteInstructions(graph: RoutingGraph, route: RouteResult, start: NamedPlaceRecord, destination: NamedPlaceRecord): RouteStep[] {
+  return instructionsForEdges(resolveRouteEdges(graph, route), start, destination);
+}
+
+export function instructionsForEdges(edges: GraphEdge[], start: NamedPlaceRecord, destination: NamedPlaceRecord): RouteStep[] {
   const steps: RouteStep[] = [];
   if (start.access.distanceMeters > 0) steps.push({ kind: 'access', distanceMeters: start.access.distanceMeters, floorFrom: start.floorId, floorTo: start.floorId, edgeIds: [] });
-  for (const group of groupEdges(routeEdges(graph, route))) {
+  for (const group of groupEdges(edges)) {
     const first = group.edges[0];
     const last = group.edges.at(-1) ?? first;
     const distanceMeters = Number(group.edges.reduce((total, edge) => total + edge.distanceMeters, 0).toFixed(3));

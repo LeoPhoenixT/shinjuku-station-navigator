@@ -120,10 +120,7 @@ function euclideanHeuristic(nodes: Map<string, GraphNode>, from: string, to: str
   return Math.hypot(b.x - a.x, b.y - a.y, b.z - a.z);
 }
 
-export function admissibleHeuristicScale(graph: RoutingGraph, options: RouteOptions = {}): number {
-  const nodes = nodeById(graph);
-  const profile = options.profile ?? 'shortest';
-  const penalty = preferencePenalty(graph);
+function heuristicScale(graph: RoutingGraph, nodes: Map<string, GraphNode>, profile: RoutingProfile, penalty: number): number {
   let scale = Number.POSITIVE_INFINITY;
   for (const edge of graph.edges) {
     if (!isEligible(edge, profile)) continue;
@@ -134,18 +131,22 @@ export function admissibleHeuristicScale(graph: RoutingGraph, options: RouteOpti
   return Number.isFinite(scale) ? Math.max(0, scale) : 0;
 }
 
+export function admissibleHeuristicScale(graph: RoutingGraph, options: RouteOptions = {}): number {
+  return heuristicScale(graph, nodeById(graph), options.profile ?? 'shortest', preferencePenalty(graph));
+}
+
 export function astar(graph: RoutingGraph, startId: string, goalId: string, options: RouteOptions = {}): RouteResult | null {
   if (!graph.adjacency[startId] || !graph.adjacency[goalId]) return null;
   const nodes = nodeById(graph);
-  const heuristicScale = admissibleHeuristicScale(graph, options);
+  const profile = options.profile ?? 'shortest';
+  const penalty = preferencePenalty(graph);
+  const scale = heuristicScale(graph, nodes, profile, penalty);
   const queue = new MinQueue();
   const gScore = new Map<string, number>(graph.nodes.map((node) => [node.id, Number.POSITIVE_INFINITY]));
   const fScore = new Map<string, number>(graph.nodes.map((node) => [node.id, Number.POSITIVE_INFINITY]));
   const previous = new Map<string, { node: string; edge: GraphEdge }>();
-  const profile = options.profile ?? 'shortest';
-  const penalty = preferencePenalty(graph);
   gScore.set(startId, 0);
-  const initialScore = heuristicScale * euclideanHeuristic(nodes, startId, goalId);
+  const initialScore = scale * euclideanHeuristic(nodes, startId, goalId);
   fScore.set(startId, initialScore);
   queue.push({ id: startId, priority: initialScore });
   while (queue.size > 0) {
@@ -159,7 +160,7 @@ export function astar(graph: RoutingGraph, startId: string, goalId: string, opti
       if (candidate < (gScore.get(edge.to) ?? Infinity)) {
         previous.set(edge.to, { node: current, edge });
         gScore.set(edge.to, candidate);
-        const score = candidate + heuristicScale * euclideanHeuristic(nodes, edge.to, goalId);
+        const score = candidate + scale * euclideanHeuristic(nodes, edge.to, goalId);
         fScore.set(edge.to, score);
         queue.push({ id: edge.to, priority: score });
       }

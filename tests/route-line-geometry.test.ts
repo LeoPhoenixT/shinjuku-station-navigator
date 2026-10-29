@@ -6,7 +6,7 @@ import type { RoutePlan } from '../src/routing/routeService';
 import type { NamedPlaceRecord } from '../src/schema/processed';
 
 const place: NamedPlaceRecord = {
-  id: 'place', sourceId: 'place', sourceFacility: 'JR', sourceFile: 'fixture', sourceRecord: 1,
+  id: 'place', sourceId: 'place', sourceFacility: 'JR', sourceFile: 'fixture', sourceRecord: 1, sourceLayer: 'Opening', sourceCategoryCode: 'Opening',
   name: 'Place', category: 'gate', floorId: '2', coordinates: [0, 10, 0], routable: true,
   access: { nodeId: 'node', distanceMeters: 0, confidence: 'high', reviewStatus: 'automatic', accessibility: 'unknown', componentId: 0, geometry: [[0, 10, 0], [0, 10, 0]] },
 };

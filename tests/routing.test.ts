@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { buildGraphFromProcessedData } from '../src/graph/buildGraph';
 import type { RoutingGraph } from '../src/graph/types';
 import { validateGraph } from '../src/graph/validateGraph';
-import { astar, dijkstra } from '../src/routing/pathfinding';
+import { astar, dijkstra, ROUTING_PROFILES } from '../src/routing/pathfinding';
 import { benchmarkRoute } from '../src/routing/benchmark';
 import type { ProcessedDataset } from '../src/types/processed';
 
@@ -127,6 +127,18 @@ function profileGraph(): RoutingGraph {
 }
 
 describe('Phase 8 routing profiles', () => {
+  it.each(ROUTING_PROFILES)('A* independently matches Dijkstra for every endpoint pair under %s', (profile) => {
+    const graph = profileGraph();
+    for (const start of graph.nodes) {
+      for (const goal of graph.nodes) {
+        const expected = dijkstra(graph, start.id, goal.id, { profile });
+        const actual = astar(graph, start.id, goal.id, { profile });
+        expect(actual?.totalCost ?? null).toBe(expected?.totalCost ?? null);
+        expect(actual?.distanceMeters ?? null).toBe(expected?.distanceMeters ?? null);
+      }
+    }
+  });
+
   it('excludes known inaccessible and stair edges while allowing disclosed unknown accessibility', () => {
     expect(astar(profileGraph(), 's', 'g')?.edgeIds).toEqual(['short-stairs', 'stairs-goal']);
     expect(astar(profileGraph(), 's', 'g', { profile: 'accessible' })?.edgeIds).toEqual(['accessible-lift', 'lift-goal']);
