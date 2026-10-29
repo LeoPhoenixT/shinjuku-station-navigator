@@ -58,7 +58,13 @@ test('projects floor transitions as an unbroken green screen-space route', async
   await expect(transition).toHaveAttribute('d', /M.+L/);
   await expect.poll(() => transition.evaluate((path) => (path as SVGPathElement).getTotalLength())).toBeGreaterThan(0);
   await expect(transition).toHaveCSS('stroke', 'rgb(34, 197, 94)');
-  await expect(page.locator('.route-transition-marker')).toHaveCSS('transform', /matrix/);
+  const marker = page.locator('.route-transition-marker');
+  await expect(marker).toBeVisible();
+  await expect(marker).toHaveCSS('transform', /matrix/);
+  await page.getByRole('button', { name: 'North-up view' }).click();
+  await expect(marker).toBeVisible();
+  await page.reload();
+  await expect(marker).toBeVisible();
 });
 
 test('keeps primary map controls usable on a mobile viewport', async ({ page }) => {
