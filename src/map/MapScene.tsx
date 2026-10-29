@@ -1,4 +1,5 @@
 import { Html } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
 import { useMemo } from 'react';
 import type { RoutingGraph } from '../graph/types.js';
 import type { RoutePlan } from '../routing/routeService.js';
@@ -11,7 +12,7 @@ import { useI18n } from '../i18n/context.js';
 import { formatMovement } from '../i18n/formatters.js';
 import { displayElevation } from './stackedElevation.js';
 import { wallEnvelopeSegments } from './wallEnvelope.js';
-import { routeDirectionCues, routePolylines, routeTransitionMarkers, routeTransitionPolylines } from './routeLineGeometry.js';
+import { routeDirectionCues, routePolylines, routeTransitionMarkers, routeTransitionPolylines, type RouteTransitionMarker } from './routeLineGeometry.js';
 import { STRUCTURAL_LINE_STYLES } from './structuralLinePresentation.js';
 import type { FacilityMarkerCandidate } from './facilityMarkers.js';
 import type { FloorViewMode } from './displayPreferences.js';
@@ -50,8 +51,15 @@ export interface MapSceneProps {
   onFacilityRouteAction: (place: NamedPlaceRecord, target: 'start' | 'destination') => void;
 }
 
-export function MapScene(props: MapSceneProps) {
+function TransitionMarker({ marker }: { marker: RouteTransitionMarker }) {
   const { locale, t } = useI18n();
+  const container = useThree(({ gl }) => gl.domElement.parentElement);
+  // Keep the DOM root in the canvas container when Fiber connects pointer events.
+  const portal = container ? { current: container } : undefined;
+  return <Html portal={portal} position={[marker.position[0], marker.position[1] + 4.7, marker.position[2]]} center zIndexRange={[5, 1]}><span className={`route-transition-marker transition-${marker.movement}`} title={t('instruction.transitionTitle', { movement: formatMovement(marker.movement, locale), fromFloor: floorDisplayName(marker.floorFrom, locale), toFloor: floorDisplayName(marker.floorTo, locale) })}>{marker.movement === 'elevator' ? 'EL' : marker.movement === 'escalator' ? 'ES' : marker.movement === 'stairs' ? 'ST' : '↕'} · {floorDisplayName(marker.floorFrom, locale)} → {floorDisplayName(marker.floorTo, locale)}</span></Html>;
+}
+
+export function MapScene(props: MapSceneProps) {
   const stacked = props.visibleFloors.length > 1;
   const center = sceneCenter(props.floor);
   const { activeFloors, contextFloors } = useMemo(
@@ -104,7 +112,7 @@ export function MapScene(props: MapSceneProps) {
     <RouteLines lines={selectedRouteLines} color="#fb923c" lineWidth={6} yOffset={3.9} />
     <RouteLines lines={verticalRouteLines} color="#22c55e" lineWidth={7} yOffset={4} />
     <NetworkDirectionArrows arrows={routeDirectionArrows} color="#fff7ed" yOffset={4.55} scale={0.82} />
-    {transitionMarkers.map((marker) => <Html key={marker.edgeId} position={[marker.position[0], marker.position[1] + 4.7, marker.position[2]]} center zIndexRange={[5, 1]}><span className={`route-transition-marker transition-${marker.movement}`} title={t('instruction.transitionTitle', { movement: formatMovement(marker.movement, locale), fromFloor: floorDisplayName(marker.floorFrom, locale), toFloor: floorDisplayName(marker.floorTo, locale) })}>{marker.movement === 'elevator' ? 'EL' : marker.movement === 'escalator' ? 'ES' : marker.movement === 'stairs' ? 'ST' : '↕'} · {floorDisplayName(marker.floorFrom, locale)} → {floorDisplayName(marker.floorTo, locale)}</span></Html>)}
+    {transitionMarkers.map((marker) => <TransitionMarker key={marker.edgeId} marker={marker} />)}
     <RouteLines lines={highlightedRouteLines} color="#fef08a" lineWidth={10} yOffset={4.12} />
     {props.debug && props.showOfficialNodes && props.routingGraph.nodes.filter((node) => props.visibleFloors.includes(node.floorId)).map((node) => <group key={node.id} position={[node.x, displayElevation(node.y, stacked) + 0.48, node.z]}><mesh><sphereGeometry args={[node.sourceId?.startsWith('reviewed:') ? 0.38 : 0.24, 8, 8]} /><meshStandardMaterial color={node.sourceId?.startsWith('reviewed:') ? '#f472b6' : '#bae6fd'} /></mesh><Html position={[0, 0.8, 0]} center zIndexRange={[3, 0]}><span className="node-label" title={node.id}>{node.sourceId?.startsWith('reviewed:') ? node.name : node.id.slice(0, 8)}</span></Html></group>)}
     {props.showFacilities && <FacilityMarkerLayer candidates={props.facilityMarkerCandidates} floors={props.visibleFloors} stacked={stacked} places={props.places} translations={props.translations} enabledCategories={props.enabledFacilityCategories} onRouteAction={props.onFacilityRouteAction} />}

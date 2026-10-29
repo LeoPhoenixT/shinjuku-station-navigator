@@ -78,6 +78,7 @@ Locale is deliberately not encoded in route URLs. Changing language rerenders th
 - Facility-marker candidates are prepared once by the viewer and shared with the scene and legend.
 - Repeated geometry uses merged meshes, instancing, and GPU line primitives.
 - The selected route appears in both the 3D scene and a camera-projected SVG overlay.
+- Floor-transition HTML labels use the canvas container as a stable portal target, so connecting pointer events does not recreate their React DOM roots.
 
 Floor extrusion, wall height, floor spacing, opacity, and camera orientation never alter route topology or cost.
 
