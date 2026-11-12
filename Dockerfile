@@ -1,5 +1,5 @@
 # Node.js is build-only. Keep the security patch and reviewed image digest explicit.
-FROM node:24.22.2-alpine3.24@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85 AS build
+FROM node:24.22.3-alpine3.24@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5 AS build
 
 WORKDIR /app
 ARG NODE_MAX_OLD_SPACE_SIZE=768
