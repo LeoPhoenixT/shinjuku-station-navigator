@@ -1,7 +1,7 @@
 import { resolveRouteEdges } from './routeEdges.js';
 import type { NamedPlaceRecord, OfficialNetworkDataset } from '../schema/processed.js';
 import type { GraphEdge, RoutingGraph } from '../graph/types.js';
-import { astar, type RouteResult, type RoutingProfile } from './pathfinding.js';
+import { astar, createRouteSearchContext, type RouteSearchContext, type RouteResult, type RoutingProfile } from './pathfinding.js';
 import { instructionsForEdges, type RouteStep } from './routeInstructions.js';
 
 export type RouteWarning =
@@ -30,7 +30,23 @@ function routeWarnings(edges: GraphEdge[], profile: RoutingProfile, start: Named
   return warnings;
 }
 
+export type RoutePlanner = (startId: string, destinationId: string, profile?: RoutingProfile) => RoutePlan;
+
+/** Own one prepared graph snapshot for the loaded network/graph/places lifecycle. */
+export function createRoutePlanner(network: OfficialNetworkDataset, graph: RoutingGraph, places: NamedPlaceRecord[]): RoutePlanner {
+  const context = createRouteSearchContext(graph);
+  return (startId, destinationId, profile = 'shortest') => planWithContext(network, context, places, startId, destinationId, profile);
+}
+
+/** One-shot compatibility API; use createRoutePlanner for repeated submissions. */
 export function planRoute(network: OfficialNetworkDataset, graph: RoutingGraph, places: NamedPlaceRecord[], startId: string, destinationId: string, profile: RoutingProfile = 'shortest'): RoutePlan {
+  return planWithContext(network, {
+    search: (from, to, options) => astar(graph, from, to, options),
+    resolveRouteEdges: (route) => resolveRouteEdges(graph, route),
+  }, places, startId, destinationId, profile);
+}
+
+function planWithContext(network: OfficialNetworkDataset, context: RouteSearchContext, places: NamedPlaceRecord[], startId: string, destinationId: string, profile: RoutingProfile): RoutePlan {
   const start = places.find(({ id }) => id === startId);
   const destination = places.find(({ id }) => id === destinationId);
   if (!start) return { status: 'invalid-place', placeId: startId, reason: 'not-found' };
@@ -58,9 +74,9 @@ export function planRoute(network: OfficialNetworkDataset, graph: RoutingGraph, 
   if (start.access.componentId !== destination.access.componentId && network.selection.coverage === 'bounded-extraction') {
     return { status: 'outside-coverage', start, destination, reason: 'different-components-in-bounded-extraction' };
   }
-  const route = astar(graph, start.access.nodeId, destination.access.nodeId, { profile });
+  const route = context.search(start.access.nodeId, destination.access.nodeId, { profile });
   if (!route) return { status: 'unreachable', start, destination, reason: profile === 'accessible' ? 'no-accessible-path' : profile === 'avoid-stairs' ? 'no-stair-free-path' : 'no-directed-path' };
-  const edges = resolveRouteEdges(graph, route);
+  const edges = context.resolveRouteEdges(route);
   const accessDistanceMeters = Number((start.access.distanceMeters + destination.access.distanceMeters).toFixed(3));
   return {
     status: 'ok',
