@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { buildGraphFromProcessedData } from '../src/graph/buildGraph';
 import type { RoutingGraph } from '../src/graph/types';
 import { validateGraph } from '../src/graph/validateGraph';
-import { astar, dijkstra, ROUTING_PROFILES } from '../src/routing/pathfinding';
+import { astar, createRouteSearchContext, dijkstra, ROUTING_PROFILES } from '../src/routing/pathfinding';
 import { benchmarkRoute } from '../src/routing/benchmark';
 import type { ProcessedDataset } from '../src/types/processed';
 
@@ -129,10 +129,12 @@ function profileGraph(): RoutingGraph {
 describe('Phase 8 routing profiles', () => {
   it.each(ROUTING_PROFILES)('A* independently matches Dijkstra for every endpoint pair under %s', (profile) => {
     const graph = profileGraph();
+    const context = createRouteSearchContext(graph);
     for (const start of graph.nodes) {
       for (const goal of graph.nodes) {
         const expected = dijkstra(graph, start.id, goal.id, { profile });
-        const actual = astar(graph, start.id, goal.id, { profile });
+        const actual = context.search(start.id, goal.id, { profile });
+        expect(actual).toEqual(astar(graph, start.id, goal.id, { profile }));
         expect(actual?.totalCost ?? null).toBe(expected?.totalCost ?? null);
         expect(actual?.distanceMeters ?? null).toBe(expected?.distanceMeters ?? null);
       }
@@ -156,5 +158,85 @@ describe('Phase 8 routing profiles', () => {
     secondTransition.floorTo = 'B1';
     graph.adjacency.stairs = graph.adjacency.stairs.map((edge) => edge.id === 'stairs-goal' ? { ...edge, floorTo: 'B1' } : edge);
     expect(astar(graph, 's', 'g', { profile: 'fewest-floor-changes' })?.edgeIds).toEqual(['accessible-lift', 'lift-goal']);
+  });
+});
+
+
+describe('reusable search context ownership', () => {
+  it('keeps zero-distance heuristic normalization and entirely filtered profiles consistent with Dijkstra', () => {
+    const graph = profileGraph();
+    graph.nodes.forEach((node) => { node.x = 0; node.y = 0; node.z = 0; });
+    for (const edge of [...graph.edges, ...Object.values(graph.adjacency).flat()]) {
+      edge.kind = 'stairs';
+      edge.accessibility = 'no';
+    }
+    const context = createRouteSearchContext(graph);
+    for (const profile of ROUTING_PROFILES) {
+      for (const start of graph.nodes) {
+        for (const goal of graph.nodes) {
+          expect(context.search(start.id, goal.id, { profile })).toEqual(dijkstra(graph, start.id, goal.id, { profile }));
+        }
+      }
+    }
+  });
+
+  it('isolates scores and predecessors across successful, unreachable, identical, missing and profile-switched searches', () => {
+    const graph = profileGraph();
+    const isolated = { ...graph.nodes[0], id: 'isolated' };
+    graph.nodes.push(isolated);
+    graph.adjacency.isolated = [];
+    const context = createRouteSearchContext(graph);
+    const requests = [
+      ['s', 'g', 'shortest'], ['g', 's', 'accessible'], ['isolated', 'g', 'shortest'],
+      ['s', 's', 'avoid-stairs'], ['missing', 'g', 'shortest'], ['s', 'g', 'prefer-elevator'],
+      ['s', 'isolated', 'fewest-floor-changes'], ['s', 'g', 'shortest'],
+    ] as const;
+    for (const [start, goal, profile] of requests) {
+      expect(context.search(start, goal, { profile })).toEqual(astar(graph, start, goal, { profile }));
+    }
+  });
+
+  it('owns nodes, edges, adjacency and geometry until explicitly replaced after graph edits', () => {
+    const graph = profileGraph();
+    const before = structuredClone(graph);
+    const context = createRouteSearchContext(graph);
+    const original = context.search('s', 'g');
+    expect(original?.edgeIds).toEqual(['short-stairs', 'stairs-goal']);
+    graph.nodes[1].x = 10_000;
+    graph.edges[0].distanceMeters = 100;
+    graph.adjacency.s[0].distanceMeters = 100;
+    graph.edges[0].geometry[0][0] = 999;
+    graph.adjacency.g = [];
+    expect(context.search('s', 'g')).toEqual(original);
+    expect(context.search('g', 's')).toEqual(astar(before, 'g', 's'));
+    const updated = createRouteSearchContext(graph);
+    expect(updated.search('s', 'g')).toEqual(astar(graph, 's', 'g'));
+    expect(updated.search('s', 'g')?.edgeIds).toEqual(['accessible-lift', 'lift-goal']);
+    expect(updated.search('g', 's')).toBeNull();
+    if (!original) throw new Error('Expected fixture route.');
+    const resolved = context.resolveRouteEdges(original);
+    expect(resolved[0].geometry[0][0]).toBe(0);
+    resolved[0].geometry[0][0] = -999;
+    resolved[0].distanceMeters = -999;
+    original.nodeIds[0] = 'corrupted';
+    const repeated = context.search('s', 'g');
+    expect(repeated).toEqual(astar(before, 's', 'g'));
+    if (repeated) expect(context.resolveRouteEdges(repeated)[0].geometry[0][0]).toBe(0);
+  });
+
+  it('recomputes an admissible heuristic for a replacement snapshot containing a cheap distant shortcut', () => {
+    const graph = profileGraph();
+    const context = createRouteSearchContext(graph);
+    // A stale scale prioritizes the old two-metre route ahead of the now-cheap distant lift.
+    graph.nodes.find(({ id }) => id === 'lift')!.x = 10_000;
+    for (const edge of [...graph.edges, ...Object.values(graph.adjacency).flat()]) {
+      if (edge.id.replace(/:reverse$/, '') === 'accessible-lift' || edge.id.replace(/:reverse$/, '') === 'lift-goal') edge.distanceMeters = 0.1;
+    }
+    expect(context.search('s', 'g')?.distanceMeters).toBe(2);
+    const updated = createRouteSearchContext(graph);
+    for (const profile of ROUTING_PROFILES) {
+      expect(updated.search('s', 'g', { profile })?.totalCost).toBe(dijkstra(graph, 's', 'g', { profile })?.totalCost);
+    }
+    expect(updated.search('s', 'g')?.distanceMeters).toBe(0.2);
   });
 });

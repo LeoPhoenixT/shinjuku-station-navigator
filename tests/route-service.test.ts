@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { buildOfficialGraph } from '../src/graph/buildOfficialGraph';
 import { mergeReviewedCustomGraph } from '../src/graph/buildReviewedCustomGraph';
-import { planRoute } from '../src/routing/routeService';
+import { createRoutePlanner, planRoute } from '../src/routing/routeService';
 import { formatRouteInstruction, formatRouteWarning } from '../src/i18n/formatters';
 import { parseNamedPlaces, parseOfficialNetwork } from '../src/schema/processed';
 import { parseReviewedCustomNetwork } from '../src/schema/reviewedCustomNetwork';
@@ -65,5 +65,24 @@ describe('consumer route service', () => {
     const candidates = places.filter(({ routable }) => routable).slice(0, 2).map((place) => structuredClone(place));
     candidates[0].access.accessibility = 'no';
     expect(planRoute(network, graph, candidates, candidates[0].id, candidates[1].id, 'accessible')).toMatchObject({ status: 'unreachable', reason: 'no-accessible-path' });
+  });
+});
+
+
+describe('prepared route planner lifecycle', () => {
+  it('keeps search and resolved geometry on one snapshot and applies updates only in a new planner', () => {
+    const mutableGraph = structuredClone(graph);
+    const candidates = places.filter(({ routable, access }) => routable && access.componentId === 0).slice(0, 2);
+    const planner = createRoutePlanner(network, mutableGraph, places);
+    const expected = planner(candidates[0].id, candidates[1].id);
+    expect(expected.status).toBe('ok');
+    for (const edges of Object.values(mutableGraph.adjacency)) edges.length = 0;
+    expect(planner(candidates[0].id, candidates[1].id)).toEqual(expected);
+    const updatedPlanner = createRoutePlanner(network, mutableGraph, places);
+    expect(updatedPlanner(candidates[0].id, candidates[1].id).status).toBe('unreachable');
+    if (expected.status !== 'ok') return;
+    const geometry = expected.legs.find(({ kind }) => kind === 'network')?.geometry;
+    if (geometry?.[0]) geometry[0][0] = -99999;
+    expect(planner(candidates[0].id, candidates[1].id)).toEqual(planRoute(network, graph, places, candidates[0].id, candidates[1].id));
   });
 });
