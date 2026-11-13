@@ -34,7 +34,9 @@
     "data:validate": "tsc -p tsconfig.scripts.json && node dist-scripts/scripts/validate-data.js",
     "data:build": "tsc -p tsconfig.scripts.json && node dist-scripts/scripts/build-all-data.js",
     "data:check": "tsc -p tsconfig.scripts.json && node dist-scripts/scripts/check-generated-data.js",
-    "release:verify": "npm run build && tsc -p tsconfig.scripts.json && node dist-scripts/scripts/verify-deployment.js"
+    "release:verify": "npm run build && tsc -p tsconfig.scripts.json && node dist-scripts/scripts/verify-deployment.js",
+    "benchmark:routing": "tsc -p tsconfig.scripts.json && node dist-scripts/scripts/benchmark-routing.js",
+    "benchmark:routing:initialization": "tsc -p tsconfig.scripts.json && node dist-scripts/scripts/benchmark-routing-initialization.js"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

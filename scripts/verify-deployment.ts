@@ -110,7 +110,7 @@ export function verifyDeployment(distRoot = 'dist', statusReportPath = 'reports/
     '- JavaScript bundles:',
     ...javascriptBundles.map((bundle) => `  - ${formatJavaScriptBundleSize(bundle)}.`),
     `- Largest JavaScript chunk: ${(largestJavascriptBytes / 1_000).toFixed(1)} kB.`,
-    `- Representative A* route: ${benchmark.averageMilliseconds.toFixed(3)} ms average over ${benchmark.iterations} runs.`,
+    `- Representative A* context preparation: ${benchmark.preparationMilliseconds.toFixed(3)} ms; repeated route: ${benchmark.averageMilliseconds.toFixed(3)} ms average over ${benchmark.iterations} runs.`,
     '- Raw GIS files in the release: none.',
     '',
   ].join('\n'));
@@ -119,7 +119,7 @@ export function verifyDeployment(distRoot = 'dist', statusReportPath = 'reports/
   console.log('JavaScript bundle budgets verified:');
   for (const bundle of javascriptBundles) console.log(`- ${formatJavaScriptBundleSize(bundle)}`);
   console.log(`Largest JavaScript chunk: ${(largestJavascriptBytes / 1_000).toFixed(1)} kB.`);
-  console.log(`Representative A* route: ${benchmark.averageMilliseconds.toFixed(3)} ms average over ${benchmark.iterations} runs.`);
+  console.log(`Representative A* context preparation: ${benchmark.preparationMilliseconds.toFixed(3)} ms; repeated route: ${benchmark.averageMilliseconds.toFixed(3)} ms average over ${benchmark.iterations} runs.`);
   console.log('Repository-relative paths verified; raw GIS files absent.');
 }
 

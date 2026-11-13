@@ -69,6 +69,25 @@ Follow these rules:
 3. Compare Dijkstra and A* where correctness could diverge.
 4. Test each affected routing profile.
 5. Confirm the underlying official/reviewed topology is not mutated.
+6. For repeated searches, create one `createRouteSearchContext(graph)` or `createRoutePlanner(network, graph, places)` per loaded graph lifecycle. The factory owns a private graph snapshot; graph updates require a new context/planner. React callers must replace graph identity to trigger that rebuild. Treat loaded network/place metadata as immutable for the same lifecycle. Keep one-shot `astar`/`planRoute` calls for isolated work.
+
+Compare routing performance against a baseline without raw data:
+
+```bash
+npm run benchmark:routing -- <baseline-git-ref>
+```
+
+The baseline must contain the self-contained `src/routing/pathfinding.ts` implementation (for example, `975d0b2`). The script reads that file from Git and transpiles it in memory. It builds the merged graph from committed processed data, verifies complete route equality for 200 deterministic requests across all five profiles, warms each implementation, and rotates seven timing batches. It reports baseline and current one-shot costs, repeated prepared-query costs, and a separate median preparation cost including graph/geometry/adjacency cloning and all profile scales. This is a local A* microbenchmark, not an end-to-end UI latency measurement; record Node version and machine with results. `release:verify` also reports preparation separately from representative repeated-query time. The original [routing-search-context-benchmark.md](../reports/routing-search-context-benchmark.md) is historical; see [routing-context-integration-benchmark.md](../reports/routing-context-integration-benchmark.md) for the current integrated initialization and complete route-service comparison.
+
+Measure the integrated context and complete route service against the frozen previous generic-clone implementation:
+
+```bash
+npm run benchmark:routing:initialization
+```
+
+This replaces the earlier research harness with actual old/new factories. It reports five fresh-process samples for context preparation and a first valid route (factory plus route handling), then 21 rotating warm samples for preparation, a new planner's first route, and complete repeated route-service queries. The repeated workload uses 40 pairs that produce nonempty routes under all five profiles. Validation compares complete plans, including geometry, instructions and warnings, before timing. Returned traversal copies are included in route-service timings; Node process startup, data loading, graph construction, React and browser rendering are excluded. Frozen baseline source provenance and hashes are in `scripts/benchmarks/previous-routing-context/README.md`.
+
+The graph snapshot copier deliberately handles the declared plain-data schema rather than arbitrary objects. Preserve the caller's adjacency and ordering, copy nested edge arrays, and memoize copied edge objects and coordinate tuples. When adding a nested mutable graph field, update `src/graph/snapshotRoutingGraph.ts` and its ownership tests together.
 
 ### Processed schema change
 

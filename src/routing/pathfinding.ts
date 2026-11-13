@@ -1,4 +1,6 @@
 import type { GraphEdge, GraphNode, RoutingGraph } from '../graph/types.js';
+import { resolveRouteEdges } from './routeEdges.js';
+import { snapshotRoutingGraph } from '../graph/snapshotRoutingGraph.js';
 
 export const ROUTING_PROFILES = ['shortest', 'accessible', 'avoid-stairs', 'prefer-elevator', 'fewest-floor-changes'] as const;
 export type RoutingProfile = typeof ROUTING_PROFILES[number];
@@ -135,15 +137,62 @@ export function admissibleHeuristicScale(graph: RoutingGraph, options: RouteOpti
   return heuristicScale(graph, nodeById(graph), options.profile ?? 'shortest', preferencePenalty(graph));
 }
 
+interface PreparedSearch {
+  nodes: Map<string, GraphNode>;
+  penalty: number;
+  scales: Map<RoutingProfile, number>;
+}
+
+function prepareSearch(graph: RoutingGraph): PreparedSearch {
+  const nodes = nodeById(graph);
+  const penalty = preferencePenalty(graph);
+  const scales = new Map<RoutingProfile, number>(ROUTING_PROFILES.map((profile) => [profile, Infinity]));
+  for (const edge of graph.edges) {
+    const straightDistance = euclideanHeuristic(nodes, edge.from, edge.to);
+    if (straightDistance === 0) continue;
+    for (const profile of ROUTING_PROFILES) {
+      if (!isEligible(edge, profile)) continue;
+      scales.set(profile, Math.min(scales.get(profile) ?? Infinity, edgeCost(edge, profile, penalty) / straightDistance));
+    }
+  }
+  for (const [profile, scale] of scales) scales.set(profile, Number.isFinite(scale) ? Math.max(0, scale) : 0);
+  return { nodes, penalty, scales };
+}
+
+/** An owned graph snapshot: recreate this context to apply graph edits. */
+export interface RouteSearchContext {
+  search(startId: string, goalId: string, options?: RouteOptions): RouteResult | null;
+  /** Resolve against the searched snapshot; returned edges cannot mutate the context. */
+  resolveRouteEdges(route: RouteResult): GraphEdge[];
+}
+
+export function createRouteSearchContext(graph: RoutingGraph): RouteSearchContext {
+  // No mutable caller-owned nodes, edges, adjacency, or geometry escape into the context.
+  const snapshot = snapshotRoutingGraph(graph);
+  const prepared = prepareSearch(snapshot);
+  return Object.freeze({
+    search: (startId: string, goalId: string, options: RouteOptions = {}) => search(snapshot, prepared, startId, goalId, options),
+    resolveRouteEdges: (route: RouteResult) => structuredClone(resolveRouteEdges(snapshot, route)),
+  });
+}
+
+/** One-shot compatibility API. Repeated queries should use createRouteSearchContext. */
 export function astar(graph: RoutingGraph, startId: string, goalId: string, options: RouteOptions = {}): RouteResult | null {
   if (!graph.adjacency[startId] || !graph.adjacency[goalId]) return null;
   const nodes = nodeById(graph);
-  const profile = options.profile ?? 'shortest';
   const penalty = preferencePenalty(graph);
-  const scale = heuristicScale(graph, nodes, profile, penalty);
+  const profile = options.profile ?? 'shortest';
+  return search(graph, { nodes, penalty, scales: new Map([[profile, heuristicScale(graph, nodes, profile, penalty)]]) }, startId, goalId, options);
+}
+
+function search(graph: RoutingGraph, prepared: PreparedSearch, startId: string, goalId: string, options: RouteOptions): RouteResult | null {
+  if (!graph.adjacency[startId] || !graph.adjacency[goalId]) return null;
+  const { nodes, penalty } = prepared;
+  const profile = options.profile ?? 'shortest';
+  const scale = prepared.scales.get(profile) ?? 0;
   const queue = new MinQueue();
-  const gScore = new Map<string, number>(graph.nodes.map((node) => [node.id, Number.POSITIVE_INFINITY]));
-  const fScore = new Map<string, number>(graph.nodes.map((node) => [node.id, Number.POSITIVE_INFINITY]));
+  const gScore = new Map<string, number>();
+  const fScore = new Map<string, number>();
   const previous = new Map<string, { node: string; edge: GraphEdge }>();
   gScore.set(startId, 0);
   const initialScore = scale * euclideanHeuristic(nodes, startId, goalId);

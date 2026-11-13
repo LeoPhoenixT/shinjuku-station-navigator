@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { NamedPlaceRecord, OfficialNetworkDataset } from '../../schema/processed.js';
 import type { RoutingGraph } from '../../graph/types.js';
-import { planRoute, type RoutePlan } from '../../routing/routeService.js';
+import { createRoutePlanner, type RoutePlan } from '../../routing/routeService.js';
 import { readRouteUrl, writeRouteUrl } from './routeUrlState.js';
 import type { RoutingProfile } from '../../routing/pathfinding.js';
 
@@ -31,7 +31,8 @@ export function useRoutePlanner(network: OfficialNetworkDataset, graph: RoutingG
   const [profile, setProfile] = useState<RoutingProfile>(request.profile);
   const [submitted, setSubmitted] = useState(request);
   const routeDirty = startId !== submitted.startId || destinationId !== submitted.destinationId || profile !== submitted.profile;
-  const displayedRoute = useMemo(() => planRoute(network, graph, places, submitted.startId, submitted.destinationId, submitted.profile), [network, graph, places, submitted]);
+  const planRoute = useMemo(() => createRoutePlanner(network, graph, places), [network, graph, places]);
+  const displayedRoute = useMemo(() => planRoute(submitted.startId, submitted.destinationId, submitted.profile), [planRoute, submitted]);
 
   useEffect(() => {
     const search = writeRouteUrl(submitted);

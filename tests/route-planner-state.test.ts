@@ -39,6 +39,18 @@ describe('route planner submitted state', () => {
     if (result.current.displayedRoute.status === 'ok') expect(result.current.displayedRoute.destination.id).toBe(candidates[2].id);
   });
 
+  it('reuses its prepared snapshot across submissions and replaces it when graph identity changes', () => {
+    const mutableGraph = structuredClone(graph);
+    const { result, rerender } = renderHook(({ currentGraph }) => useRoutePlanner(network, currentGraph, places), { initialProps: { currentGraph: mutableGraph } });
+    const expected = result.current.displayedRoute;
+    expect(expected.status).toBe('ok');
+    for (const edges of Object.values(mutableGraph.adjacency)) edges.length = 0;
+    act(() => result.current.submitRoute());
+    expect(result.current.displayedRoute).toEqual(expected);
+    rerender({ currentGraph: { ...mutableGraph } });
+    expect(result.current.displayedRoute.status).toBe('unreachable');
+  });
+
   it('starts without an invented demo route when the URL has no endpoints', () => {
     window.history.replaceState(null, '', '/');
     const { result } = renderHook(() => useRoutePlanner(network, graph, places));
