@@ -299,7 +299,9 @@ describe('viewer controls', () => {
     renderControls({ route: okRoute });
     expect(screen.getAllByText(/Start gate.*End gate/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/About 1 min/)).toHaveLength(1);
-    expect(screen.getByText(/4.0 m.*0 floor changes.*Wheelchair accessible/)).toBeInTheDocument();
+    for (const detail of ['4.0 m', '0 floor changes', 'Wheelchair accessible']) {
+      expect(screen.getByText(detail, { exact: true })).toBeInTheDocument();
+    }
     expect(screen.getByRole('alert')).toHaveTextContent('Accessibility data is incomplete');
     expect(screen.getByText(/Elevator operation, congestion, and temporary closures are not live/)).toBeInTheDocument();
     expect(screen.getByText(/Movement types: walking/)).toBeInTheDocument();

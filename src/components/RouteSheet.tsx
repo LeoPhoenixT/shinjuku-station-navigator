@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import type { RoutePlan } from '../routing/routeService.js';
 import type { RouteStep } from '../routing/routeInstructions.js';
-import { floorDisplayName } from '../places/placePresentation.js';
-import { publicPlaceName } from '../places/placePresentation.js';
+import { floorDisplayName, publicPlaceName } from '../places/placePresentation.js';
 import { estimateJourney, estimatedTimeText } from '../routing/journeyEstimate.js';
 import { useI18n } from '../i18n/context.js';
 import { formatFloorChanges, formatMovement, formatRouteInstruction, formatRouteWarning, formatRoutingProfile, formatWarningCount } from '../i18n/formatters.js';
@@ -44,31 +43,47 @@ export function RouteSheet({ route, translations, selectedStepIndex, onStepSelec
   const estimate = estimateJourney(route);
   const activeIndex = Math.min(selectedStepIndex ?? 0, Math.max(0, route.steps.length - 1));
   const activeStep = route.steps[activeIndex];
-  const journeyLabel = t('route.journey', { start: publicPlaceName(route.start, locale, translations), destination: publicPlaceName(route.destination, locale, translations) });
+  const startName = publicPlaceName(route.start, locale, translations);
+  const destinationName = publicPlaceName(route.destination, locale, translations);
+  const journeyLabel = t('route.journey', { start: startName, destination: destinationName });
   const movementTypes = [...new Set(route.steps.map((step) => step.movement).filter((movement): movement is NonNullable<typeof movement> => Boolean(movement)))];
   const accessibilitySensitive = route.profile === 'accessible' || route.profile === 'avoid-stairs' || route.profile === 'prefer-elevator';
   const warningMessages = route.warnings.map((warning) => formatRouteWarning(warning, [route.start, route.destination], locale, translations));
   const instruction = (step: RouteStep) => formatRouteInstruction(step, route.start, route.destination, locale, translations);
   return <section className={`route-sheet ${expanded ? 'route-sheet-expanded' : ''}`} aria-labelledby="route-summary-heading">
     <header className="route-sheet-header">
-      <button type="button" className="route-sheet-toggle" aria-expanded={expanded} aria-controls="route-step-list" onClick={() => setExpanded(!expanded)}>
-        <span><span className="route-sheet-kicker">{estimatedTimeText(estimate, locale)}</span><strong id="route-summary-heading">{journeyLabel}</strong></span>
-        <span className="route-sheet-meta">{route.totalDistanceMeters.toFixed(1)} m · {formatFloorChanges(estimate.floorChanges, locale)} · {formatRoutingProfile(route.profile, locale)}</span>
-        <span className="route-sheet-action">{t(expanded ? 'routeSheet.hideDirections' : 'routeSheet.showDirections')} <span aria-hidden="true">{expanded ? '⌄' : '⌃'}</span></span>
-      </button>
-      {onEditRoute && <button type="button" className="route-sheet-edit" onClick={onEditRoute}>{t('routeSheet.edit')}</button>}
+      <h2 id="route-summary-heading" className="route-sheet-journey">
+        <span className="visually-hidden">{journeyLabel}</span>
+        <span className="route-sheet-endpoint" aria-hidden="true"><b>A</b>{startName}</span>
+        <span className="route-sheet-endpoint" aria-hidden="true"><b>B</b>{destinationName}</span>
+      </h2>
+      <p className="route-sheet-meta">
+        <span>{estimatedTimeText(estimate, locale)}</span>
+        <span>{route.totalDistanceMeters.toFixed(1)} m</span>
+        <span>{formatFloorChanges(estimate.floorChanges, locale)}</span>
+        <span>{formatRoutingProfile(route.profile, locale)}</span>
+      </p>
+      <div className="route-sheet-actions">
+        <button type="button" className="route-sheet-toggle" aria-expanded={expanded} aria-controls={expanded ? 'route-step-list' : undefined} onClick={() => setExpanded(!expanded)}>
+          {t(expanded ? 'routeSheet.hideDirections' : 'routeSheet.showDirections')} <span aria-hidden="true">{expanded ? '⌄' : '⌃'}</span>
+        </button>
+        {onEditRoute && <button type="button" className="route-sheet-edit" onClick={onEditRoute}>{t('routeSheet.edit')}</button>}
+      </div>
     </header>
     <p className="visually-hidden">{t('routeSheet.screenReader', { steps: route.steps.length, movements: movementTypes.length > 0 ? movementTypes.map((movement) => formatMovement(movement, locale)).join(locale === 'ja' ? '、' : ', ') : t('routeSheet.movementWalking'), warnings: formatWarningCount(route.warnings.length, locale) })}</p>
     {warningMessages.length > 0 && <div className="route-warning-list">{warningMessages.map((warning, index) => <p className="route-warning" role="alert" key={`${route.warnings[index].code}:${warning}`}>{warning}</p>)}</div>}
     {accessibilitySensitive && <p className="route-data-notice">{t('routeSheet.dataNotice')}</p>}
-    {activeStep && <div className="current-step" aria-live="polite" aria-atomic="true">
-      <span className={`step-icon step-${activeStep.kind}`} aria-hidden="true">{stepIcon(activeStep)}</span>
-      <span className="current-step-copy"><span>{t('routeSheet.step', { current: activeIndex + 1, total: route.steps.length, floor: floorBadge(activeStep, locale) })}</span><strong>{instruction(activeStep)}</strong></span>
-      <span className="current-step-actions">
-        <button type="button" onClick={() => onFitStep(activeIndex)}>{t('routeSheet.fitStep')}</button>
+    {activeStep && <div className="current-step">
+      <div className="current-step-actions">
         <button type="button" onClick={() => onStepSelect(activeIndex - 1)} disabled={activeIndex === 0} aria-label={t('routeSheet.previousLabel')}>{t('routeSheet.previous')}</button>
         <button type="button" onClick={() => onStepSelect(activeIndex + 1)} disabled={activeIndex >= route.steps.length - 1} aria-label={t('routeSheet.nextLabel')}>{t('routeSheet.next')}</button>
-      </span>
+        <button type="button" onClick={() => onFitStep(activeIndex)}>{t('routeSheet.fitStep')}</button>
+      </div>
+      <span className={`step-icon step-${activeStep.kind}`} aria-hidden="true">{stepIcon(activeStep)}</span>
+      <div className="current-step-copy" aria-live="polite" aria-atomic="true">
+        <span>{t('routeSheet.step', { current: activeIndex + 1, total: route.steps.length, floor: floorBadge(activeStep, locale) })}</span>
+        <strong>{instruction(activeStep)}</strong>
+      </div>
     </div>}
     {expanded && <div className="route-sheet-body" id="route-step-list">
       <ol className="route-step-list">
