@@ -10,6 +10,10 @@ export interface RoutePlannerDraft {
   readonly destinationId: string;
   readonly profile: RoutingProfile;
   readonly dirty: boolean;
+  readonly startQuery?: string;
+  readonly destinationQuery?: string;
+  readonly setStartQuery: (query: string | undefined) => void;
+  readonly setDestinationQuery: (query: string | undefined) => void;
   readonly setStartId: (id: string) => void;
   readonly setDestinationId: (id: string) => void;
   readonly setProfile: (profile: RoutingProfile) => void;
@@ -29,6 +33,8 @@ export function useRoutePlanner(network: OfficialNetworkDataset, graph: RoutingG
   const [startId, setStartId] = useState(request.startId);
   const [destinationId, setDestinationId] = useState(request.destinationId);
   const [profile, setProfile] = useState<RoutingProfile>(request.profile);
+  const [startQuery, setStartQuery] = useState<string>();
+  const [destinationQuery, setDestinationQuery] = useState<string>();
   const [submitted, setSubmitted] = useState(request);
   const routeDirty = startId !== submitted.startId || destinationId !== submitted.destinationId || profile !== submitted.profile;
   const planRoute = useMemo(() => createRoutePlanner(network, graph, places), [network, graph, places]);
@@ -42,6 +48,8 @@ export function useRoutePlanner(network: OfficialNetworkDataset, graph: RoutingG
   useEffect(() => {
     const restore = () => {
       const restored = readRouteUrl(window.location.search, initial);
+      setStartQuery(undefined);
+      setDestinationQuery(undefined);
       setStartId(restored.startId);
       setDestinationId(restored.destinationId);
       setProfile(restored.profile);
@@ -51,21 +59,32 @@ export function useRoutePlanner(network: OfficialNetworkDataset, graph: RoutingG
     return () => window.removeEventListener('popstate', restore);
   }, [initial]);
 
-  const submitRoute = () => setSubmitted({ startId, destinationId, profile });
+  const submitRoute = () => {
+    if (startQuery !== undefined || destinationQuery !== undefined) return;
+    setSubmitted({ startId, destinationId, profile });
+  };
   const clearRoute = () => {
     const cleared = { startId: '', destinationId: '', profile };
+    setStartQuery(undefined);
+    setDestinationQuery(undefined);
     setStartId('');
     setDestinationId('');
     setSubmitted(cleared);
   };
   const routeToDestination = (nextDestinationId: string) => {
+    if (startQuery !== undefined) return;
     const next = { startId, destinationId: nextDestinationId, profile };
+    setDestinationQuery(undefined);
     setDestinationId(nextDestinationId);
     setSubmitted(next);
   };
 
   return {
-    draft: { startId, destinationId, profile, dirty: routeDirty, setStartId, setDestinationId, setProfile },
+    draft: {
+      startId, destinationId, profile, dirty: routeDirty, startQuery, destinationQuery, setStartQuery, setDestinationQuery, setProfile,
+      setStartId: (id) => { setStartQuery(undefined); setStartId(id); },
+      setDestinationId: (id) => { setDestinationQuery(undefined); setDestinationId(id); },
+    },
     displayedRoute,
     submitRoute,
     clearRoute,

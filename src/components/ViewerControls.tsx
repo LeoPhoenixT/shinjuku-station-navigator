@@ -32,6 +32,8 @@ export function ViewerControls(props: ViewerControlsProps) {
   const { locale, t } = useI18n();
   const routablePlaces = useMemo(() => planner.places.filter(({ routable }) => routable), [planner.places]);
   const placeSearchIndex = useMemo(() => buildPlaceSearchIndex(routablePlaces, planner.translations), [planner.translations, routablePlaces]);
+  const { startQuery, destinationQuery } = planner.draft;
+  const hasUnconfirmedEndpoint = startQuery !== undefined || destinationQuery !== undefined;
   const [shareMessage, setShareMessage] = useState<string>();
   const [narrow] = useState(() => typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 640px)').matches);
   const [expandedPanels, setExpandedPanels] = useState<Set<'planner' | 'directions' | 'settings' | 'legend'>>(() => {
@@ -88,15 +90,15 @@ export function ViewerControls(props: ViewerControlsProps) {
         </header>
         {plannerOpen && <div className="planner-body" id="planner-body">
           <div className="place-row">
-            <PlaceSearchInput kind="start" searchIndex={placeSearchIndex} translations={planner.translations} value={planner.draft.startId} onChange={planner.draft.setStartId} />
+            <PlaceSearchInput kind="start" searchIndex={placeSearchIndex} translations={planner.translations} value={planner.draft.startId} unconfirmedQuery={startQuery} onQueryChange={planner.draft.setStartQuery} onChange={planner.draft.setStartId} />
             <button type="button" className="swap-places" onClick={planner.swapPlaces} aria-label={t('planner.actions.swap')} title={t('planner.actions.swap')}>⇄</button>
-            <PlaceSearchInput kind="destination" searchIndex={placeSearchIndex} translations={planner.translations} value={planner.draft.destinationId} onChange={planner.draft.setDestinationId} />
+            <PlaceSearchInput kind="destination" searchIndex={placeSearchIndex} translations={planner.translations} value={planner.draft.destinationId} unconfirmedQuery={destinationQuery} onQueryChange={planner.draft.setDestinationQuery} onChange={planner.draft.setDestinationId} />
           </div>
           <div className="planner-actions">
             <label className="profile-control"><span>{t('planner.routeField')}</span><select aria-label={t('profile.label')} value={planner.draft.profile} onChange={(event) => planner.draft.setProfile(event.target.value as PlannerViewModel['draft']['profile'])}><option value="shortest">{t('profile.shortest')}</option><option value="accessible">{t('profile.accessible')}</option><option value="avoid-stairs">{t('profile.avoidStairs')}</option><option value="prefer-elevator">{t('profile.preferElevator')}</option><option value="fewest-floor-changes">{t('profile.fewestFloorChanges')}</option></select></label>
-            <button type="button" className="submit-route" onClick={planner.submitRoute} disabled={!planner.draft.startId || !planner.draft.destinationId || !planner.draft.dirty}>{t(planner.displayedRoute.status === 'ok' ? 'planner.actions.update' : 'planner.actions.show')}</button>
-            <button type="button" className="clear-route" onClick={planner.clearRoute} disabled={!planner.draft.startId && !planner.draft.destinationId && planner.displayedRoute.status !== 'ok'}>{t('planner.actions.clear')}</button>
-            <button type="button" className="share-route" onClick={() => void copyRouteLink()} disabled={planner.displayedRoute.status !== 'ok' || planner.draft.dirty}>{t('planner.actions.share')}</button>
+            <button type="button" className="submit-route" onClick={planner.submitRoute} disabled={hasUnconfirmedEndpoint || !planner.draft.startId || !planner.draft.destinationId || !planner.draft.dirty}>{t(planner.displayedRoute.status === 'ok' ? 'planner.actions.update' : 'planner.actions.show')}</button>
+            <button type="button" className="clear-route" onClick={planner.clearRoute} disabled={!hasUnconfirmedEndpoint && !planner.draft.startId && !planner.draft.destinationId && planner.displayedRoute.status !== 'ok'}>{t('planner.actions.clear')}</button>
+            <button type="button" className="share-route" onClick={() => void copyRouteLink()} disabled={hasUnconfirmedEndpoint || planner.displayedRoute.status !== 'ok' || planner.draft.dirty}>{t('planner.actions.share')}</button>
           </div>
           <p className={`planner-status ${planner.displayedRoute.status === 'ok' || emptyRequest ? '' : 'planner-status-error'}`} role={planner.displayedRoute.status === 'ok' || emptyRequest ? 'status' : 'alert'}>{routeMessage(planner.displayedRoute, locale)}</p>
         </div>}

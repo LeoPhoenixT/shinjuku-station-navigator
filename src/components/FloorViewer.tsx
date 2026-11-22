@@ -202,7 +202,7 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
       setInteractionMessage(t('feedback.startSet', { place: publicPlaceName(place, locale, data.translations) }));
       return;
     }
-    if (!planner.draft.startId) {
+    if (!planner.draft.startId || planner.draft.startQuery !== undefined) {
       planner.draft.setDestinationId(place.id);
       setInteractionMessage(t('feedback.destinationNeedsStart', { place: publicPlaceName(place, locale, data.translations) }));
       return;

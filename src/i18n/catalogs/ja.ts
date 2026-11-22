@@ -43,6 +43,7 @@ export const ja = {
   'search.toilets': 'トイレ',
   'search.elevators': 'エレベーター',
   'search.lockers': 'コインロッカー',
+  'search.noResults': '一致する場所がありません。別の名称、エリア、カテゴリーを入力してください。',
   'search.limit': '全{count}件のうち100件を表示しています。名称、エリア、カテゴリーを入力して絞り込んでください。',
   'search.group': '{floor}・{area}・{category}',
 

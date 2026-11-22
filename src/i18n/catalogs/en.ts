@@ -41,6 +41,7 @@ export const en = {
   'search.toilets': 'Toilets',
   'search.elevators': 'Elevators',
   'search.lockers': 'Lockers',
+  'search.noResults': 'No matching places. Try another name, area, or category.',
   'search.limit': 'Showing 100 of {count} places. Type a name, area, or category to narrow results.',
   'search.group': '{floor} · {area} · {category}',
 

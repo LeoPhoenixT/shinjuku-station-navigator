@@ -114,6 +114,8 @@ button, summary { -webkit-tap-highlight-color: transparent; }
   width: 100%;
 }
 .place-search input { text-overflow: ellipsis; }
+.place-search-status { color: #cbd5e1; font-size: 0.78rem; }
+.place-search-status:empty { margin-top: -0.28rem; }
 .place-shortcuts { display: flex; gap: 0.3rem; overflow-x: auto; padding-top: 0.1rem; scrollbar-width: thin; }
 .place-shortcuts button { background: #111827; border: 1px solid #475569; border-radius: 999px; color: #cbd5e1; cursor: pointer; flex: 0 0 auto; font-size: 0.68rem; min-height: 2rem; padding: 0.25rem 0.55rem; }
 .place-shortcuts button[aria-pressed="true"] { background: #0c4a6e; border-color: #38bdf8; color: #e0f2fe; }

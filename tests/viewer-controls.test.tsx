@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { ViewerControls } from '../src/components/ViewerControls';
@@ -32,6 +33,7 @@ function viewerControlsProps(props: ReturnType<typeof renderProps>): ViewerContr
       places: props.places,
       draft: {
         startId: props.startId, destinationId: props.destinationId, profile: props.profile, dirty: props.routeDirty,
+        setStartQuery: vi.fn(), setDestinationQuery: vi.fn(),
         setStartId: props.setStartId, setDestinationId: props.setDestinationId, setProfile: props.setProfile,
       },
       displayedRoute: props.route,
@@ -99,6 +101,26 @@ describe('viewer controls', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Choose a start and destination');
     expect(screen.getByRole('button', { name: 'Clear route' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Share route' })).toBeDisabled();
+  });
+
+  it('blocks submission while an endpoint search is unconfirmed', () => {
+    const props = renderProps(false, { routeDirty: true });
+    function Controls() {
+      const [startQuery, setStartQuery] = useState<string>();
+      const view = viewerControlsProps(props);
+      return <ViewerControls {...view} planner={{ ...view.planner, draft: { ...view.planner.draft, startQuery, setStartQuery } }} />;
+    }
+    render(<Controls />);
+    const start = screen.getByRole('combobox', { name: 'Search start place' });
+    const submit = screen.getByRole('button', { name: 'Show route' });
+    expect(submit).toBeEnabled();
+    fireEvent.change(start, { target: { value: 'no matching station place' } });
+    fireEvent.blur(start, { relatedTarget: submit });
+    expect(start).toHaveValue('no matching station place');
+    expect(submit).toBeDisabled();
+    expect(props.submitRoute).not.toHaveBeenCalled();
+    fireEvent.keyDown(start, { key: 'Escape' });
+    expect(submit).toBeEnabled();
   });
 
   it('uses the compact planner shell when a narrow viewport has no route request', () => {
