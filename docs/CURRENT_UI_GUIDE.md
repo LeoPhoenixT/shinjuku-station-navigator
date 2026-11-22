@@ -61,6 +61,7 @@ Map settings include:
 
 - Marker and category visibility
 - Building outlines and the walking network
+- Surface roads and three street-level landmarks, enabled by default
 - English/Japanese interface language
 - Custom floor visibility
 - Free rotation
@@ -184,7 +185,9 @@ Opening boundaries use a magenta treatment, while the toggleable Drawing layer u
 
 Source floors such as `2out`, `3out`, and `4out` share the display elevation of their corresponding numbered floor. Their outlines remain purple, with reduced opacity on unrelated route-context floors, so exterior-looking source areas remain distinguishable.
 
-This is indoor-map context. The repository does not contain the separate surface-road dataset used by the external reference demo.
+The **Surface roads** option draws the surrounding GSI road edges and medians at ground level and labels East Exit Plaza, West Exit Plaza, and Busta Shinjuku. Roads remain visible at reduced opacity when the ground floor is hidden or shown only as context. In the all-floors view and on narrow screens with surface roads enabled, each ticket gate appears as a purple `GT` badge at overview scale. Zoom in to see the full names, or select a badge to see the gate name and route actions. On wider screens, selecting one floor also shows its gate names. Route endpoint labels stay visible on their displayed floors. On mobile, zoom buttons are available under **Map tools**.
+
+The street lines and area labels provide orientation. The indoor pedestrian network continues to determine route coverage and directions.
 
 ### Facility markers
 

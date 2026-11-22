@@ -7,6 +7,8 @@ import { STRUCTURAL_LINE_STYLES } from './structuralLinePresentation.js';
 import type { NetworkContext } from './networkContext.js';
 import { translate, type Locale } from '../i18n/types.js';
 import { formatIndoorMapCategory } from '../i18n/formatters.js';
+import { SURFACE_LANDMARK_COLOR, SURFACE_ROAD_COLOR } from './viewerPresentation.js';
+import { GATE_BADGE_COLOR, GATE_BADGE_SYMBOL } from './displayPreferences.js';
 
 export type MapLegendItemKind = 'surface' | 'line' | 'marker' | 'route' | 'network' | 'debug';
 export type MapLegendSection = 'route' | 'spaces' | 'facilities' | 'structure' | 'network' | 'debug';
@@ -30,7 +32,9 @@ export interface MapLegendState {
   startId: string;
   destinationId: string;
   showFacilities: boolean;
+  showGateMarkers: boolean;
   showStructuralDetails: boolean;
+  showSurfaceContext?: boolean;
   showOfficialNetwork: boolean;
   networkContexts: NetworkContext[];
   hasOneWayNetwork: boolean;
@@ -82,6 +86,9 @@ export function buildMapLegendItems(state: MapLegendState): MapLegendItem[] {
   }
 
   if (state.showFacilities) {
+    if (state.showGateMarkers && state.places.some((place) => place.routable && place.category === 'gate' && visibleFloors.has(place.floorId))) {
+      items.push({ id: 'facility:ticket-gate', section: 'facilities', label: translate(locale, 'category.ticketGates'), kind: 'marker', color: GATE_BADGE_COLOR, symbol: GATE_BADGE_SYMBOL });
+    }
     const markerKeys = new Set<string>();
     for (const marker of state.facilityCandidates.filter(({ status, floorId }) => status === 'public' && visibleFloors.has(floorId)).sort((a, b) => a.priority - b.priority || a.categoryName.localeCompare(b.categoryName) || a.id.localeCompare(b.id))) {
       const categoryName = formatIndoorMapCategory('Facility', marker.categoryCode, locale);
@@ -95,6 +102,10 @@ export function buildMapLegendItems(state: MapLegendState): MapLegendItem[] {
   if (hasVisibleLayer(state.features, visibleFloors, 'Opening')) items.push({ id: 'opening', section: 'structure', label: translate(locale, 'legend.opening'), kind: 'line', color: STRUCTURAL_LINE_STYLES.openingActive.color });
   if (state.showStructuralDetails && hasVisibleLayer(state.features, visibleFloors, 'Drawing')) items.push({ id: 'drawing', section: 'structure', label: translate(locale, 'legend.structuralDrawing'), kind: 'line', color: STRUCTURAL_LINE_STYLES.drawingActive.color });
   if (state.features.some((feature) => visibleFloors.has(feature.floorId ?? 'B1') && typeof feature.properties.sourceFloor === 'string' && feature.properties.sourceFloor.endsWith('out'))) items.push({ id: 'outdoor', section: 'structure', label: translate(locale, 'legend.outdoorContext'), kind: 'line', color: STRUCTURAL_LINE_STYLES.outdoorActive.color });
+  if (state.showSurfaceContext) {
+    items.push({ id: 'surface-roads', section: 'structure', label: translate(locale, 'legend.surfaceRoads'), kind: 'line', color: SURFACE_ROAD_COLOR });
+    items.push({ id: 'surface-landmarks', section: 'structure', label: translate(locale, 'legend.surfaceLandmarks'), kind: 'marker', color: SURFACE_LANDMARK_COLOR, symbol: '◆' });
+  }
 
   if (state.showOfficialNetwork) {
     const networkStyles: Record<NetworkContext, { label: string; color: string }> = { inside: { label: translate(locale, 'legend.inside'), color: '#38bdf8' }, boundary: { label: translate(locale, 'legend.boundary'), color: '#f59e0b' }, outside: { label: translate(locale, 'legend.outside'), color: '#c084fc' } };

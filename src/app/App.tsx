@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { useI18n } from '../i18n/context.js';
+import { SURFACE_CONTEXT_SOURCE } from '../schema/surfaceContext.js';
 import './App.css';
 
 const FloorViewer = lazy(() => import('../components/FloorViewer.js').then((module) => ({ default: module.FloorViewer })));
@@ -19,9 +20,13 @@ export function App() {
           {t('attribution.dataset')}
         </a>
         {' '}{t('attribution.modifiedSuffix')} ·{' '}
-        <a href="https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/f7fde41d-ffca-4b2a-9b25-94b8a701a037/a0f187e6/20220706_resources_data_betten_01.pdf" target="_blank" rel="noreferrer">
+        <a href="https://www.geospatial.jp/ckan/dataset/ecabe2e2-21a9-4a72-8dee-0b34e2c34fb6/resource/e3b28fde-5546-4c9d-956b-69363d707835/download/.pdf" target="_blank" rel="noreferrer">
           {t('attribution.terms')}
         </a>
+        {' · '}
+        <a href={SURFACE_CONTEXT_SOURCE} target="_blank" rel="noreferrer">{t('attribution.surface')}</a>
+        {' '}{t('attribution.surfaceModified')}
+        {' ('}<a href="https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html" target="_blank" rel="noreferrer">{t('attribution.surfaceTerms')}</a>{')'}
       </footer>
     </main>
   );

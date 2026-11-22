@@ -3,6 +3,7 @@ import { buildHumanGoldenRoute } from './build-human-golden-route.js';
 import { buildNamedPlaces } from './build-named-places.js';
 import { buildPlaceTranslations } from './build-place-translations.js';
 import { buildFullMap } from './build-full-map.js';
+import { buildSurfaceContext, SURFACE_CONTEXT_OUTPUT } from './build-surface-context.js';
 import { buildReviewedCustomNetwork } from './build-reviewed-custom-network.js';
 import { buildFacilityMarkerReport } from './build-facility-marker-report.js';
 import { convertDataset } from './convert-dataset.js';
@@ -29,6 +30,7 @@ export const GENERATED_FILES = [
   'public/data/processed/shinjuku-b1-named-places.json',
   'public/data/processed/shinjuku-place-translations.json',
   'public/data/processed/shinjuku-full-map.json',
+  SURFACE_CONTEXT_OUTPUT,
 ] as const;
 
 function output(root: string, relative: typeof GENERATED_FILES[number]): string {
@@ -59,6 +61,7 @@ export function buildAllData(root = '.'): void {
   validateOfficialNetwork(network, networkValidation, 'public/data/processed/jr-shinjuku-ticket-gates-b1-official-network.json');
   buildReviewedCustomNetwork(network, reviewedNetwork);
   buildFullMap(fullMap);
+  buildSurfaceContext(output(root, SURFACE_CONTEXT_OUTPUT));
   buildNamedPlaces(network, places, fullMap, reviewedNetwork);
   buildPlaceTranslations(places, 'data/place-translations.source.json', translations, translationCoverage);
   buildFacilityMarkerReport(fullMap, network, markerReport);

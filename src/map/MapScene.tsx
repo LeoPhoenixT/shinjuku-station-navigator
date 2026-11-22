@@ -1,6 +1,6 @@
 import { Html } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
-import { useMemo } from 'react';
+import { useMemo, type RefObject } from 'react';
 import type { RoutingGraph } from '../graph/types.js';
 import type { RoutePlan } from '../routing/routeService.js';
 import type { NamedPlaceRecord } from '../schema/processed.js';
@@ -8,6 +8,7 @@ import type { OfficialNetworkDataset } from '../types/officialNetwork.js';
 import type { ProcessedDataset } from '../types/processed.js';
 import { floorDisplayName } from '../places/placePresentation.js';
 import type { PlaceTranslationsDataset } from '../schema/placeTranslations.js';
+import type { SurfaceContext } from '../schema/surfaceContext.js';
 import { useI18n } from '../i18n/context.js';
 import { formatMovement } from '../i18n/formatters.js';
 import { displayElevation } from './stackedElevation.js';
@@ -22,6 +23,7 @@ import { ExtrudedLayer, SemanticFixtureLayer, SemanticSpaceLayer } from './scene
 import { NetworkDirectionArrows, RouteLines, Segments, StructuralOverlay, WideSegments } from './sceneLinePrimitives.js';
 import { DrawingLayer, OfficialNetworkLayer, SourceLinksLayer, TwsiLayer } from './sceneOptionalLayers.js';
 import { FacilityMarkerLayer, PlaceLayer } from './sceneMarkerLayers.js';
+import { SurfaceContextLayer } from './SurfaceContextLayer.js';
 
 export interface MapSceneProps {
   activeFloor: string;
@@ -45,7 +47,9 @@ export interface MapSceneProps {
   showTwsi: boolean;
   showFacilities: boolean;
   enabledFacilityCategories: ReadonlySet<string>;
-  showGateLabels: boolean;
+  showGateMarkers: boolean;
+  surfaceContext?: SurfaceContext;
+  fittedZoomRef: RefObject<number>;
   showStructuralDetails: boolean;
   visibleFloors: string[];
   onFacilityRouteAction: (place: NamedPlaceRecord, target: 'start' | 'destination') => void;
@@ -61,6 +65,8 @@ function TransitionMarker({ marker }: { marker: RouteTransitionMarker }) {
 
 export function MapScene(props: MapSceneProps) {
   const stacked = props.visibleFloors.length > 1;
+  const narrow = useThree(({ size }) => size.width <= 640);
+  const compactGates = Boolean(props.surfaceContext) && (props.floorViewMode === 'stack' || narrow) && !props.debug;
   const center = sceneCenter(props.floor);
   const { activeFloors, contextFloors } = useMemo(
     () => partitionVisibleFloors(props.visibleFloors, props.activeFloor, props.routeFloorIds, props.floorViewMode),
@@ -84,6 +90,7 @@ export function MapScene(props: MapSceneProps) {
   const transitionMarkers = useMemo(() => routeTransitionMarkers(props.route, props.routingGraph, props.visibleFloors, stacked), [props.route, props.routingGraph, props.visibleFloors, stacked]);
   const highlightedRouteLines = useMemo(() => highlightedPolylines(props.routingGraph, props.highlightedRouteEdgeIds, props.visibleFloors, stacked), [props.highlightedRouteEdgeIds, props.routingGraph, props.visibleFloors, stacked]);
   return <group position={center}>
+    {props.surfaceContext && <SurfaceContextLayer data={props.surfaceContext} muted={!activeFloors.includes('0')} />}
     <ambientLight intensity={0.85} />
     <hemisphereLight args={['#dbeafe', '#111827', 0.7]} />
     <directionalLight position={[80, 120, 80]} intensity={1.25} />
@@ -116,6 +123,6 @@ export function MapScene(props: MapSceneProps) {
     <RouteLines lines={highlightedRouteLines} color="#fef08a" lineWidth={10} yOffset={4.12} />
     {props.debug && props.showOfficialNodes && props.routingGraph.nodes.filter((node) => props.visibleFloors.includes(node.floorId)).map((node) => <group key={node.id} position={[node.x, displayElevation(node.y, stacked) + 0.48, node.z]}><mesh><sphereGeometry args={[node.sourceId?.startsWith('reviewed:') ? 0.38 : 0.24, 8, 8]} /><meshStandardMaterial color={node.sourceId?.startsWith('reviewed:') ? '#f472b6' : '#bae6fd'} /></mesh><Html position={[0, 0.8, 0]} center zIndexRange={[3, 0]}><span className="node-label" title={node.id}>{node.sourceId?.startsWith('reviewed:') ? node.name : node.id.slice(0, 8)}</span></Html></group>)}
     {props.showFacilities && <FacilityMarkerLayer candidates={props.facilityMarkerCandidates} floors={props.visibleFloors} stacked={stacked} places={props.places} translations={props.translations} enabledCategories={props.enabledFacilityCategories} onRouteAction={props.onFacilityRouteAction} />}
-    <PlaceLayer places={props.places.filter((place) => props.visibleFloors.includes(place.floorId))} translations={props.translations} startId={props.startId} destinationId={props.destinationId} debug={props.debug} stacked={stacked} showGates={props.showGateLabels} onRouteAction={props.onFacilityRouteAction} />
+    <PlaceLayer places={props.places.filter((place) => props.visibleFloors.includes(place.floorId))} translations={props.translations} startId={props.startId} destinationId={props.destinationId} debug={props.debug} stacked={stacked} showGates={props.showGateMarkers} compactGates={compactGates} fittedZoomRef={props.fittedZoomRef} onRouteAction={props.onFacilityRouteAction} />
   </group>;
 }

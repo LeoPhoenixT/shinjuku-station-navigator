@@ -36,6 +36,7 @@ describe('deployment verification', () => {
     'jr-shinjuku-ticket-gates-b1-official-network.json',
     'shinjuku-b1-named-places.json',
     'shinjuku-full-map.json',
+    'shinjuku-surface-context.json',
     'shinjuku-reviewed-custom-network.json',
     'shinjuku-place-translations.json',
   ])('rejects invalid deployed %s even when the source remains valid', (file) => {

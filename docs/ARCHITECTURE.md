@@ -40,6 +40,7 @@ The most important architectural rule is that five concerns stay separate:
 - `src/schema/processed.ts`, `src/schema/reviewedCustomNetwork.ts`, and `src/schema/placeTranslations.ts` validate every fetched dataset before use.
 - `src/data/loadMapData.ts` fetches processed files in parallel.
 - `src/hooks/useMapData.ts` exposes loading, error, and ready states and cancels stale requests.
+- `src/hooks/useSurfaceContext.ts` loads and validates the optional surface reference independently. Indoor navigation can start before it loads and continue if the asset is unavailable.
 
 Invalid schema versions, malformed geometry, duplicate identifiers, or broken graph references fail at the boundary rather than becoming renderer errors.
 

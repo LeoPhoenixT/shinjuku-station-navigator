@@ -62,7 +62,7 @@ export function MapToolbar(props: MapToolbarProps) {
     }
     settingsWasOpenRef.current = settingsOpen;
   }, [props.settingsOpen]);
-  const modifiedDisplayCount = Number(layers.showFacilities) + Number(layers.showStructuralDetails) + Number(layers.showOfficialNetwork);
+  const modifiedDisplayCount = Number(layers.showFacilities) + Number(layers.showStructuralDetails) + Number(layers.showOfficialNetwork) + Number(layers.showSurfaceContext);
   const focusedSelection = floors.floorViewMode === 'focused';
   const publicVisibleCount = floors.floorIds.filter((floorId) => floors.visibleFloors.includes(floorId)).length;
   const runMobileTool = (action: () => void) => { action(); setMobileToolsOpen(false); };
@@ -97,8 +97,8 @@ export function MapToolbar(props: MapToolbarProps) {
       <button type="button" className="mobile-tools-toggle" aria-expanded={mobileToolsOpen} onClick={() => setMobileToolsOpen((open) => !open)}>{t('map.tools')}</button>
       <button type="button" className="desktop-camera-control" onClick={camera.fitRoute} disabled={!props.canFitRoute} aria-label={t('map.fitRoute')} title={t('map.fitRoute')}>{t('map.route')}</button>
       <button type="button" className="desktop-camera-control" onClick={camera.fitStation} aria-label={t('map.fitStation')} title={t('map.fitStation')}>{t('map.station')}</button>
-      <button type="button" className="desktop-camera-control" onClick={camera.zoomOut} aria-label={t('map.zoomOut')} title={t('map.zoomOut')}>−</button>
-      <button type="button" className="desktop-camera-control" onClick={camera.zoomIn} aria-label={t('map.zoomIn')} title={t('map.zoomIn')}>＋</button>
+      <button type="button" onClick={camera.zoomOut} aria-label={t('map.zoomOut')} title={t('map.zoomOut')}>−</button>
+      <button type="button" onClick={camera.zoomIn} aria-label={t('map.zoomIn')} title={t('map.zoomIn')}>＋</button>
       <button type="button" className="compass-control" onClick={() => runMobileTool(camera.showNorthView)} aria-label={t('map.northUp')} title={t('map.heading', { degrees: camera.cameraHeading })}><span className="compass-needle" style={{ transform: `rotate(${-camera.cameraHeading}deg)` }}>↑</span><span>N</span></button>
       <button type="button" onClick={() => runMobileTool(camera.showAngledView)} aria-label={t('map.angled3d')} title={t('map.angled3d')}>3D</button>
       <details className="map-settings" open={props.settingsOpen}>
@@ -117,6 +117,7 @@ export function MapToolbar(props: MapToolbarProps) {
             <label><input type="checkbox" checked={layers.showFacilities} onChange={(event) => layers.setShowFacilities(event.target.checked)} /><span><strong>{t('settings.markers')}</strong><small>{t('settings.markersHelp')}</small></span></label>
             <label><input type="checkbox" checked={layers.showStructuralDetails} onChange={(event) => layers.setShowStructuralDetails(event.target.checked)} /><span><strong>{t('settings.outlines')}</strong><small>{t('settings.outlinesHelp')}</small></span></label>
             <label><input type="checkbox" checked={layers.showOfficialNetwork} onChange={(event) => layers.setShowOfficialNetwork(event.target.checked)} /><span><strong>{t('settings.walkingNetwork')}</strong><small>{t('settings.walkingNetworkHelp')}</small></span></label>
+            <label><input type="checkbox" checked={layers.showSurfaceContext} onChange={(event) => layers.setShowSurfaceContext(event.target.checked)} /><span><strong>{t('settings.surfaceContext')}</strong><small>{t('settings.surfaceContextHelp')}</small></span></label>
           </fieldset>
 
           <fieldset><legend>{t('language.title')}</legend><div className="settings-segments language-segments" role="radiogroup" aria-label={t('language.title')}>

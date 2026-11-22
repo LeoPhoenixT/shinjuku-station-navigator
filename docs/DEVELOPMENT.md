@@ -129,6 +129,12 @@ Raw MLIT source materials are ignored local inputs and must never be committed.
 
 `data:check` rebuilds into a temporary directory and byte-compares all registered artifacts. It is the preferred non-mutating reproducibility check.
 
+### Surface-road data
+
+`npm run data:surface` regenerates the surface context from the committed road-only snapshot in `data/shinjuku-surface-roads.source.json`. This command runs offline and needs only the normal development dependencies. The converter uses the same local projection as the indoor dataset, clips to a roughly 1 km × 1.2 km station rectangle, rounds line vertices to centimetres, and includes three reviewed area anchors. `data:build`, `data:check`, and `release:verify` cover the runtime asset.
+
+For a deliberate source refresh, run `npm run data:surface:refresh` with network access. The script uses the pinned development-only PMTiles and MVT decoders to read nine zoom-16 tiles from the GSI archive with HTTP range requests. It checks the archive ETag against the reviewed release, records a checksum of each decoded tile, and clips the tile buffer before retaining road edges and visible medians. For a newer upstream edition, review the published date, ETag, feature codes, and station alignment before updating the pins and regenerating the snapshot. The browser serves the resulting local JSON and does not request GSI tiles. See [Data licensing](DATA_LICENSE.md).
+
 ## Generated-data ownership
 
 - `data/` contains reviewed project inputs and provenance.

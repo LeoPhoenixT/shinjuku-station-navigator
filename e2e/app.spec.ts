@@ -83,6 +83,72 @@ test('keeps primary map controls usable on a mobile viewport', async ({ page }) 
   await expect(page.getByRole('radio', { name: 'Emphasize B1 floor' })).toBeVisible();
 });
 
+test('keeps surface landmarks available on B1 and allows hiding the layer', async ({ page, isMobile }) => {
+  const landmarks = page.locator('.surface-landmark');
+  await expect(landmarks).toHaveCount(3);
+  await expect(page.getByText('East Exit Plaza', { exact: true })).toBeVisible();
+  await expect(page.getByText('West Exit Plaza', { exact: true })).toBeVisible();
+  await expect(page.getByText('Busta Shinjuku', { exact: true })).toBeVisible();
+  await expect(page.locator('.place-label')).toHaveCount(0);
+  await expect(page.locator('.gate-badge').first()).toHaveText('GT');
+
+  await page.getByRole('radio', { name: 'Emphasize B1 floor' }).click();
+  await expect(landmarks).toHaveCount(3);
+  if (isMobile) {
+    await expect(page.locator('.place-label')).toHaveCount(0);
+    await page.getByRole('button', { name: 'Map tools' }).click();
+    for (let clicks = 0; clicks < 3; clicks += 1) await page.getByRole('button', { name: 'Zoom in' }).click();
+  }
+  await expect(page.locator('.place-label').first()).toBeVisible();
+  await expect(page.locator('.gate-badge')).toHaveCount(0);
+
+  await page.getByLabel('Map settings').click();
+  const roads = page.getByRole('checkbox', { name: /Surface roads/ });
+  await expect(roads).toBeChecked();
+  await roads.uncheck();
+  await expect(landmarks).toHaveCount(0);
+  await roads.check();
+  await expect(landmarks).toHaveCount(3);
+});
+
+test('keeps a tall desktop overview clear until the user zooms in', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'Tall desktop viewport.');
+  await page.setViewportSize({ width: 1694, height: 1300 });
+  await expect(page.getByText('East Exit Plaza', { exact: true })).toBeInViewport();
+  await expect(page.locator('.place-label')).toHaveCount(0);
+  const badges = page.locator('.gate-badge');
+  await expect(badges.first()).toBeVisible();
+  const gateCount = await badges.count();
+  for (let clicks = 0; clicks < 3; clicks += 1) await page.getByRole('button', { name: 'Zoom in' }).click();
+  await expect(page.locator('.place-label')).toHaveCount(gateCount);
+  await page.getByRole('button', { name: 'Zoom out' }).click();
+  await expect(page.locator('.place-label')).toHaveCount(0);
+  await expect(badges).toHaveCount(gateCount);
+});
+
+test('continues showing a route if the optional surface data is unavailable', async ({ page }) => {
+  test.skip(test.info().project.name !== 'desktop-chromium', 'Desktop route and layer retry.');
+  const asset = '**/shinjuku-surface-context.json';
+  await page.route(asset, (route) => route.fulfill({ status: 503 }));
+  const params = new URLSearchParams({ start: START_ID, destination: DESTINATION_ID, profile: 'shortest' });
+  const failedAsset = page.waitForResponse((response) => response.url().endsWith('shinjuku-surface-context.json') && response.status() === 503);
+  await page.goto(`/?${params}`);
+  await failedAsset;
+  const directions = page.getByRole('region', { name: /Central Gate.*Central West Gate/ });
+  await expect(directions).toBeVisible();
+  await expect(page.locator('.surface-landmark')).toHaveCount(0);
+  const routeUrl = page.url();
+
+  await page.unroute(asset);
+  await page.getByLabel('Map settings').click();
+  const roads = page.getByRole('checkbox', { name: /Surface roads/ });
+  await roads.uncheck();
+  await roads.check();
+  await expect(page.locator('.surface-landmark')).toHaveCount(3);
+  await expect(directions).toBeVisible();
+  await expect(page).toHaveURL(routeUrl);
+});
+
 test('finds destinations in either language on desktop and mobile', async ({ page }) => {
   const editRoute = page.getByRole('button', { name: 'Edit route' });
   if (await editRoute.isVisible()) await editRoute.click();
@@ -111,6 +177,7 @@ test('switches the interface language and restores it after reload', async ({ pa
   await page.getByRole('radio', { name: '日本語' }).click();
 
   await expect(page.getByRole('region', { name: '新宿駅の多層屋内地図' })).toBeVisible();
+  await expect(page.getByText('東口駅前広場', { exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: '地図設定を閉じる' })).toBeVisible();
   expect(page.url()).toBe(originalUrl);
   expect(await page.locator('html').getAttribute('lang')).toBe('ja');

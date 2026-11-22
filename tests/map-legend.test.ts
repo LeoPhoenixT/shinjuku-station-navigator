@@ -32,7 +32,7 @@ function items(overrides: Partial<Parameters<typeof buildMapLegendItems>[0]> = {
   return buildMapLegendItems({
     features: [feature('walkway', 'Space', 'B1', { category: 'B029' }), feature('restricted', 'Space', 'B1', { category: 'B026' }), feature('opening', 'Opening', 'B1'), feature('drawing', 'Drawing', 'B1'), feature('twsi', 'TWSI_Line', 'B1')],
     facilityCandidates: [marker], places: [route.start, route.destination], visibleFloors: ['B1'], route, startId: 'start', destinationId: 'destination',
-    showFacilities: true, showStructuralDetails: true, showOfficialNetwork: false, networkContexts: ['inside', 'boundary', 'outside'], hasOneWayNetwork: true, debug: false, showTwsi: false, ...overrides,
+    showFacilities: true, showGateMarkers: false, showStructuralDetails: true, showOfficialNetwork: false, networkContexts: ['inside', 'boundary', 'outside'], hasOneWayNetwork: true, debug: false, showTwsi: false, ...overrides,
   });
 }
 
@@ -54,5 +54,12 @@ describe('dynamic map legend', () => {
     const result = items({ visibleFloors: ['0'] });
     expect(result.map(({ id }) => id)).toEqual(['destination']);
     expect(groupMapLegendItems(items()).map(({ section }) => section)).toEqual(['route', 'spaces', 'facilities', 'structure']);
+  });
+
+  it('explains the gate symbol when the category has a gate on a visible floor', () => {
+    const places = [place('gate', 'B1')];
+    expect(items({ places, showGateMarkers: true }).find(({ id }) => id === 'facility:ticket-gate')).toMatchObject({ label: 'Ticket gates', symbol: 'GT' });
+    expect(items({ places, showGateMarkers: false }).some(({ id }) => id === 'facility:ticket-gate')).toBe(false);
+    expect(items({ places, showGateMarkers: true, visibleFloors: ['0'] }).some(({ id }) => id === 'facility:ticket-gate')).toBe(false);
   });
 });

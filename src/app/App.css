@@ -367,11 +367,45 @@ button, summary { -webkit-tap-highlight-color: transparent; }
 .place-label-warning { border-color: #f59e0b; }
 .place-label-wrap { display: block; position: relative; }
 .place-label-detail { left: calc(100% + 0.35rem); top: 0; }
+.surface-landmark-layer { pointer-events: none; }
+.surface-landmark {
+  align-items: center;
+  background: rgba(14, 24, 37, 0.96);
+  border: 1px solid rgba(244, 211, 157, 0.58);
+  border-radius: 0.3rem;
+  display: flex;
+  font-size: clamp(0.63rem, 1vw, 0.75rem);
+  font-weight: 700;
+  gap: 0.35rem;
+  line-height: 1;
+  padding: 0.32rem 0.42rem;
+  pointer-events: none;
+  position: relative;
+  transform: translateY(-1.6rem);
+  white-space: nowrap;
+}
+.surface-landmark::before {
+  background: currentColor;
+  content: '';
+  flex: 0 0 0.32rem;
+  height: 0.32rem;
+  transform: rotate(45deg);
+}
+.surface-landmark::after {
+  background: currentColor;
+  content: '';
+  height: 0.85rem;
+  left: 50%;
+  opacity: 0.8;
+  position: absolute;
+  top: 100%;
+  width: 1px;
+}
 .source-facility-marker-wrap { display: block; position: relative; }
 .source-facility-marker {
   align-items: center;
   background: rgba(8, 17, 31, 0.94);
-  border: 2px solid #7dd3fc;
+  border: 2px solid var(--facility-marker-border, #7dd3fc);
   border-radius: 999px;
   color: #f8fafc;
   cursor: pointer;
@@ -389,6 +423,7 @@ button, summary { -webkit-tap-highlight-color: transparent; }
   white-space: nowrap;
 }
 .source-facility-priority-2 { border-color: #a78bfa; border-radius: 0.42rem; }
+.gate-badge { font-size: 0.66rem; }
 .source-facility-priority-3 { border-color: #94a3b8; border-radius: 0.15rem; color: #e2e8f0; }
 .source-facility-marker[aria-pressed="true"] { background: #0c4a6e; border-color: #fef08a; }
 .map-popup-layer { z-index: 9 !important; }

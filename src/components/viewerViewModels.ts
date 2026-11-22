@@ -55,6 +55,8 @@ export interface ViewerDisplayViewModel {
     readonly resetFacilityCategories: () => void;
     readonly showStructuralDetails: boolean;
     readonly setShowStructuralDetails: (value: boolean) => void;
+    readonly showSurfaceContext: boolean;
+    readonly setShowSurfaceContext: (value: boolean) => void;
   };
   readonly diagnostics: {
     readonly debug: boolean;
