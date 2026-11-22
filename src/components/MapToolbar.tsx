@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { useI18n } from '../i18n/context.js';
 import { floorDisplayName } from '../places/placePresentation.js';
@@ -70,6 +70,21 @@ export function MapToolbar(props: MapToolbarProps) {
   }, [props.settingsOpen]);
   const modifiedDisplayCount = Number(layers.showFacilities) + Number(layers.showStructuralDetails) + Number(layers.showOfficialNetwork) + Number(layers.showSurfaceContext);
   const focusedSelection = floors.floorViewMode === 'focused';
+  const tabStopFloor = focusedSelection && floors.floorIds.includes(floors.activeFloor)
+    ? floors.activeFloor : floors.floorIds.at(-1);
+  const moveFloorFocus = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const direction = event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1
+      : event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : 0;
+    if (!direction) return;
+    const buttons = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="radio"]')];
+    const current = buttons.findIndex((button) => button === event.target);
+    if (current === -1) return;
+    event.preventDefault();
+    const next = buttons[(current + direction + buttons.length) % buttons.length];
+    next.focus();
+    next.click();
+  };
   const publicVisibleCount = floors.floorIds.filter((floorId) => floors.visibleFloors.includes(floorId)).length;
   const runMobileTool = (action: () => void) => {
     action();
@@ -84,10 +99,11 @@ export function MapToolbar(props: MapToolbarProps) {
       </div>
       <div className={`floor-rail-scroll-wrap ${floorOverflow.before ? 'has-floor-before' : ''} ${floorOverflow.after ? 'has-floor-after' : ''}`}>
         <button type="button" className="floor-scroll-button floor-scroll-before" aria-label={t('map.previousFloors')} disabled={!floorOverflow.before} onClick={() => moveFloorList(-1)}><span className="floor-arrow-desktop" aria-hidden="true">↑</span><span className="floor-arrow-mobile" aria-hidden="true">‹</span></button>
-        <div className="floor-rail-levels" role="radiogroup" aria-label={t('map.floorFocus')} ref={floorListRef}>
+        <div className="floor-rail-levels" role="radiogroup" aria-label={t('map.floorFocus')} ref={floorListRef} onKeyDown={moveFloorFocus}>
         {[...floors.floorIds].reverse().map((floorId) => <button
           type="button"
           role="radio"
+          tabIndex={floorId === tabStopFloor ? 0 : -1}
           key={`focus:${floorId}`}
           aria-label={t('map.focusFloor', {
             floor: floorDisplayName(floorId, locale),

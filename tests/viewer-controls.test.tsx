@@ -59,6 +59,19 @@ function renderControls(overrides = {}) {
 }
 
 describe('viewer controls', () => {
+  it('uses one tab stop and wraps keyboard selection in the floor radio group', () => {
+    const props = renderControls({ activeFloor: '4', floorViewMode: 'focused' });
+    const radios = within(screen.getByRole('radiogroup', { name: 'Emphasized floor' })).getAllByRole('radio');
+    expect(radios.filter((radio) => radio.tabIndex === 0)).toEqual([radios[0]]);
+    radios[0].focus();
+    fireEvent.keyDown(radios[0], { key: 'ArrowUp' });
+    expect(radios.at(-1)).toHaveFocus();
+    expect(props.selectFloor).toHaveBeenCalledWith('B3');
+    fireEvent.keyDown(radios.at(-1)!, { key: 'ArrowRight' });
+    expect(radios[0]).toHaveFocus();
+    expect(props.selectFloor).toHaveBeenLastCalledWith('4');
+  });
+
   it('exposes named route selectors and reports bounded coverage clearly', () => {
     const props = renderControls();
     fireEvent.change(screen.getByLabelText('Search destination place'), { target: { value: placeDisplayName(places[0]) } });

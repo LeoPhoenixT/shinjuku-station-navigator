@@ -255,6 +255,7 @@ button, summary { -webkit-tap-highlight-color: transparent; }
 .settings-segments label:first-child span { border-radius: 0.45rem 0 0 0.45rem; }
 .settings-segments label:last-child span { border-radius: 0 0.45rem 0.45rem 0; }
 .settings-segments input:checked + span { background: #0c4a6e; border-color: #38bdf8; color: #e0f2fe; }
+.settings-segments input:focus-visible + span { outline: 2px solid #38bdf8; outline-offset: -3px; }
 
 .map-legend {
   align-self: start;
@@ -457,6 +458,7 @@ button, summary { -webkit-tap-highlight-color: transparent; }
 
 button:hover, summary:hover { border-color: #7dd3fc; }
 button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible, .route-sheet-journey:focus-visible, [role="option"]:focus-visible { outline: 2px solid #38bdf8; outline-offset: 2px; }
+.floor-rail-levels button:focus-visible { outline-offset: -3px; }
 
 @media (max-width: 920px) {
   .route-controls { grid-template-columns: minmax(0, 1fr) auto; }
