@@ -195,6 +195,17 @@ test('allows selecting both endpoints and submitting on a short mobile screen', 
   await expect(page.getByRole('region', { name: /Central Gate.*Central West Gate/ })).toBeVisible();
 });
 
+test('keeps the legend within a short desktop viewer while the planner is open', async ({ page }) => {
+  test.skip(test.info().project.name !== 'desktop-chromium', 'Short desktop legend.');
+  await page.setViewportSize({ width: 1280, height: 520 });
+  await expect(page.getByRole('combobox', { name: 'Search start place' })).toBeVisible();
+  await page.getByLabel('Expand map legend').click();
+  const legend = page.getByRole('region', { name: 'Visible map layers' });
+  await expect(legend).toBeInViewport({ ratio: 0.99 });
+  await legend.press('End');
+  await expect.poll(() => legend.evaluate((panel) => panel.scrollTop)).toBeGreaterThan(0);
+});
+
 test('keeps the keyboard-active search option visible', async ({ page }) => {
   const planRoute = page.getByRole('button', { name: 'Plan a route' });
   if (await planRoute.isVisible()) await planRoute.click();
