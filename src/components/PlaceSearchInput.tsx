@@ -1,4 +1,4 @@
-import { useId, useMemo, useRef, useState, type ChangeEvent, type FocusEvent, type KeyboardEvent, type RefObject } from 'react';
+import { useId, useLayoutEffect, useMemo, useRef, useState, type ChangeEvent, type FocusEvent, type KeyboardEvent, type RefObject } from 'react';
 import { buildPlaceIdIndex, groupPlacesByFloorArea, placeDisplayName, type PlaceSearchIndex } from '../features/route-planner/placeSearch.js';
 import { categoryDisplayName, floorLongName, placeSecondaryText, publicPlaceName } from '../places/placePresentation.js';
 import type { NamedPlaceRecord } from '../schema/processed.js';
@@ -26,7 +26,9 @@ export function PlaceSearchInput({ kind, searchIndex, translations, value, uncon
   const inputRef = providedInputRef ?? localInputRef;
   const selected = searchIndex.findById(value);
   const [open, setOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeOption, setActiveOption] = useState({ index: 0, reveal: false });
+  const { index: activeIndex } = activeOption;
+  const activeOptionRef = useRef<HTMLDivElement>(null);
   const [category, setCategory] = useState<NamedPlaceRecord['category'] | 'all'>('all');
   const selectedText = selected ? placeDisplayName(selected, locale, translations) : value;
   const query = unconfirmedQuery ?? selectedText;
@@ -40,18 +42,23 @@ export function PlaceSearchInput({ kind, searchIndex, translations, value, uncon
   const matches = useMemo(() => groups.flatMap((group) => group.places), [groups]);
   const matchIndexById = useMemo(() => buildPlaceIdIndex(matches), [matches]);
 
+  useLayoutEffect(() => {
+    if (open && activeOption.reveal) activeOptionRef.current?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+  }, [activeOption, open]);
+
   const close = () => {
     setOpen(false);
+    setActiveOption({ index: 0, reveal: false });
   };
   const choose = (place: NamedPlaceRecord) => {
     onChange(place.id);
     onQueryChange(undefined);
-    setOpen(false);
+    close();
   };
   const handleQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
     const next = event.target.value;
     setOpen(true);
-    setActiveIndex(0);
+    setActiveOption({ index: 0, reveal: false });
     const exact = searchIndex.findByDisplayName(next, locale);
     onQueryChange(next && !exact && next !== selectedText ? next : undefined);
     if (!next || exact) onChange(exact?.id ?? '');
@@ -67,13 +74,14 @@ export function PlaceSearchInput({ kind, searchIndex, translations, value, uncon
     close();
   };
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'ArrowDown') {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();
       setOpen(true);
-      setActiveIndex((index) => Math.min(index + 1, Math.max(0, matches.length - 1)));
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault();
-      setActiveIndex((index) => Math.max(0, index - 1));
+      setActiveOption(({ index }) => {
+        const lastIndex = Math.max(0, matches.length - 1);
+        const offset = event.key === 'ArrowDown' ? 1 : -1;
+        return { index: open ? Math.min(lastIndex, Math.max(0, index + offset)) : 0, reveal: true };
+      });
     } else if (event.key === 'Enter' && open && matches[activeIndex]) {
       event.preventDefault();
       choose(matches[activeIndex]);
@@ -106,8 +114,8 @@ export function PlaceSearchInput({ kind, searchIndex, translations, value, uncon
       autoComplete="off"
     />
     {open && categoryShortcuts.length > 1 && <div className="place-shortcuts" role="group" aria-label={t('search.categories', { label })}>
-      <button type="button" aria-pressed={category === 'all'} onMouseDown={(event) => event.preventDefault()} onClick={() => { setCategory('all'); setActiveIndex(0); }}>{t('search.all')}</button>
-      {categoryShortcuts.map(([candidate, text]) => <button type="button" key={candidate} aria-pressed={category === candidate} onMouseDown={(event) => event.preventDefault()} onClick={() => { setCategory(candidate); setActiveIndex(0); }}>{text}</button>)}
+      <button type="button" aria-pressed={category === 'all'} onMouseDown={(event) => event.preventDefault()} onClick={() => { setCategory('all'); setActiveOption({ index: 0, reveal: false }); }}>{t('search.all')}</button>
+      {categoryShortcuts.map(([candidate, text]) => <button type="button" key={candidate} aria-pressed={category === candidate} onMouseDown={(event) => event.preventDefault()} onClick={() => { setCategory(candidate); setActiveOption({ index: 0, reveal: false }); }}>{text}</button>)}
     </div>}
     <div className="place-search-status" id={`${inputId}-status`} aria-live="polite">{noResults ? t('search.noResults') : ''}</div>
     {open && matches.length > 0 && <ul className="place-options" id={listId} role="listbox">
@@ -120,6 +128,7 @@ export function PlaceSearchInput({ kind, searchIndex, translations, value, uncon
         {group.places.map((place) => {
           const index = matchIndexById.indexOf(place.id)!;
           return <div
+            ref={index === activeIndex ? activeOptionRef : undefined}
             className="place-option"
             id={`${listId}-${index}`}
             key={place.id}

@@ -189,6 +189,18 @@ test('allows selecting both endpoints and submitting on a short mobile screen', 
   await expect(page.getByRole('region', { name: /Central Gate.*Central West Gate/ })).toBeVisible();
 });
 
+test('keeps the keyboard-active search option visible', async ({ page }) => {
+  const editRoute = page.getByRole('button', { name: 'Edit route' });
+  if (await editRoute.isVisible()) await editRoute.click();
+  const start = page.getByRole('combobox', { name: 'Search start place' });
+  await start.focus();
+  for (let index = 0; index < 18; index += 1) await start.press('ArrowDown');
+  const active = page.getByRole('listbox').getByRole('option', { selected: true });
+  await expect(active).toBeInViewport({ ratio: 0.9 });
+  await start.press('Enter');
+  await expect(start).toHaveAttribute('aria-expanded', 'false');
+});
+
 test('switches the interface language and restores it after reload', async ({ page }) => {
   await expect(page).toHaveURL(/profile=shortest/);
   const originalUrl = page.url();

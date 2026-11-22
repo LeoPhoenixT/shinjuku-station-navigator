@@ -141,7 +141,7 @@ button, summary { -webkit-tap-highlight-color: transparent; }
 .place-option-heading strong { color: #7dd3fc; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; }
 .place-option-heading span { color: #94a3b8; font-size: 0.68rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .place-option-limit { border-bottom: 1px solid rgb(148 163 184 / 18%); color: #cbd5e1; font-size: 0.78rem; list-style: none; padding: 0.55rem 0.7rem; }
-.place-option { border-radius: 0.4rem; cursor: pointer; display: flex; flex-direction: column; gap: 0.15rem; padding: 0.55rem 0.6rem; }
+.place-option { scroll-margin-block: 2rem 0.25rem; border-radius: 0.4rem; cursor: pointer; display: flex; flex-direction: column; gap: 0.15rem; padding: 0.55rem 0.6rem; }
 .place-option[aria-selected="true"], .place-option:hover { background: #1e293b; }
 .place-option > strong { color: #f8fafc; font-size: 0.85rem; }
 .place-option > span { color: #94a3b8; font-size: 0.72rem; }
