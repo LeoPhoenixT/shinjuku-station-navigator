@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createExtrudedGeometry, emphasizedSpaceSegments, featureSegments, graphContextSegments, graphSegments, highlightedPolylines, outdoorFeatureSegments, sceneCenter } from '../src/map/sceneGeometry';
+import { createExtrudedGeometry, emphasizedSpaceSegments, featureSegments, floorCalloutAnchor, graphContextSegments, graphSegments, highlightedPolylines, outdoorFeatureSegments, sceneCenter } from '../src/map/sceneGeometry';
 import type { RoutingGraph } from '../src/graph/types';
 import type { ProcessedDataset, ProcessedFeature } from '../src/types/processed';
 
@@ -43,6 +43,17 @@ describe('scene geometry selection', () => {
     geometry?.addEventListener('dispose', () => { disposed = true; });
     geometry?.dispose();
     expect(disposed).toBe(true);
+  });
+
+  it('anchors callouts to the requested edge of the largest polygon on the displayed floor', () => {
+    const large: ProcessedFeature = {
+      ...polygon('concourse', 'Floor'),
+      geometry: { type: 'Polygon', parts: [[[-10, -5, 3], [12, -5, 3], [12, -5, 10], [-10, -5, 10]]] },
+    };
+    const features = [large, polygon('small', 'Floor'), polygon('other', 'Floor', '0')];
+    expect(floorCalloutAnchor(features, 'B1', true, 'west')).toEqual([-10, -30, 3]);
+    expect(floorCalloutAnchor(features, 'B1', false, 'east')).toEqual([12, -5, 3]);
+    expect(floorCalloutAnchor(features, 'B2', true, 'east')).toBeUndefined();
   });
 
   it('keeps graph context, floor filtering, and highlighted route selection deterministic', () => {

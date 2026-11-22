@@ -24,6 +24,30 @@ export function featureSegments(features: ProcessedFeature[], layer: ProcessedFe
   return features.filter((feature) => floors.includes(feature.floorId ?? 'B1') && feature.layer === layer && (feature.geometry.type === 'Polygon' || feature.geometry.type === 'PolyLine')).flatMap((feature) => feature.geometry.type === 'Point' ? [] : feature.geometry.parts.flatMap((part) => part.slice(1).map((point, index) => [displayPoint(part[index], stacked), displayPoint(point, stacked)] as SceneSegment)));
 }
 
+/** Anchor a callout to an outer edge of the largest mapped floor polygon. */
+export function floorCalloutAnchor(features: ProcessedFeature[], floorId: string, stacked: boolean, edge: 'east' | 'west'): ScenePoint3 | undefined {
+  let largestArea = 0;
+  let anchor: ScenePoint3 | undefined;
+  for (const feature of features) {
+    if ((feature.floorId ?? 'B1') !== floorId || feature.layer !== 'Floor' || feature.geometry.type !== 'Polygon') continue;
+    const exterior = feature.geometry.parts[0];
+    if (!exterior?.length) continue;
+    let twiceArea = 0;
+    let edgePoint = exterior[0];
+    for (let index = 0; index < exterior.length; index += 1) {
+      const point = exterior[index];
+      const next = exterior[(index + 1) % exterior.length];
+      twiceArea += point[0] * next[2] - next[0] * point[2];
+      if (edge === 'east' ? point[0] > edgePoint[0] : point[0] < edgePoint[0]) edgePoint = point;
+    }
+    const area = Math.abs(twiceArea);
+    if (area <= largestArea) continue;
+    largestArea = area;
+    anchor = displayPoint(edgePoint, stacked);
+  }
+  return anchor;
+}
+
 /** The caller owns and must dispose the returned geometry. */
 export function createExtrudedGeometry(features: ProcessedFeature[], layer: 'Floor' | 'Space' | 'Fixture', floors: string[], stacked: boolean, style = DISPLAY_HEIGHTS[layer]!): BufferGeometry | undefined {
   const geometries = features.filter((feature) => feature.layer === layer && floors.includes(feature.floorId ?? 'B1') && feature.geometry.type === 'Polygon').flatMap((feature) => feature.geometry.type !== 'Polygon' ? [] : feature.geometry.parts.flatMap((part) => {

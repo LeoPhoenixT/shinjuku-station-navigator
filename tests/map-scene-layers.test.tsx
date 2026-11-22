@@ -26,7 +26,7 @@ vi.mock('../src/map/debugNetwork.js', async (importOriginal) => {
   const original = await importOriginal<typeof import('../src/map/debugNetwork.js')>();
   return { ...original, allSourceLinkSegments: vi.fn(original.allSourceLinkSegments) };
 });
-vi.mock('../src/map/sceneLayers.js', () => ({ ExtrudedLayer: () => null, SemanticFixtureLayer: () => null, SemanticSpaceLayer: () => null }));
+vi.mock('../src/map/sceneLayers.js', () => ({ FloorStructure: () => null, SemanticFixtureLayer: () => null, SemanticSpaceLayer: () => null }));
 vi.mock('../src/map/sceneLinePrimitives.js', () => ({ NetworkDirectionArrows: () => null, RouteLines: () => null, Segments: () => null, StructuralOverlay: () => null, WideSegments: () => null }));
 vi.mock('../src/map/sceneMarkerLayers.js', () => ({ FacilityMarkerLayer: () => null, PlaceLayer: () => null }));
 vi.mock('../src/map/SurfaceContextLayer.js', () => ({ SurfaceContextLayer: vi.fn(() => null) }));

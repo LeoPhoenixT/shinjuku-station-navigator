@@ -61,7 +61,7 @@ export function FacilityMarkerLayer({ candidates, floors, stacked, places, trans
 const GATE_DETAIL_ZOOM_MULTIPLIER = 1.7;
 const PLACE_MARKER_OFFSET = 3.55;
 
-export function PlaceLayer({ places, translations, startId, destinationId, debug, stacked, showGates, compactGates, fittedZoomRef, onRouteAction }: { places: NamedPlaceRecord[]; translations?: PlaceTranslationsDataset; startId: string; destinationId: string; debug: boolean; stacked: boolean; showGates: boolean; compactGates: boolean; fittedZoomRef: RefObject<number>; onRouteAction: RouteAction }) {
+export function PlaceLayer({ places, translations, startId, destinationId, debug, stacked, showGates, detailedGateFloors, fittedZoomRef, onRouteAction }: { places: NamedPlaceRecord[]; translations?: PlaceTranslationsDataset; startId: string; destinationId: string; debug: boolean; stacked: boolean; showGates: boolean; detailedGateFloors: string[]; fittedZoomRef: RefObject<number>; onRouteAction: RouteAction }) {
   const { locale, t } = useI18n();
   const camera = useThree((state) => state.camera);
   const container = useThree(({ gl }) => gl.domElement.parentElement);
@@ -72,12 +72,13 @@ export function PlaceLayer({ places, translations, startId, destinationId, debug
     if (zoomedIn !== next) setZoomedIn(next);
   });
   const [selectedId, setSelectedId] = useState<string>();
-  const showGateNames = !compactGates || zoomedIn;
   const markers = useMemo(() => places.flatMap((place) => {
     if (!debug && !place.routable) return [];
+    const emphasized = detailedGateFloors.includes(place.floorId);
+    const showGateNames = debug || (zoomedIn && emphasized);
     const detail = placeMarkerDetail(place, startId, destinationId, showGates, showGateNames);
-    return detail ? [{ place, detail }] : [];
-  }), [debug, destinationId, places, showGateNames, showGates, startId]);
+    return detail ? [{ place, detail, emphasized }] : [];
+  }), [debug, destinationId, detailedGateFloors, places, showGates, startId, zoomedIn]);
   useEffect(() => {
     if (!selectedId) return;
     const dismiss = (event: PointerEvent) => {
@@ -88,7 +89,7 @@ export function PlaceLayer({ places, translations, startId, destinationId, debug
     return () => document.removeEventListener('pointerdown', dismiss);
   }, [selectedId]);
   return <>
-    {markers.map(({ place, detail }) => {
+    {markers.map(({ place, detail, emphasized }) => {
       const badge = detail === 'icon';
       const start = place.id === startId;
       const destination = place.id === destinationId;
@@ -100,9 +101,9 @@ export function PlaceLayer({ places, translations, startId, destinationId, debug
       return <group key={place.id} position={[place.coordinates[0], displayElevation(place.coordinates[1], stacked) + PLACE_MARKER_OFFSET, place.coordinates[2]]}>
         {!badge && <mesh><sphereGeometry args={[start || destination ? 1.2 : 0.72, 12, 12]} /><meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3} /></mesh>}
         {(start || destination) && <mesh rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[1.45, 1.8, 24]} /><meshBasicMaterial color={color} /></mesh>}
-        <Html portal={portal} position={[start ? -2.5 : destination ? 2.5 : 0, 1.55, 0]} center zIndexRange={badge ? [1, 0] : [4, 0]} wrapperClass={selected ? 'map-html-layer map-popup-layer' : 'map-html-layer'}><div className="place-label-wrap" data-popup-owner={place.id}>
+        <Html portal={portal} position={[start ? -2.5 : destination ? 2.5 : 0, 1.55, 0]} center zIndexRange={badge ? [1, 0] : [4, 0]} wrapperClass={selected ? 'map-html-layer map-popup-layer' : 'map-html-layer'}><div className="place-label-wrap" data-popup-owner={place.id} data-floor-id={place.floorId}>
           {badge ? (
-            <button type="button" className="source-facility-marker gate-badge" style={{ '--facility-marker-border': GATE_BADGE_COLOR } as CSSProperties} aria-label={t('place.markerLabel', { label: name, floor: floorName, area })} aria-pressed={selected} title={name} onClick={() => setSelectedId(selected ? undefined : place.id)}>{GATE_BADGE_SYMBOL}</button>
+            <button type="button" className={`source-facility-marker gate-badge${emphasized ? '' : ' gate-badge-context'}`} style={{ '--facility-marker-border': GATE_BADGE_COLOR } as CSSProperties} aria-label={t('place.markerLabel', { label: name, floor: floorName, area })} aria-pressed={selected} title={name} onClick={() => setSelectedId(selected ? undefined : place.id)}>{GATE_BADGE_SYMBOL}</button>
           ) : (
             <button type="button" className={`place-label ${start ? 'place-label-start' : destination ? 'place-label-destination' : ''} ${place.routable ? '' : 'place-label-warning'}`} aria-pressed={selected} title={t('place.title', { name, area, distance: place.access.distanceMeters.toFixed(1) })} onClick={() => setSelectedId(selected ? undefined : place.id)}>{start ? `A · ${name}` : destination ? `B · ${name}` : name}</button>
           )}
