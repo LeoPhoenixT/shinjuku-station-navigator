@@ -81,6 +81,8 @@ export const ja = {
   'map.hideFloor': '{floor}を非表示{route}',
   'map.onRoute': '（経路上）',
   'map.cameraControls': 'カメラと地図の操作',
+  'map.keyboardLabel': '駅構内の操作可能な地図',
+  'map.keyboardHelp': '矢印キーで地図を移動します。',
   'map.tools': '地図ツール',
   'map.fitRoute': '経路全体を表示',
   'map.fitStation': '駅全体を表示',

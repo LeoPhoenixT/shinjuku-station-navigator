@@ -61,6 +61,10 @@ test('projects floor transitions as an unbroken green screen-space route', async
   const marker = page.locator('.route-transition-marker');
   await expect(marker).toBeVisible();
   await expect(marker).toHaveCSS('transform', /matrix/);
+  const map = page.getByRole('group', { name: 'Interactive station map' });
+  const previousPath = await transition.getAttribute('d');
+  await map.press('ArrowRight');
+  await expect.poll(() => transition.getAttribute('d')).not.toBe(previousPath);
   await page.getByRole('button', { name: 'North-up view' }).click();
   await expect(marker).toBeVisible();
   await page.reload();
@@ -79,6 +83,9 @@ test('keeps primary map controls usable on a mobile viewport', async ({ page }) 
 
   await page.getByRole('button', { name: 'Map tools' }).click();
   await expect(page.getByRole('button', { name: 'North-up view' })).toBeVisible();
+  for (const name of ['Fit route', 'Fit station', 'Zoom out', 'Zoom in']) {
+    await expect(page.getByRole('button', { name })).toBeVisible();
+  }
   await page.getByRole('button', { name: 'All floors' }).click();
   await expect(page.getByRole('radio', { name: 'Emphasize B1 floor' })).toBeVisible();
 });

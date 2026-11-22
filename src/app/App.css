@@ -38,6 +38,7 @@ button, summary { -webkit-tap-highlight-color: transparent; }
 .viewer-panel, .floor-viewer { min-height: 0; position: relative; }
 .viewer-panel { overflow: hidden; }
 .floor-viewer { height: 100%; }
+.floor-viewer canvas:focus-visible { outline: 3px solid #38bdf8; outline-offset: -3px; }
 .floor-viewer canvas { display: block; height: 100% !important; touch-action: none; width: 100% !important; }
 
 .route-controls {
@@ -501,7 +502,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-v
   .floor-rail-modes button { min-width: auto; }
   .camera-toolbar { align-self: start; display: grid; gap: 0.3rem; grid-column: 1; grid-row: 3; grid-template-columns: repeat(2, minmax(2.75rem, auto)); justify-self: end; padding: 0.35rem; position: static; }
   .camera-toolbar > button { min-height: 2.75rem; min-width: 2.75rem; padding: 0.35rem; }
-  .camera-toolbar .desktop-camera-control { display: none; }
+  .camera-toolbar-open { max-height: 46dvh; overflow-y: auto; z-index: 2; }
   .mobile-tools-toggle { display: block; grid-column: 1 / -1; min-width: 6.5rem !important; }
   .camera-toolbar:not(.camera-toolbar-open) { grid-template-columns: 1fr; }
   .camera-toolbar:not(.camera-toolbar-open) > :not(.mobile-tools-toggle) { display: none; }

@@ -106,8 +106,8 @@ export function MapToolbar(props: MapToolbarProps) {
 
     <aside className={`camera-toolbar ${mobileToolsOpen || props.settingsOpen ? 'camera-toolbar-open' : ''}`} aria-label={t('map.cameraControls')}>
       <button type="button" className="mobile-tools-toggle" ref={mobileToolsRef} aria-expanded={mobileToolsOpen} onClick={() => setMobileToolsOpen((open) => !open)}>{t('map.tools')}</button>
-      <button type="button" className="desktop-camera-control" onClick={camera.fitRoute} disabled={!props.canFitRoute} aria-label={t('map.fitRoute')} title={t('map.fitRoute')}>{t('map.route')}</button>
-      <button type="button" className="desktop-camera-control" onClick={camera.fitStation} aria-label={t('map.fitStation')} title={t('map.fitStation')}>{t('map.station')}</button>
+      <button type="button" onClick={camera.fitRoute} disabled={!props.canFitRoute} aria-label={t('map.fitRoute')} title={t('map.fitRoute')}>{t('map.route')}</button>
+      <button type="button" onClick={camera.fitStation} aria-label={t('map.fitStation')} title={t('map.fitStation')}>{t('map.station')}</button>
       <button type="button" onClick={camera.zoomOut} aria-label={t('map.zoomOut')} title={t('map.zoomOut')}>−</button>
       <button type="button" onClick={camera.zoomIn} aria-label={t('map.zoomIn')} title={t('map.zoomIn')}>＋</button>
       <button type="button" className="compass-control" onClick={() => runMobileTool(camera.showNorthView)} aria-label={t('map.northUp')} title={t('map.heading', { degrees: camera.cameraHeading })}><span className="compass-needle" style={{ transform: `rotate(${-camera.cameraHeading}deg)` }}>↑</span><span>N</span></button>

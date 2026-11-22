@@ -56,6 +56,7 @@ Camera controls include:
 - North-up view
 - Angled 3D view
 - Optional free rotation
+- Arrow-key panning when the interactive map has keyboard focus
 
 Map settings include:
 

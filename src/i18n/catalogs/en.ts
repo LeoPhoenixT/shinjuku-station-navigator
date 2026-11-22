@@ -79,6 +79,8 @@ export const en = {
   'map.hideFloor': 'Hide {floor} floor{route}',
   'map.onRoute': ', on route',
   'map.cameraControls': 'Camera and map controls',
+  'map.keyboardLabel': 'Interactive station map',
+  'map.keyboardHelp': 'Use the arrow keys to pan the map.',
   'map.tools': 'Map tools',
   'map.fitRoute': 'Fit route',
   'map.fitStation': 'Fit station',

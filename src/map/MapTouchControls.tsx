@@ -1,5 +1,6 @@
 import { useThree } from '@react-three/fiber';
 import { useEffect, useRef, type RefObject } from 'react';
+import { useI18n } from '../i18n/context.js';
 import { OrthographicCamera, Spherical, Vector3 } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import {
@@ -27,10 +28,32 @@ function clamp(value: number, minimum: number, maximum: number) {
 }
 
 export function MapTouchControls({ controlsRef, rotationEnabled }: MapTouchControlsProps) {
+  const { t } = useI18n();
   const camera = useThree((state) => state.camera);
   const canvas = useThree((state) => state.gl.domElement);
   const invalidate = useThree((state) => state.invalidate);
+  const activeControls = useThree((state) => state.controls);
   const rotationEnabledRef = useRef(rotationEnabled);
+
+  useEffect(() => {
+    canvas.tabIndex = 0;
+    canvas.setAttribute('role', 'group');
+    canvas.setAttribute('aria-label', t('map.keyboardLabel'));
+    canvas.setAttribute('aria-describedby', 'map-keyboard-help');
+    return () => {
+      canvas.removeAttribute('tabindex');
+      canvas.removeAttribute('role');
+      canvas.removeAttribute('aria-label');
+      canvas.removeAttribute('aria-describedby');
+    };
+  }, [canvas, t]);
+
+  useEffect(() => {
+    const controls = controlsRef.current;
+    if (!controls || controls !== activeControls) return;
+    controls.listenToKeyEvents(canvas);
+    return () => controls.stopListenToKeyEvents();
+  }, [activeControls, canvas, controlsRef]);
 
   useEffect(() => {
     rotationEnabledRef.current = rotationEnabled;

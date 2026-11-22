@@ -278,6 +278,7 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
   const feedbackView: ViewerFeedbackViewModel = { interactionMessage };
   const legendView: ViewerLegendViewModel = { items: legendItems };
   return <div className="floor-viewer">
+    <p id="map-keyboard-help" className="visually-hidden">{t('map.keyboardHelp')}</p>
     <Canvas frameloop="demand" orthographic camera={{ position: [0, 120, 0.01], zoom: 1, near: 0.1, far: 3000 }} aria-label={t('app.viewerLabel')}>
       <color attach="background" args={["#08111f"]} />
       <CameraHeadingReporter onHeadingChange={setCameraHeading} />
