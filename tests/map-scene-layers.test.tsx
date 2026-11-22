@@ -7,6 +7,12 @@ import { networkDirectionArrows } from '../src/map/networkDirectionGeometry.js';
 import { allSourceLinkSegments } from '../src/map/debugNetwork.js';
 import { parseFloorDataset, parseOfficialNetwork } from '../src/schema/processed.js';
 import { buildOfficialGraph } from '../src/graph/buildOfficialGraph.js';
+import { SurfaceContextLayer } from '../src/map/SurfaceContextLayer.js';
+import { parseSurfaceContext, SURFACE_CONTEXT_FILE } from '../src/schema/surfaceContext.js';
+
+vi.mock('@react-three/fiber', () => ({
+  useThree: (select: (state: { size: { width: number } }) => unknown) => select({ size: { width: 1280 } }),
+}));
 
 vi.mock('../src/map/sceneGeometry.js', async (importOriginal) => {
   const original = await importOriginal<typeof import('../src/map/sceneGeometry.js')>();
@@ -23,6 +29,7 @@ vi.mock('../src/map/debugNetwork.js', async (importOriginal) => {
 vi.mock('../src/map/sceneLayers.js', () => ({ ExtrudedLayer: () => null, SemanticFixtureLayer: () => null, SemanticSpaceLayer: () => null }));
 vi.mock('../src/map/sceneLinePrimitives.js', () => ({ NetworkDirectionArrows: () => null, RouteLines: () => null, Segments: () => null, StructuralOverlay: () => null, WideSegments: () => null }));
 vi.mock('../src/map/sceneMarkerLayers.js', () => ({ FacilityMarkerLayer: () => null, PlaceLayer: () => null }));
+vi.mock('../src/map/SurfaceContextLayer.js', () => ({ SurfaceContextLayer: vi.fn(() => null) }));
 
 const network = parseOfficialNetwork(JSON.parse(readFileSync('public/data/processed/jr-shinjuku-ticket-gates-b1-official-network.json', 'utf8')) as unknown);
 const graph = buildOfficialGraph(network);
@@ -31,8 +38,8 @@ const props: MapSceneProps = {
   floor: parseFloorDataset(JSON.parse(readFileSync('public/data/processed/shinjuku-full-map.json', 'utf8')) as unknown),
   officialNetwork: network, routingGraph: graph, twsiGraph: graph, places: [], route: { status: 'invalid-place', placeId: '', reason: 'not-found' },
   startId: '', destinationId: '', highlightedRouteEdgeIds: [], debug: false, showAllSourceLinks: false, showOfficialNetwork: false,
-  showOfficialNodes: false, showTwsi: false, showFacilities: false, enabledFacilityCategories: new Set(), showGateLabels: false,
-  showStructuralDetails: false, visibleFloors: ['B1'], onFacilityRouteAction: () => undefined,
+  showOfficialNodes: false, showTwsi: false, showFacilities: false, enabledFacilityCategories: new Set(), showGateMarkers: false,
+  showStructuralDetails: false, visibleFloors: ['B1'], fittedZoomRef: { current: 1 }, onFacilityRouteAction: () => undefined,
 };
 
 beforeEach(() => vi.clearAllMocks());
@@ -61,5 +68,14 @@ describe('optional scene layers', () => {
     expect(allSourceLinkSegments).toHaveBeenCalledExactlyOnceWith(network, floors, true);
     expect(graphSegments).toHaveBeenCalledExactlyOnceWith(graph, floors, true);
     expect(vi.mocked(featureSegments).mock.calls.filter(([, layer]) => layer === 'Drawing')).toHaveLength(2);
+  });
+
+  it('mutes surface roads when the ground floor is only background context', () => {
+    const surfaceContext = parseSurfaceContext(JSON.parse(readFileSync(`public/data/processed/${SURFACE_CONTEXT_FILE}`, 'utf8')));
+    const scene = { ...props, visibleFloors: ['B1', '0'], surfaceContext };
+    renderToStaticMarkup(<MapScene {...scene} />);
+    renderToStaticMarkup(<MapScene {...scene} floorViewMode="focused" />);
+    renderToStaticMarkup(<MapScene {...scene} floorViewMode="route" routeFloorIds={['B1']} />);
+    expect(vi.mocked(SurfaceContextLayer).mock.calls.map(([layer]) => layer.muted)).toEqual([false, true, true]);
   });
 });

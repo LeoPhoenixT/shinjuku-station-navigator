@@ -1,12 +1,12 @@
 import { Html } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type RefObject } from 'react';
 import type { NamedPlaceRecord } from '../schema/processed.js';
 import type { PlaceTranslationsDataset } from '../schema/placeTranslations.js';
 import { useI18n } from '../i18n/context.js';
 import { formatIndoorMapCategory } from '../i18n/formatters.js';
 import { floorLongName, publicAreaName, publicPlaceName } from '../places/placePresentation.js';
-import { facilityMarkerMatchesPreferences, placeHasPermanentLabel } from './displayPreferences.js';
+import { facilityMarkerMatchesPreferences, GATE_BADGE_COLOR, GATE_BADGE_SYMBOL, placeMarkerDetail } from './displayPreferences.js';
 import { routablePlaceForFacility, selectVisibleFacilityMarkers, type FacilityMarkerCandidate } from './facilityMarkers.js';
 import { displayElevation } from './stackedElevation.js';
 
@@ -58,9 +58,26 @@ export function FacilityMarkerLayer({ candidates, floors, stacked, places, trans
   })}</>;
 }
 
-export function PlaceLayer({ places, translations, startId, destinationId, debug, stacked, showGates, onRouteAction }: { places: NamedPlaceRecord[]; translations?: PlaceTranslationsDataset; startId: string; destinationId: string; debug: boolean; stacked: boolean; showGates: boolean; onRouteAction: RouteAction }) {
+const GATE_DETAIL_ZOOM_MULTIPLIER = 1.7;
+const PLACE_MARKER_OFFSET = 3.55;
+
+export function PlaceLayer({ places, translations, startId, destinationId, debug, stacked, showGates, compactGates, fittedZoomRef, onRouteAction }: { places: NamedPlaceRecord[]; translations?: PlaceTranslationsDataset; startId: string; destinationId: string; debug: boolean; stacked: boolean; showGates: boolean; compactGates: boolean; fittedZoomRef: RefObject<number>; onRouteAction: RouteAction }) {
   const { locale, t } = useI18n();
+  const camera = useThree((state) => state.camera);
+  const container = useThree(({ gl }) => gl.domElement.parentElement);
+  const portal = container ? { current: container } : undefined;
+  const [zoomedIn, setZoomedIn] = useState(false);
+  useFrame(() => {
+    const next = camera.zoom >= fittedZoomRef.current * GATE_DETAIL_ZOOM_MULTIPLIER;
+    if (zoomedIn !== next) setZoomedIn(next);
+  });
   const [selectedId, setSelectedId] = useState<string>();
+  const showGateNames = !compactGates || zoomedIn;
+  const markers = useMemo(() => places.flatMap((place) => {
+    if (!debug && !place.routable) return [];
+    const detail = placeMarkerDetail(place, startId, destinationId, showGates, showGateNames);
+    return detail ? [{ place, detail }] : [];
+  }), [debug, destinationId, places, showGateNames, showGates, startId]);
   useEffect(() => {
     if (!selectedId) return;
     const dismiss = (event: PointerEvent) => {
@@ -70,20 +87,28 @@ export function PlaceLayer({ places, translations, startId, destinationId, debug
     document.addEventListener('pointerdown', dismiss);
     return () => document.removeEventListener('pointerdown', dismiss);
   }, [selectedId]);
-  return <>{places.filter((place) => (debug || place.routable) && placeHasPermanentLabel(place, startId, destinationId, showGates)).map((place) => {
-    const start = place.id === startId; const destination = place.id === destinationId;
-    const selected = place.id === selectedId;
-    const color = start ? '#22c55e' : destination ? '#ef4444' : place.routable ? '#a78bfa' : '#f59e0b';
-    const name = publicPlaceName(place, locale, translations);
-    const area = publicAreaName(place.sourceFacility, locale, translations);
-    const floorName = floorLongName(place.floorId, locale);
-    return <group key={place.id} position={[place.coordinates[0], displayElevation(place.coordinates[1], stacked) + 3.55, place.coordinates[2]]}>
-      <mesh><sphereGeometry args={[start || destination ? 1.2 : 0.72, 12, 12]} /><meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3} /></mesh>
-      {(start || destination) && <mesh rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[1.45, 1.8, 24]} /><meshBasicMaterial color={color} /></mesh>}
-      <Html position={[start ? -2.5 : destination ? 2.5 : 0, 1.55, 0]} center zIndexRange={[4, 0]} wrapperClass={selected ? 'map-html-layer map-popup-layer' : 'map-html-layer'}><div className="place-label-wrap" data-popup-owner={place.id}>
-        <button type="button" className={`place-label ${start ? 'place-label-start' : destination ? 'place-label-destination' : ''} ${place.routable ? '' : 'place-label-warning'}`} aria-pressed={selected} title={t('place.title', { name, area, distance: place.access.distanceMeters.toFixed(1) })} onClick={() => setSelectedId(selected ? undefined : place.id)}>{start ? `A · ${name}` : destination ? `B · ${name}` : name}</button>
-        {selected && <div className="source-facility-detail place-label-detail"><strong>{name}</strong><span>{floorName} · {area}</span>{debug && <span title={place.id}>{place.name} · {place.sourceFacility}</span>}<span className="facility-route-actions"><button type="button" onClick={() => { onRouteAction(place, 'start'); setSelectedId(undefined); }}>{t('place.setStart')}</button><button type="button" onClick={() => { onRouteAction(place, 'destination'); setSelectedId(undefined); }}>{t('place.routeHere')}</button></span></div>}
-      </div></Html>
-    </group>;
-  })}</>;
+  return <>
+    {markers.map(({ place, detail }) => {
+      const badge = detail === 'icon';
+      const start = place.id === startId;
+      const destination = place.id === destinationId;
+      const selected = place.id === selectedId;
+      const color = start ? '#22c55e' : destination ? '#ef4444' : place.routable ? '#a78bfa' : '#f59e0b';
+      const name = publicPlaceName(place, locale, translations);
+      const area = publicAreaName(place.sourceFacility, locale, translations);
+      const floorName = floorLongName(place.floorId, locale);
+      return <group key={place.id} position={[place.coordinates[0], displayElevation(place.coordinates[1], stacked) + PLACE_MARKER_OFFSET, place.coordinates[2]]}>
+        {!badge && <mesh><sphereGeometry args={[start || destination ? 1.2 : 0.72, 12, 12]} /><meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3} /></mesh>}
+        {(start || destination) && <mesh rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[1.45, 1.8, 24]} /><meshBasicMaterial color={color} /></mesh>}
+        <Html portal={portal} position={[start ? -2.5 : destination ? 2.5 : 0, 1.55, 0]} center zIndexRange={badge ? [1, 0] : [4, 0]} wrapperClass={selected ? 'map-html-layer map-popup-layer' : 'map-html-layer'}><div className="place-label-wrap" data-popup-owner={place.id}>
+          {badge ? (
+            <button type="button" className="source-facility-marker gate-badge" style={{ '--facility-marker-border': GATE_BADGE_COLOR } as CSSProperties} aria-label={t('place.markerLabel', { label: name, floor: floorName, area })} aria-pressed={selected} title={name} onClick={() => setSelectedId(selected ? undefined : place.id)}>{GATE_BADGE_SYMBOL}</button>
+          ) : (
+            <button type="button" className={`place-label ${start ? 'place-label-start' : destination ? 'place-label-destination' : ''} ${place.routable ? '' : 'place-label-warning'}`} aria-pressed={selected} title={t('place.title', { name, area, distance: place.access.distanceMeters.toFixed(1) })} onClick={() => setSelectedId(selected ? undefined : place.id)}>{start ? `A · ${name}` : destination ? `B · ${name}` : name}</button>
+          )}
+          {selected && <div className="source-facility-detail place-label-detail"><strong>{name}</strong><span>{floorName} · {area}</span>{debug && <span title={place.id}>{place.name} · {place.sourceFacility}</span>}<span className="facility-route-actions"><button type="button" onClick={() => { onRouteAction(place, 'start'); setSelectedId(undefined); }}>{t('place.setStart')}</button><button type="button" onClick={() => { onRouteAction(place, 'destination'); setSelectedId(undefined); }}>{t('place.routeHere')}</button></span></div>}
+        </div></Html>
+      </group>;
+    })}
+  </>;
 }

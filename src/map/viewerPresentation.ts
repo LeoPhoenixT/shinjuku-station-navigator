@@ -2,6 +2,8 @@ import type { FloorViewMode } from './displayPreferences.js';
 
 export const DEFAULT_STACKED_FLOORS = true;
 export const DEFAULT_ROTATION_ENABLED = true;
+export const SURFACE_ROAD_COLOR = '#7b93aa';
+export const SURFACE_LANDMARK_COLOR = '#f4d39d';
 
 // Display-only envelope used to communicate storey height. Routing retains
 // source elevations and never uses this value for distance or cost.

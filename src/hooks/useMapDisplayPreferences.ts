@@ -29,6 +29,7 @@ export function useMapDisplayPreferences(
   const [showTwsi, setShowTwsi] = useState(false);
   const [showFacilities, setShowFacilities] = useState(true);
   const [showStructuralDetails, setShowStructuralDetails] = useState(true);
+  const [showSurfaceContext, setShowSurfaceContext] = useState(true);
   const defaultFacilityCategoryCodes = useMemo(buildDefaultFacilityCategoryCodes, []);
   const [enabledFacilityCategories, setEnabledFacilityCategories] = useState<Set<string>>(
     () => new Set(defaultFacilityCategoryCodes),
@@ -83,6 +84,8 @@ export function useMapDisplayPreferences(
     setShowFacilities,
     showStructuralDetails,
     setShowStructuralDetails,
+    showSurfaceContext,
+    setShowSurfaceContext,
     defaultFacilityCategoryCodes,
     enabledFacilityCategories,
     filteredFacilityCandidates,

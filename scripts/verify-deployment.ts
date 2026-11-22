@@ -8,6 +8,7 @@ import { mergeReviewedCustomGraph } from '../src/graph/buildReviewedCustomGraph.
 import { parseFloorDataset, parseNamedPlaces, parseOfficialNetwork } from '../src/schema/processed.js';
 import { parseReviewedCustomNetwork } from '../src/schema/reviewedCustomNetwork.js';
 import { parsePlaceTranslations } from '../src/schema/placeTranslations.js';
+import { parseSurfaceContext, SURFACE_CONTEXT_FILE } from '../src/schema/surfaceContext.js';
 import { assertJavaScriptBundleBudget, formatJavaScriptBundleSize, type JavaScriptBundleSize } from './release-budgets.js';
 
 const rawExtensions = new Set(['.shp', '.shx', '.dbf', '.prj', '.cpg']);
@@ -18,6 +19,7 @@ const EXPECTED_PROCESSED_ASSETS = [
   'jr-shinjuku-ticket-gates-b1.json',
   'shinjuku-b1-named-places.json',
   'shinjuku-full-map.json',
+  SURFACE_CONTEXT_FILE,
   'shinjuku-reviewed-custom-network.json',
   'shinjuku-place-translations.json',
 ] as const;
@@ -76,6 +78,7 @@ export function verifyDeployment(distRoot = 'dist', statusReportPath = 'reports/
   const places = parseNamedPlaces(JSON.parse(readFileSync(path.join(distRoot, 'data/processed/shinjuku-b1-named-places.json'), 'utf8')) as unknown, network, reviewedNetwork);
   const translations = parsePlaceTranslations(JSON.parse(readFileSync(path.join(distRoot, 'data/processed/shinjuku-place-translations.json'), 'utf8')) as unknown, places);
   const map = parseFloorDataset(JSON.parse(readFileSync(path.join(distRoot, 'data/processed/shinjuku-full-map.json'), 'utf8')) as unknown);
+  parseSurfaceContext(JSON.parse(readFileSync(path.join(distRoot, 'data/processed', SURFACE_CONTEXT_FILE), 'utf8')) as unknown);
   const mapLayerCount = new Set(map.features.map((feature) => feature.layer)).size;
   const mapFloorCount = new Set(map.features.flatMap((feature) => feature.floorId ? [feature.floorId] : [])).size;
   const graph = mergeReviewedCustomGraph(buildOfficialGraph(network), reviewedNetwork);

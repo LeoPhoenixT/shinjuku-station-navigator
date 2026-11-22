@@ -74,6 +74,10 @@ This project uses processed data derived from [新宿駅周辺屋内地図オー
 
 「新宿駅周辺屋内地図データ」（国土交通省）を加工して作成
 
+The surface roads use [GSI Optimized Vector Tiles](https://github.com/gsi-cyberjapan/optimal_bvmap) from Japan's Geospatial Information Authority, adapted by this project under the [GSI Content Terms of Use](https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html).
+
+The road overlay was inspired by [Satoshi Komatsu's Shinjuku Station Indoor demo](https://satoshi7190.github.io/Shinjuku-indoor-threejs-demo/) and its [technical write-up](https://qiita.com/satoshi7190/items/23d192372877af75b283).
+
 ## Security
 
 Report suspected vulnerabilities privately through GitHub's **Report a vulnerability** option. See [SECURITY.md](SECURITY.md) for the disclosure policy.
@@ -84,4 +88,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for project boundaries, required checks, 
 
 ## License
 
-The application source code is licensed under the [MIT License](LICENSE). Processed MLIT-derived data remains subject to the source terms and attribution described in [docs/DATA_LICENSE.md](docs/DATA_LICENSE.md).
+The application source code is licensed under the [MIT License](LICENSE). The processed indoor and road datasets follow their respective source terms and attribution requirements in [docs/DATA_LICENSE.md](docs/DATA_LICENSE.md).

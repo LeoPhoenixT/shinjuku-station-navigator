@@ -1,6 +1,6 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useLayoutEffect, useMemo, useRef } from 'react';
+import { useLayoutEffect, useMemo, useRef, type RefObject } from 'react';
 import { TOUCH, Vector3 } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { floorElevationMeters } from '../data/floors.js';
@@ -12,6 +12,7 @@ import { mergeReviewedCustomGraph } from '../graph/buildReviewedCustomGraph.js';
 import { useMapData } from '../hooks/useMapData.js';
 import { GATE_CATEGORY_CODE, useMapDisplayPreferences } from '../hooks/useMapDisplayPreferences.js';
 import { useMapInteractionMessage } from '../hooks/useMapInteractionMessage.js';
+import { useSurfaceContext } from '../hooks/useSurfaceContext.js';
 import { type CameraOrientation, useViewerNavigation } from '../hooks/useViewerNavigation.js';
 import { ANGLED_CAMERA_POLAR_ANGLE, calculateAngledContentHeight, calculateCameraClearanceDistance, calculateOrthographicFitZoom } from '../map/cameraFit.js';
 import type { MapBounds } from '../map/mapBounds.js';
@@ -30,7 +31,7 @@ import { useI18n } from '../i18n/context.js';
 
 const CAMERA_FAR_PADDING_METERS = 100;
 
-function FitMapCamera({ bounds, datasetBounds, revision, stacked, orientation, zoomMultiplier }: { bounds: MapBounds; datasetBounds: MapBounds; revision: number; stacked: boolean; orientation: CameraOrientation; zoomMultiplier: number }) {
+function FitMapCamera({ bounds, datasetBounds, revision, stacked, orientation, zoomMultiplier, fittedZoomRef }: { bounds: MapBounds; datasetBounds: MapBounds; revision: number; stacked: boolean; orientation: CameraOrientation; zoomMultiplier: number; fittedZoomRef: RefObject<number> }) {
   const camera = useThree((state) => state.camera);
   const invalidate = useThree((state) => state.invalidate);
   const size = useThree((state) => state.size);
@@ -44,6 +45,7 @@ function FitMapCamera({ bounds, datasetBounds, revision, stacked, orientation, z
       ? calculateAngledContentHeight(contentHeight, contentDepth, ANGLED_CAMERA_POLAR_ANGLE)
       : contentDepth;
     const fittedZoom = calculateOrthographicFitZoom(size.width, size.height, contentWidth, projectedContentHeight);
+    fittedZoomRef.current = Math.min(24, Math.max(0.2, fittedZoom));
     camera.zoom = Math.min(24, Math.max(0.2, fittedZoom * zoomMultiplier));
 
     const centerX = (bounds.minX + bounds.maxX - datasetBounds.minX - datasetBounds.maxX) / 2;
@@ -68,7 +70,7 @@ function FitMapCamera({ bounds, datasetBounds, revision, stacked, orientation, z
     camera.updateMatrixWorld();
     camera.updateProjectionMatrix();
     invalidate();
-  }, [bounds, camera, datasetBounds, invalidate, orientation, revision, size.height, size.width, stacked, zoomMultiplier]);
+  }, [bounds, camera, datasetBounds, fittedZoomRef, invalidate, orientation, revision, size.height, size.width, stacked, zoomMultiplier]);
 
   return null;
 }
@@ -131,6 +133,8 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
     setShowFacilities,
     showStructuralDetails,
     setShowStructuralDetails,
+    showSurfaceContext,
+    setShowSurfaceContext,
     enabledFacilityCategories,
     filteredFacilityCandidates,
     facilityCategories,
@@ -139,6 +143,7 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
     clearAllFacilityCategories,
     resetFacilityCategories,
   } = display;
+  const surfaceContext = useSurfaceContext(showSurfaceContext);
   const {
     activeFloor,
     visibleFloors,
@@ -174,16 +179,18 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
   const transitionHaloPathRef = useRef<SVGPathElement>(null);
   const transitionPathRef = useRef<SVGPathElement>(null);
   const orbitControlsRef = useRef<OrbitControlsImpl>(null);
+  const fittedZoomRef = useRef(1);
   const visibleNetworkState = useMemo(() => {
     const nodes = new Map(routingGraph.nodes.map((node) => [node.id, node]));
     const edges = routingGraph.edges.filter((edge) => visibleFloors.includes(edge.floorFrom) && visibleFloors.includes(edge.floorTo));
     return { contexts: [...new Set(edges.map((edge) => classifyNetworkEdgeContext(edge, nodes)))], hasOneWay: edges.some(({ direction }) => direction !== 'both') };
   }, [routingGraph.edges, routingGraph.nodes, visibleFloors]);
+  const showGateMarkers = showFacilities && enabledFacilityCategories.has(GATE_CATEGORY_CODE);
   const legendItems = useMemo(() => buildMapLegendItems({
     features: data.floor.features, facilityCandidates: filteredFacilityCandidates, places: data.places.places, visibleFloors, route: planner.displayedRoute,
-    startId: markerEndpoints.startId, destinationId: markerEndpoints.destinationId, showFacilities, showStructuralDetails, showOfficialNetwork, networkContexts: visibleNetworkState.contexts, hasOneWayNetwork: visibleNetworkState.hasOneWay, debug, showAllSourceLinks, showTwsi,
-    locale,
-  }), [data.floor.features, data.places.places, debug, filteredFacilityCandidates, locale, markerEndpoints.destinationId, markerEndpoints.startId, planner.displayedRoute, showAllSourceLinks, showFacilities, showOfficialNetwork, showStructuralDetails, showTwsi, visibleFloors, visibleNetworkState]);
+    startId: markerEndpoints.startId, destinationId: markerEndpoints.destinationId, showFacilities, showGateMarkers, showStructuralDetails, showOfficialNetwork, networkContexts: visibleNetworkState.contexts, hasOneWayNetwork: visibleNetworkState.hasOneWay, debug, showAllSourceLinks, showTwsi,
+    showSurfaceContext: Boolean(surfaceContext), locale,
+  }), [data.floor.features, data.places.places, debug, filteredFacilityCandidates, locale, markerEndpoints.destinationId, markerEndpoints.startId, planner.displayedRoute, showAllSourceLinks, showFacilities, showGateMarkers, showOfficialNetwork, showStructuralDetails, showTwsi, surfaceContext, visibleFloors, visibleNetworkState]);
 
   const selectPlannerPlace = (id: string, target: 'start' | 'destination') => {
     if (target === 'start') planner.draft.setStartId(id); else planner.draft.setDestinationId(id);
@@ -233,6 +240,7 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
     layers: {
       showOfficialNetwork, setShowOfficialNetwork, showFacilities, setShowFacilities, facilityCategories, enabledFacilityCategories,
       toggleFacilityCategory, showAllFacilityCategories, clearAllFacilityCategories, resetFacilityCategories, showStructuralDetails, setShowStructuralDetails,
+      showSurfaceContext, setShowSurfaceContext,
     },
     diagnostics: { debug, setDebug, showAllSourceLinks, setShowAllSourceLinks, showOfficialNodes, setShowOfficialNodes, showTwsi, setShowTwsi },
   };
@@ -241,9 +249,9 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
   return <div className="floor-viewer">
     <Canvas frameloop="demand" orthographic camera={{ position: [0, 120, 0.01], zoom: 1, near: 0.1, far: 3000 }} aria-label={t('app.viewerLabel')}>
       <color attach="background" args={["#08111f"]} />
-      <FitMapCamera bounds={cameraBounds} datasetBounds={data.floor.statistics.bounds} revision={cameraRevision} stacked={stackedFloors} orientation={cameraOrientation} zoomMultiplier={zoomMultiplier} />
+      <FitMapCamera bounds={cameraBounds} datasetBounds={data.floor.statistics.bounds} revision={cameraRevision} stacked={stackedFloors} orientation={cameraOrientation} zoomMultiplier={zoomMultiplier} fittedZoomRef={fittedZoomRef} />
       <CameraHeadingReporter onHeadingChange={setCameraHeading} />
-      <MapScene activeFloor={activeFloor} floorViewMode={floorViewMode} routeFloorIds={routeFloorIds} visibleFloors={visibleFloors} floor={data.floor} officialNetwork={data.network} routingGraph={routingGraph} twsiGraph={twsiGraph} places={data.places.places} translations={data.translations} facilityMarkerCandidates={facilityMarkerCandidates} route={planner.displayedRoute} startId={markerEndpoints.startId} destinationId={markerEndpoints.destinationId} highlightedRouteEdgeIds={highlightedEdgeIds} debug={debug} showAllSourceLinks={showAllSourceLinks} showOfficialNetwork={showOfficialNetwork} showOfficialNodes={showOfficialNodes} showTwsi={showTwsi} showFacilities={showFacilities} enabledFacilityCategories={enabledFacilityCategories} showGateLabels={showFacilities && enabledFacilityCategories.has(GATE_CATEGORY_CODE)} showStructuralDetails={showStructuralDetails} onFacilityRouteAction={selectFacilityRouteAction} />
+      <MapScene activeFloor={activeFloor} floorViewMode={floorViewMode} routeFloorIds={routeFloorIds} visibleFloors={visibleFloors} floor={data.floor} officialNetwork={data.network} routingGraph={routingGraph} twsiGraph={twsiGraph} places={data.places.places} translations={data.translations} facilityMarkerCandidates={facilityMarkerCandidates} route={planner.displayedRoute} startId={markerEndpoints.startId} destinationId={markerEndpoints.destinationId} highlightedRouteEdgeIds={highlightedEdgeIds} debug={debug} showAllSourceLinks={showAllSourceLinks} showOfficialNetwork={showOfficialNetwork} showOfficialNodes={showOfficialNodes} showTwsi={showTwsi} showFacilities={showFacilities} enabledFacilityCategories={enabledFacilityCategories} showGateMarkers={showGateMarkers} showStructuralDetails={showStructuralDetails} surfaceContext={surfaceContext} fittedZoomRef={fittedZoomRef} onFacilityRouteAction={selectFacilityRouteAction} />
       <RouteScreenOverlay route={planner.displayedRoute} visibleFloors={visibleFloors} floor={data.floor} routingGraph={routingGraph} haloPathRef={routeHaloPathRef} routePathRef={routePathRef} transitionHaloPathRef={transitionHaloPathRef} transitionPathRef={transitionPathRef} />
       <OrbitControls ref={orbitControlsRef} key={`${cameraRevision}:${visibleFloors.join(',')}:${activeFloor}`} makeDefault target={[cameraCenter.x, cameraCenter.y, cameraCenter.z]} enableRotate={rotationEnabled} zoomSpeed={0.55} minZoom={0.2} maxZoom={24} maxPolarAngle={MAX_CAMERA_POLAR_ANGLE} touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_PAN }} />
       <MapTouchControls controlsRef={orbitControlsRef} rotationEnabled={rotationEnabled} />

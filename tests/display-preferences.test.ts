@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { buildDefaultFacilityCategoryCodes, EXIT_CATEGORY_CODE, GATE_CATEGORY_CODE } from '../src/hooks/useMapDisplayPreferences';
-import { facilityMarkerMatchesPreferences, placeHasPermanentLabel } from '../src/map/displayPreferences';
+import { facilityMarkerMatchesPreferences, placeMarkerDetail } from '../src/map/displayPreferences';
 import type { FacilityMarkerCandidate } from '../src/map/facilityMarkers';
 import { places } from './fixtures/places';
 
@@ -19,11 +19,16 @@ describe('map display preferences', () => {
     expect(facilityMarkerMatchesPreferences({ ...marker, categoryCode: 'F014' }, new Set(['F014']))).toBe(false);
   });
 
-  it('always labels gates and active endpoints but leaves other places as markers', () => {
-    expect(placeHasPermanentLabel(place, '', '')).toBe(true);
-    expect(placeHasPermanentLabel(place, '', '', false)).toBe(false);
-    expect(placeHasPermanentLabel({ ...place, id: 'toilet', category: 'toilet' }, 'toilet', '')).toBe(true);
-    expect(placeHasPermanentLabel({ ...place, id: 'toilet', category: 'toilet' }, '', 'toilet')).toBe(true);
-    expect(placeHasPermanentLabel({ ...place, id: 'toilet', category: 'toilet' }, '', '')).toBe(false);
+  it('uses compact gate icons at overview scale and full labels at detail scale', () => {
+    expect(placeMarkerDetail(place, '', '', true, false)).toBe('icon');
+    expect(placeMarkerDetail(place, '', '', true, true)).toBe('label');
+    expect(placeMarkerDetail(place, '', '', false, false)).toBeUndefined();
+    expect(placeMarkerDetail({ ...place, category: 'toilet' }, '', '', true, false)).toBeUndefined();
+  });
+
+  it('keeps active endpoints labelled at overview scale and with gates disabled', () => {
+    expect(placeMarkerDetail(place, 'gate', '', true, false)).toBe('label');
+    expect(placeMarkerDetail(place, '', 'gate', true, false)).toBe('label');
+    expect(placeMarkerDetail({ ...place, id: 'toilet', category: 'toilet' }, 'toilet', '', false, false)).toBe('label');
   });
 });

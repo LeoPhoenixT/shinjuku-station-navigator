@@ -2,6 +2,7 @@ import { parseFloorDataset, parseNamedPlaces, parseOfficialNetwork, type NamedPl
 import { parseReviewedCustomNetwork, type ReviewedCustomNetworkDataset } from '../schema/reviewedCustomNetwork.js';
 import type { ProcessedDataset } from '../types/processed.js';
 import { parsePlaceTranslations, type PlaceTranslationsDataset } from '../schema/placeTranslations.js';
+import { parseSurfaceContext, SURFACE_CONTEXT_FILE, type SurfaceContext } from '../schema/surfaceContext.js';
 
 export interface MapDatasets { floor: ProcessedDataset; network: OfficialNetworkDataset; reviewedNetwork: ReviewedCustomNetworkDataset; places: NamedPlacesDataset; translations: PlaceTranslationsDataset }
 
@@ -17,6 +18,10 @@ async function json(url: string, signal?: AbortSignal): Promise<unknown> {
   const response = await fetch(url, { signal });
   if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
   return response.json() as Promise<unknown>;
+}
+
+export async function loadSurfaceContext(signal?: AbortSignal): Promise<SurfaceContext> {
+  return parseSurfaceContext(await json(processedDataUrl(SURFACE_CONTEXT_FILE), signal));
 }
 
 export async function loadMapData(signal?: AbortSignal): Promise<MapDatasets> {
