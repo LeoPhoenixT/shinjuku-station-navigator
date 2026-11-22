@@ -177,6 +177,18 @@ test('finds destinations in either language on desktop and mobile', async ({ pag
   expect(fallbackBox!.x + fallbackBox!.width).toBeLessThanOrEqual(viewport!.width);
 });
 
+test('allows selecting both endpoints and submitting on a short mobile screen', async ({ page }) => {
+  test.skip(test.info().project.name !== 'mobile-chromium', 'Short mobile route-planner journey.');
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.getByRole('button', { name: 'Edit route' }).click();
+  await page.getByRole('combobox', { name: 'Search start place' }).fill('中央改札');
+  await page.getByRole('option', { name: /Central Gate/ }).first().click();
+  await page.getByRole('combobox', { name: 'Search destination place' }).fill('Central West');
+  await page.getByRole('option', { name: /^Central West Gate\b/ }).click();
+  await page.getByRole('button', { name: 'Show route' }).click();
+  await expect(page.getByRole('region', { name: /Central Gate.*Central West Gate/ })).toBeVisible();
+});
+
 test('switches the interface language and restores it after reload', async ({ page }) => {
   await expect(page).toHaveURL(/profile=shortest/);
   const originalUrl = page.url();

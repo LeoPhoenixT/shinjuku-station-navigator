@@ -479,7 +479,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-v
   .data-attribution { font-size: 0.6rem; padding: 0.3rem 0.5rem; }
   .route-controls { gap: 0.45rem; grid-template-columns: 1fr; grid-template-rows: auto auto minmax(0, 1fr) auto; padding: 0.5rem; }
   .journey-stack { grid-column: 1; grid-row: 4; max-height: 58dvh; max-width: 100%; width: 100%; }
-  .planner-card { width: 100%; }
+  .planner-card { min-height: 0; width: 100%; }
   .planner-card-collapsed { width: 100%; }
   .planner-card-empty { width: fit-content; }
   .planner-header { grid-template-columns: 1fr auto; padding: 0.58rem 0.65rem; }
@@ -487,10 +487,11 @@ button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-v
   .planner-summary { justify-self: start; }
   .planner-toggle { background: #172033; border-radius: 0.45rem; display: block; font-size: 0.75rem; min-height: 2.35rem; padding: 0.35rem 0.6rem; }
   .planner-card-collapsed .planner-header { padding-block: 0.45rem; }
-  .planner-body { padding: 0 0.65rem 0.65rem; }
+  .planner-body { overscroll-behavior-y: contain; padding: 0 0.65rem 0.65rem; }
   .place-row { display: flex; flex-direction: column; gap: 0.4rem; }
   .place-search { width: 100%; }
   .place-search input { min-height: 2.75rem; }
+  .place-options { max-height: none; overflow: visible; position: static; }
   .swap-places { align-self: center; height: 2.4rem; min-height: 2.4rem; transform: rotate(90deg); width: 2.4rem; }
   .planner-actions { align-items: center; display: grid; gap: 0.4rem; grid-template-columns: 1fr auto; margin-top: 0.45rem; }
   .profile-control { min-width: 0; }
