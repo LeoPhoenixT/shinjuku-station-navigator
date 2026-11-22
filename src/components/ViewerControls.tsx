@@ -102,7 +102,7 @@ export function ViewerControls(props: ViewerControlsProps) {
           </div>
           <p className={`planner-status ${planner.displayedRoute.status === 'ok' || emptyRequest ? '' : 'planner-status-error'}`} role={planner.displayedRoute.status === 'ok' || emptyRequest ? 'status' : 'alert'}>{routeMessage(planner.displayedRoute, locale)}</p>
         </div>}
-      </section> : <RouteSheet route={planner.displayedRoute} translations={planner.translations} selectedStepIndex={camera.selectedStepIndex} onStepSelect={camera.selectStep} expanded={panelOpen('directions')} onExpandedChange={(open) => setPanelOpen('directions', open)} onEditRoute={() => setPanelOpen('planner', true)} />}
+      </section> : <RouteSheet route={planner.displayedRoute} translations={planner.translations} selectedStepIndex={camera.selectedStepIndex} onStepSelect={camera.selectStep} onFitStep={camera.fitStep} expanded={panelOpen('directions')} onExpandedChange={(open) => setPanelOpen('directions', open)} onEditRoute={() => setPanelOpen('planner', true)} />}
     </div>
     {(shareMessage || feedback.interactionMessage) && <div className="app-toast" role="status">{shareMessage || feedback.interactionMessage}</div>}
   </div>;

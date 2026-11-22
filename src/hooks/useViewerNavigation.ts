@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { RoutingGraph } from '../graph/types.js';
 import { boundsForFloors, boundsForRoute, boundsForRouteStep } from '../map/mapBounds.js';
 import type { FloorViewMode } from '../map/displayPreferences.js';
-import { displayElevation } from '../map/stackedElevation.js';
 import { DEFAULT_ROTATION_ENABLED, DEFAULT_STACKED_FLOORS } from '../map/viewerPresentation.js';
 import type { RoutePlan } from '../routing/routeService.js';
 import type { ProcessedDataset } from '../types/processed.js';
@@ -47,6 +46,7 @@ export function useViewerNavigation({
   const [cameraMode, setCameraMode] = useState<CameraMode>('route');
   const [cameraOrientation, setCameraOrientation] = useState<CameraOrientation>('angled');
   const [zoomMultiplier, setZoomMultiplier] = useState(1);
+  const [fittedStepIndex, setFittedStepIndex] = useState<number>();
   const [selectedStepIndex, setSelectedStepIndex] = useState<number>();
   const stackedFloors = visibleFloors.length > 1;
   const routeFloorIds = useMemo(() => {
@@ -71,14 +71,11 @@ export function useViewerNavigation({
     () => boundsForRouteStep(route, graph, selectedStepIndex, routeBounds),
     [graph, route, routeBounds, selectedStepIndex],
   );
-  const cameraBounds = cameraMode === 'station'
-    ? visibleBounds
-    : cameraMode === 'step' && stepBounds ? stepBounds : routeBounds;
-  const cameraCenter = useMemo(() => ({
-    x: (cameraBounds.minX + cameraBounds.maxX - floor.statistics.bounds.minX - floor.statistics.bounds.maxX) / 2,
-    y: displayElevation((cameraBounds.minY + cameraBounds.maxY) / 2, stackedFloors),
-    z: (cameraBounds.minZ + cameraBounds.maxZ - floor.statistics.bounds.minZ - floor.statistics.bounds.maxZ) / 2,
-  }), [cameraBounds, floor.statistics.bounds, stackedFloors]);
+  const fittedStepBounds = useMemo(
+    () => boundsForRouteStep(route, graph, fittedStepIndex, routeBounds),
+    [graph, route, routeBounds, fittedStepIndex],
+  );
+  const cameraBounds = cameraMode === 'station' ? visibleBounds : fittedStepBounds ?? routeBounds;
   const highlightedEdgeIds = route.status === 'ok' && selectedStepIndex !== undefined
     ? route.steps[selectedStepIndex]?.edgeIds ?? []
     : [];
@@ -87,6 +84,7 @@ export function useViewerNavigation({
 
   const focusCamera = useCallback((mode: CameraMode, stepIndex?: number) => {
     setCameraMode(mode);
+    setFittedStepIndex(stepIndex);
     setSelectedStepIndex(stepIndex);
     setZoomMultiplier(1);
     setCameraRevision((value) => value + 1);
@@ -145,18 +143,25 @@ export function useViewerNavigation({
 
   const selectStep = (index: number) => {
     if (route.status !== 'ok' || !route.steps[index]) return;
-    const floorId = route.steps[index].floorTo;
-    setActiveFloor(floorId);
+    const step = route.steps[index];
+    setActiveFloor(step.floorTo);
     setVisibleFloors((current) => (
-      current.includes(floorId)
+      current.includes(step.floorFrom) && current.includes(step.floorTo)
         ? current
-        : allFloorIds.filter((candidate) => current.includes(candidate) || candidate === floorId)
+        : allFloorIds.filter((candidate) => current.includes(candidate) || candidate === step.floorFrom || candidate === step.floorTo)
     ));
+    setSelectedStepIndex(index);
+  };
+
+  const fitStep = (index: number) => {
+    if (route.status !== 'ok' || !route.steps[index]) return;
+    selectStep(index);
     focusCamera('step', index);
   };
 
   const resetAfterRouteClear = () => {
     setSelectedStepIndex(undefined);
+    setFittedStepIndex(undefined);
     setCameraMode('station');
   };
 
@@ -175,7 +180,7 @@ export function useViewerNavigation({
     stackedFloors,
     routeFloorIds,
     cameraBounds,
-    cameraCenter,
+    stepBounds,
     highlightedEdgeIds,
     fitRoute,
     fitStation,
@@ -184,6 +189,7 @@ export function useViewerNavigation({
     toggleCustomFloor,
     showRouteFloors,
     selectStep,
+    fitStep,
     resetAfterRouteClear,
     zoomIn: () => setZoomMultiplier((value) => Math.min(4, value * 1.25)),
     zoomOut: () => setZoomMultiplier((value) => Math.max(0.5, value / 1.25)),

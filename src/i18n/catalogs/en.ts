@@ -183,6 +183,7 @@ export const en = {
   'routeSheet.warningCount.one': '1 route warning.',
   'routeSheet.warningCount.many': '{count} route warnings.',
   'routeSheet.step': 'Step {current} of {total} · {floor}',
+  'routeSheet.fitStep': 'Locate step',
   'routeSheet.previous': 'Previous',
   'routeSheet.next': 'Next',
   'routeSheet.previousLabel': 'Previous route step',

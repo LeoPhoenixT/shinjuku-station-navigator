@@ -17,6 +17,7 @@ import { type CameraOrientation, useViewerNavigation } from '../hooks/useViewerN
 import { ANGLED_CAMERA_POLAR_ANGLE, calculateAngledContentHeight, calculateCameraClearanceDistance, calculateOrthographicFitZoom } from '../map/cameraFit.js';
 import type { MapBounds } from '../map/mapBounds.js';
 import { MapScene } from '../map/MapScene.js';
+import { panToStepIfOutsideView } from '../map/stepCamera.js';
 import { MapTouchControls } from '../map/MapTouchControls.js';
 import { buildFacilityMarkerCandidates } from '../map/facilityMarkers.js';
 import { buildMapLegendItems } from '../map/mapLegend.js';
@@ -31,13 +32,41 @@ import { useI18n } from '../i18n/context.js';
 
 const CAMERA_FAR_PADDING_METERS = 100;
 
-function FitMapCamera({ bounds, datasetBounds, revision, stacked, orientation, zoomMultiplier, fittedZoomRef }: { bounds: MapBounds; datasetBounds: MapBounds; revision: number; stacked: boolean; orientation: CameraOrientation; zoomMultiplier: number; fittedZoomRef: RefObject<number> }) {
+function FitMapCamera({ bounds, stepBounds, datasetBounds, revision, stacked, orientation, zoomMultiplier, controlsRef, fittedZoomRef }: {
+  bounds: MapBounds;
+  stepBounds?: MapBounds;
+  datasetBounds: MapBounds;
+  revision: number;
+  stacked: boolean;
+  orientation: CameraOrientation;
+  zoomMultiplier: number;
+  controlsRef: RefObject<OrbitControlsImpl | null>;
+  fittedZoomRef: RefObject<number>;
+}) {
   const camera = useThree((state) => state.camera);
   const invalidate = useThree((state) => state.invalidate);
   const size = useThree((state) => state.size);
+  const previousFit = useRef<{ revision: number; width: number; height: number; zoomMultiplier: number }>(undefined);
+  const previousStep = useRef<MapBounds>(undefined);
 
   useLayoutEffect(() => {
-    if (!('isOrthographicCamera' in camera) || !camera.isOrthographicCamera) return;
+    const controls = controlsRef.current;
+    if (!controls || !('isOrthographicCamera' in camera) || !camera.isOrthographicCamera) return;
+    const previous = previousFit.current;
+    previousFit.current = { revision, width: size.width, height: size.height, zoomMultiplier };
+    if (previous?.revision === revision && previous.width === size.width && previous.height === size.height) {
+      if (previous.zoomMultiplier !== zoomMultiplier) {
+        camera.zoom = Math.min(24, Math.max(0.2, camera.zoom * zoomMultiplier / previous.zoomMultiplier));
+        camera.updateProjectionMatrix();
+        invalidate();
+      }
+      if (stepBounds && stepBounds !== previousStep.current) {
+        if (panToStepIfOutsideView(camera, controls.target, stepBounds, datasetBounds, stacked)) invalidate();
+      }
+      previousStep.current = stepBounds;
+      return;
+    }
+    previousStep.current = stepBounds;
     const contentWidth = bounds.maxX - bounds.minX;
     const contentDepth = bounds.maxZ - bounds.minZ;
     const contentHeight = displayElevation(bounds.maxY, stacked) - displayElevation(bounds.minY, stacked);
@@ -66,11 +95,12 @@ function FitMapCamera({ bounds, datasetBounds, revision, stacked, orientation, z
     camera.position.set(centerX, centerY + verticalOffset, centerZ + depthOffset);
     camera.near = 0.1;
     camera.far = Math.max(1500, cameraDistance + datasetDiagonal + CAMERA_FAR_PADDING_METERS);
-    camera.lookAt(centerX, centerY, centerZ);
+    controls.target.set(centerX, centerY, centerZ);
+    camera.lookAt(controls.target);
     camera.updateMatrixWorld();
     camera.updateProjectionMatrix();
     invalidate();
-  }, [bounds, camera, datasetBounds, fittedZoomRef, invalidate, orientation, revision, size.height, size.width, stacked, zoomMultiplier]);
+  }, [bounds, camera, controlsRef, datasetBounds, fittedZoomRef, invalidate, orientation, revision, size.height, size.width, stacked, stepBounds, zoomMultiplier]);
 
   return null;
 }
@@ -159,7 +189,7 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
     stackedFloors,
     routeFloorIds,
     cameraBounds,
-    cameraCenter,
+    stepBounds,
     highlightedEdgeIds,
     fitRoute,
     fitStation,
@@ -168,6 +198,7 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
     toggleCustomFloor,
     showRouteFloors,
     selectStep,
+    fitStep,
     resetAfterRouteClear,
     zoomIn,
     zoomOut,
@@ -234,7 +265,7 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
   };
   const navigationView: ViewerNavigationViewModel = {
     floors: { floorIds, visibleFloors, routeFloorIds, activeFloor, floorViewMode, selectFloor, showStack, showRouteFloors, toggleCustomFloor },
-    camera: { rotationEnabled, setRotationEnabled, fitRoute, fitStation, zoomIn, zoomOut, showNorthView, showAngledView, cameraHeading, selectedStepIndex, selectStep },
+    camera: { rotationEnabled, setRotationEnabled, fitRoute, fitStation, zoomIn, zoomOut, showNorthView, showAngledView, cameraHeading, selectedStepIndex, selectStep, fitStep },
   };
   const displayView: ViewerDisplayViewModel = {
     layers: {
@@ -249,11 +280,11 @@ function ReadyViewer({ data }: { data: Extract<ReturnType<typeof useMapData>, { 
   return <div className="floor-viewer">
     <Canvas frameloop="demand" orthographic camera={{ position: [0, 120, 0.01], zoom: 1, near: 0.1, far: 3000 }} aria-label={t('app.viewerLabel')}>
       <color attach="background" args={["#08111f"]} />
-      <FitMapCamera bounds={cameraBounds} datasetBounds={data.floor.statistics.bounds} revision={cameraRevision} stacked={stackedFloors} orientation={cameraOrientation} zoomMultiplier={zoomMultiplier} fittedZoomRef={fittedZoomRef} />
       <CameraHeadingReporter onHeadingChange={setCameraHeading} />
       <MapScene activeFloor={activeFloor} floorViewMode={floorViewMode} routeFloorIds={routeFloorIds} visibleFloors={visibleFloors} floor={data.floor} officialNetwork={data.network} routingGraph={routingGraph} twsiGraph={twsiGraph} places={data.places.places} translations={data.translations} facilityMarkerCandidates={facilityMarkerCandidates} route={planner.displayedRoute} startId={markerEndpoints.startId} destinationId={markerEndpoints.destinationId} highlightedRouteEdgeIds={highlightedEdgeIds} debug={debug} showAllSourceLinks={showAllSourceLinks} showOfficialNetwork={showOfficialNetwork} showOfficialNodes={showOfficialNodes} showTwsi={showTwsi} showFacilities={showFacilities} enabledFacilityCategories={enabledFacilityCategories} showGateMarkers={showGateMarkers} showStructuralDetails={showStructuralDetails} surfaceContext={surfaceContext} fittedZoomRef={fittedZoomRef} onFacilityRouteAction={selectFacilityRouteAction} />
       <RouteScreenOverlay route={planner.displayedRoute} visibleFloors={visibleFloors} floor={data.floor} routingGraph={routingGraph} haloPathRef={routeHaloPathRef} routePathRef={routePathRef} transitionHaloPathRef={transitionHaloPathRef} transitionPathRef={transitionPathRef} />
-      <OrbitControls ref={orbitControlsRef} key={`${cameraRevision}:${visibleFloors.join(',')}:${activeFloor}`} makeDefault target={[cameraCenter.x, cameraCenter.y, cameraCenter.z]} enableRotate={rotationEnabled} zoomSpeed={0.55} minZoom={0.2} maxZoom={24} maxPolarAngle={MAX_CAMERA_POLAR_ANGLE} touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_PAN }} />
+      <OrbitControls ref={orbitControlsRef} key={cameraRevision} makeDefault enableRotate={rotationEnabled} zoomSpeed={0.55} minZoom={0.2} maxZoom={24} maxPolarAngle={MAX_CAMERA_POLAR_ANGLE} touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_PAN }} />
+      <FitMapCamera bounds={cameraBounds} stepBounds={stepBounds} datasetBounds={data.floor.statistics.bounds} revision={cameraRevision} stacked={stackedFloors} orientation={cameraOrientation} zoomMultiplier={zoomMultiplier} controlsRef={orbitControlsRef} fittedZoomRef={fittedZoomRef} />
       <MapTouchControls controlsRef={orbitControlsRef} rotationEnabled={rotationEnabled} />
     </Canvas>
     <svg className="route-screen-overlay" aria-hidden="true"><path ref={routeHaloPathRef} className="route-screen-halo" /><path ref={transitionHaloPathRef} className="route-screen-transition-halo" /><path ref={routePathRef} className="route-screen-line" /><path ref={transitionPathRef} className="route-screen-transition-line" /></svg>

@@ -14,6 +14,7 @@ interface RouteSheetProps {
   translations?: PlaceTranslationsDataset;
   selectedStepIndex?: number;
   onStepSelect: (index: number) => void;
+  onFitStep: (index: number) => void;
   expanded?: boolean;
   onExpandedChange?: (expanded: boolean) => void;
   onEditRoute?: () => void;
@@ -34,7 +35,7 @@ function floorBadge(step: RouteStep, locale: Locale): string {
   return from === to ? from : `${from} → ${to}`;
 }
 
-export function RouteSheet({ route, translations, selectedStepIndex, onStepSelect, expanded: controlledExpanded, onExpandedChange, onEditRoute }: RouteSheetProps) {
+export function RouteSheet({ route, translations, selectedStepIndex, onStepSelect, onFitStep, expanded: controlledExpanded, onExpandedChange, onEditRoute }: RouteSheetProps) {
   const { locale, t } = useI18n();
   const [localExpanded, setLocalExpanded] = useState(false);
   const expanded = controlledExpanded ?? localExpanded;
@@ -64,6 +65,7 @@ export function RouteSheet({ route, translations, selectedStepIndex, onStepSelec
       <span className={`step-icon step-${activeStep.kind}`} aria-hidden="true">{stepIcon(activeStep)}</span>
       <span className="current-step-copy"><span>{t('routeSheet.step', { current: activeIndex + 1, total: route.steps.length, floor: floorBadge(activeStep, locale) })}</span><strong>{instruction(activeStep)}</strong></span>
       <span className="current-step-actions">
+        <button type="button" onClick={() => onFitStep(activeIndex)}>{t('routeSheet.fitStep')}</button>
         <button type="button" onClick={() => onStepSelect(activeIndex - 1)} disabled={activeIndex === 0} aria-label={t('routeSheet.previousLabel')}>{t('routeSheet.previous')}</button>
         <button type="button" onClick={() => onStepSelect(activeIndex + 1)} disabled={activeIndex >= route.steps.length - 1} aria-label={t('routeSheet.nextLabel')}>{t('routeSheet.next')}</button>
       </span>

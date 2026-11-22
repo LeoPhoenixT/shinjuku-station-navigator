@@ -47,9 +47,15 @@ describe('viewer navigation sequences', () => {
     expect(result.current.activeFloor).toBe('0');
     expect(result.current.selectedStepIndex).toBe(0);
     expect(result.current.highlightedEdgeIds).toEqual(['ab']);
+    expect(result.current.zoomMultiplier).toBe(1.25);
+    expect(result.current.cameraRevision).toBe(revision);
+    expect(result.current.cameraBounds).toEqual(boundsForFloors(floor, ['B1', '0']));
+    expect(result.current.stepBounds).toEqual(boundsForRouteStep(route, graph, 0, floor.statistics.bounds));
+
+    act(() => result.current.fitStep(0));
     expect(result.current.zoomMultiplier).toBe(1);
     expect(result.current.cameraRevision).toBe(revision + 1);
-    expect(result.current.cameraBounds).toEqual(boundsForRouteStep(route, graph, 0, floor.statistics.bounds));
+    expect(result.current.cameraBounds).toEqual(result.current.stepBounds);
 
     act(() => result.current.zoomIn());
     act(() => result.current.selectFloor('B1'));

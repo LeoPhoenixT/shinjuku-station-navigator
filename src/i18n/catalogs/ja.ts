@@ -185,6 +185,7 @@ export const ja = {
   'routeSheet.warningCount.one': '経路に関する注意事項が1件あります。',
   'routeSheet.warningCount.many': '経路に関する注意事項が{count}件あります。',
   'routeSheet.step': 'ステップ{current}/{total}・{floor}',
+  'routeSheet.fitStep': 'この手順を地図で表示',
   'routeSheet.previous': '前へ',
   'routeSheet.next': '次へ',
   'routeSheet.previousLabel': '前の経路ステップ',

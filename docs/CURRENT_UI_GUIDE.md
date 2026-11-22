@@ -89,7 +89,7 @@ The route sheet displays:
 - Expand/collapse controls
 - Previous and next step controls
 
-Selecting an instruction highlights its official-network geometry in yellow, reveals its destination floor if necessary, and fits the camera around that step.
+Selecting an instruction highlights its official-network geometry in yellow and reveals any missing floors for the step. The map preserves its angle and zoom, panning when the step is outside the view. **Locate step** explicitly fits the camera around the current instruction.
 
 Semantic instruction generation is implemented in `src/routing/routeInstructions.ts`. Locale-specific sentence formatting is implemented in `src/i18n/formatters.ts`, and the directions interface is implemented in `src/components/RouteSheet.tsx`.
 
