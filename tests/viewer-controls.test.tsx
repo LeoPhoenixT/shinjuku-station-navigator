@@ -140,8 +140,10 @@ describe('viewer controls', () => {
     const originalMatchMedia = window.matchMedia;
     Object.defineProperty(window, 'matchMedia', { configurable: true, value: vi.fn().mockReturnValue({ matches: true }) });
     renderControls({ startId: '', destinationId: '', route: { status: 'invalid-place', placeId: '', reason: 'not-found' } });
-    expect(screen.getByRole('region', { name: 'Route planner' })).toHaveClass('planner-card-empty');
-    expect(screen.getByRole('button', { name: 'Edit route' })).toBeVisible();
+    const planner = screen.getByRole('region', { name: 'Route planner' });
+    expect(planner).toHaveClass('planner-card-empty');
+    expect(within(planner).getByText('Shinjuku Station')).toBeVisible();
+    expect(within(planner).getByRole('button', { name: 'Plan a route' })).toBeVisible();
     Object.defineProperty(window, 'matchMedia', { configurable: true, value: originalMatchMedia });
   });
 

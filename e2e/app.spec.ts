@@ -74,12 +74,11 @@ test('projects floor transitions as an unbroken green screen-space route', async
 test('keeps primary map controls usable on a mobile viewport', async ({ page }) => {
   test.skip(test.info().project.name !== 'mobile-chromium', 'Mobile control journey.');
   const planner = page.getByRole('region', { name: 'Route planner' });
-  const editRoute = page.getByRole('button', { name: 'Edit route' });
+  const planRoute = page.getByRole('button', { name: 'Plan a route' });
+  await expect(planner.getByText('Shinjuku Station', { exact: true })).toBeVisible();
+  await expect(planRoute).toBeVisible();
   const plannerBox = await planner.boundingBox();
-  const editRouteBox = await editRoute.boundingBox();
-  expect(plannerBox).not.toBeNull();
-  expect(editRouteBox).not.toBeNull();
-  expect(plannerBox!.width).toBeLessThanOrEqual(editRouteBox!.width + 20);
+  expect(plannerBox?.width).toBeLessThan(page.viewportSize()!.width - 20);
 
   await page.getByRole('button', { name: 'Map tools' }).click();
   await expect(page.getByRole('button', { name: 'North-up view' })).toBeVisible();
@@ -167,8 +166,8 @@ test('continues showing a route if the optional surface data is unavailable', as
 });
 
 test('finds destinations in either language on desktop and mobile', async ({ page }) => {
-  const editRoute = page.getByRole('button', { name: 'Edit route' });
-  if (await editRoute.isVisible()) await editRoute.click();
+  const planRoute = page.getByRole('button', { name: 'Plan a route' });
+  if (await planRoute.isVisible()) await planRoute.click();
   const start = page.getByRole('combobox', { name: 'Search start place' });
   await start.fill('中央改札');
   await expect(page.getByRole('option', { name: /Central Gate/ }).first()).toBeVisible();
@@ -187,7 +186,7 @@ test('finds destinations in either language on desktop and mobile', async ({ pag
 test('allows selecting both endpoints and submitting on a short mobile screen', async ({ page }) => {
   test.skip(test.info().project.name !== 'mobile-chromium', 'Short mobile route-planner journey.');
   await page.setViewportSize({ width: 320, height: 568 });
-  await page.getByRole('button', { name: 'Edit route' }).click();
+  await page.getByRole('button', { name: 'Plan a route' }).click();
   await page.getByRole('combobox', { name: 'Search start place' }).fill('中央改札');
   await page.getByRole('option', { name: /Central Gate/ }).first().click();
   await page.getByRole('combobox', { name: 'Search destination place' }).fill('Central West');
@@ -197,8 +196,8 @@ test('allows selecting both endpoints and submitting on a short mobile screen', 
 });
 
 test('keeps the keyboard-active search option visible', async ({ page }) => {
-  const editRoute = page.getByRole('button', { name: 'Edit route' });
-  if (await editRoute.isVisible()) await editRoute.click();
+  const planRoute = page.getByRole('button', { name: 'Plan a route' });
+  if (await planRoute.isVisible()) await planRoute.click();
   const start = page.getByRole('combobox', { name: 'Search start place' });
   await start.focus();
   for (let index = 0; index < 18; index += 1) await start.press('ArrowDown');

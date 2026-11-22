@@ -96,12 +96,12 @@ export function ViewerControls(props: ViewerControlsProps) {
       <MapLegend items={legend.items} open={panelOpen('legend')} onOpenChange={(open) => setPanelOpen('legend', open)} />
       {(plannerOpen || planner.displayedRoute.status !== 'ok') ? <section className={`planner-card ${plannerOpen ? '' : 'planner-card-collapsed'} ${emptyRequest && !plannerOpen ? 'planner-card-empty' : ''}`} aria-label={t('planner.label')}>
         <header className="planner-header">
-          <span><span className="planner-kicker">{t('planner.kicker')}</span><strong>{t('planner.title')}</strong></span>
+          <span className="planner-heading"><span className="planner-kicker">{t('planner.kicker')}</span><strong>{t('planner.title')}</strong></span>
           <span className="planner-summary" title={routeSummary}>{(planner.draft.startId || planner.draft.destinationId) ? routeSummary : ''}</span>
-          <button type="button" className="planner-toggle" aria-label={t(plannerOpen ? 'planner.actions.hideLabel' : 'planner.actions.edit')} aria-expanded={plannerOpen} aria-controls="planner-body" onClick={() => {
+          <button type="button" className="planner-toggle" aria-label={t(plannerOpen ? 'planner.actions.hideLabel' : 'planner.title')} aria-expanded={plannerOpen} aria-controls="planner-body" onClick={() => {
             if (plannerOpen && planner.displayedRoute.status === 'ok') focusAfterPanelChange.current = 'summary';
             setPanelOpen('planner', !plannerOpen);
-          }}>{t(plannerOpen ? 'planner.actions.hide' : 'planner.actions.edit')}</button>
+          }}>{t(plannerOpen ? 'planner.actions.hide' : 'planner.title')}</button>
         </header>
         {plannerOpen && <div className="planner-body" id="planner-body">
           <div className="place-row">
