@@ -67,7 +67,7 @@ Map settings include:
 - Free rotation
 - Developer diagnostics
 
-The settings surface is a non-modal dialog (`aria-modal="false"`). Opening it moves focus to its Done/close button; Escape closes it; closing restores focus to the settings summary when that trigger still exists. It deliberately has no focus trap, so native keyboard use of its disclosures and checkboxes remains unchanged.
+The settings surface is a non-modal dialog (`aria-modal="false"`). Opening it moves focus to its Done/close button; Escape closes it; closing restores focus to the desktop settings trigger or the mobile Map tools button. It deliberately has no focus trap, so native keyboard use of its disclosures and checkboxes remains unchanged.
 
 ### Interface language
 

@@ -13,11 +13,16 @@ interface MapToolbarProps {
   readonly onSettingsOpenChange?: (open: boolean) => void;
 }
 
+function isMobileToolsLayout() {
+  return window.matchMedia?.('(max-width: 640px)').matches ?? false;
+}
+
 export function MapToolbar(props: MapToolbarProps) {
   const { floors, camera } = props.navigation;
   const { layers, diagnostics } = props.display;
   const { locale, setLocale, t } = useI18n();
   const floorListRef = useRef<HTMLDivElement>(null);
+  const mobileToolsRef = useRef<HTMLButtonElement>(null);
   const settingsTriggerRef = useRef<HTMLElement>(null);
   const settingsCloseRef = useRef<HTMLButtonElement>(null);
   const settingsWasOpenRef = useRef(Boolean(props.settingsOpen));
@@ -58,7 +63,7 @@ export function MapToolbar(props: MapToolbarProps) {
     if (settingsOpen && !settingsWasOpenRef.current) {
       settingsCloseRef.current?.focus();
     } else if (!settingsOpen && settingsWasOpenRef.current) {
-      const trigger = settingsTriggerRef.current;
+      const trigger = isMobileToolsLayout() ? mobileToolsRef.current : settingsTriggerRef.current;
       if (trigger?.isConnected) trigger.focus();
     }
     settingsWasOpenRef.current = settingsOpen;
@@ -66,7 +71,11 @@ export function MapToolbar(props: MapToolbarProps) {
   const modifiedDisplayCount = Number(layers.showFacilities) + Number(layers.showStructuralDetails) + Number(layers.showOfficialNetwork) + Number(layers.showSurfaceContext);
   const focusedSelection = floors.floorViewMode === 'focused';
   const publicVisibleCount = floors.floorIds.filter((floorId) => floors.visibleFloors.includes(floorId)).length;
-  const runMobileTool = (action: () => void) => { action(); setMobileToolsOpen(false); };
+  const runMobileTool = (action: () => void) => {
+    action();
+    if (isMobileToolsLayout()) mobileToolsRef.current?.focus();
+    setMobileToolsOpen(false);
+  };
   return <>
     <aside className="floor-rail" aria-label={t('map.floorControls')}>
       <div className="floor-rail-modes" role="group" aria-label={t('map.floorViewMode')}>
@@ -96,7 +105,7 @@ export function MapToolbar(props: MapToolbarProps) {
     </aside>
 
     <aside className={`camera-toolbar ${mobileToolsOpen || props.settingsOpen ? 'camera-toolbar-open' : ''}`} aria-label={t('map.cameraControls')}>
-      <button type="button" className="mobile-tools-toggle" aria-expanded={mobileToolsOpen} onClick={() => setMobileToolsOpen((open) => !open)}>{t('map.tools')}</button>
+      <button type="button" className="mobile-tools-toggle" ref={mobileToolsRef} aria-expanded={mobileToolsOpen} onClick={() => setMobileToolsOpen((open) => !open)}>{t('map.tools')}</button>
       <button type="button" className="desktop-camera-control" onClick={camera.fitRoute} disabled={!props.canFitRoute} aria-label={t('map.fitRoute')} title={t('map.fitRoute')}>{t('map.route')}</button>
       <button type="button" className="desktop-camera-control" onClick={camera.fitStation} aria-label={t('map.fitStation')} title={t('map.fitStation')}>{t('map.station')}</button>
       <button type="button" onClick={camera.zoomOut} aria-label={t('map.zoomOut')} title={t('map.zoomOut')}>−</button>

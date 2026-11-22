@@ -1,4 +1,4 @@
-import { useId, useMemo, useRef, useState, type ChangeEvent, type FocusEvent, type KeyboardEvent } from 'react';
+import { useId, useMemo, useRef, useState, type ChangeEvent, type FocusEvent, type KeyboardEvent, type RefObject } from 'react';
 import { buildPlaceIdIndex, groupPlacesByFloorArea, placeDisplayName, type PlaceSearchIndex } from '../features/route-planner/placeSearch.js';
 import { categoryDisplayName, floorLongName, placeSecondaryText, publicPlaceName } from '../places/placePresentation.js';
 import type { NamedPlaceRecord } from '../schema/processed.js';
@@ -6,6 +6,7 @@ import type { PlaceTranslationsDataset } from '../schema/placeTranslations.js';
 import { useI18n } from '../i18n/context.js';
 
 interface PlaceSearchInputProps {
+  readonly inputRef?: RefObject<HTMLInputElement | null>;
   readonly kind: 'start' | 'destination';
   readonly searchIndex: PlaceSearchIndex;
   readonly translations?: PlaceTranslationsDataset;
@@ -15,13 +16,14 @@ interface PlaceSearchInputProps {
   readonly onChange: (id: string) => void;
 }
 
-export function PlaceSearchInput({ kind, searchIndex, translations, value, unconfirmedQuery, onQueryChange, onChange }: PlaceSearchInputProps) {
+export function PlaceSearchInput({ kind, searchIndex, translations, value, unconfirmedQuery, onQueryChange, onChange, inputRef: providedInputRef }: PlaceSearchInputProps) {
   const { locale, t } = useI18n();
   const label = t(kind === 'start' ? 'planner.start' : 'planner.destination');
   const searchLabel = locale === 'en' ? label.toLocaleLowerCase('en') : label;
   const listId = useId();
   const inputId = useId();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const localInputRef = useRef<HTMLInputElement>(null);
+  const inputRef = providedInputRef ?? localInputRef;
   const selected = searchIndex.findById(value);
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);

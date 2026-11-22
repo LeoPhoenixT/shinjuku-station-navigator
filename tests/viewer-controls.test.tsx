@@ -319,6 +319,18 @@ describe('viewer controls', () => {
     expect(screen.getByRole('region', { name: 'Start gate to End gate' })).toBeInTheDocument();
   });
 
+  it('moves keyboard focus to the summary on submit and back to the start field when editing', () => {
+    const before = renderProps(false, { routeDirty: true });
+    const view = render(<ViewerControls {...viewerControlsProps(before)} />);
+    const submit = screen.getByRole('button', { name: 'Show route' });
+    submit.focus();
+    fireEvent.click(submit);
+    view.rerender(<ViewerControls {...viewerControlsProps(renderProps(false, { route: okRoute }))} />);
+    expect(screen.getByRole('heading', { name: 'Start gate to End gate' })).toHaveFocus();
+    fireEvent.click(screen.getByRole('button', { name: 'Edit route' }));
+    expect(screen.getByRole('combobox', { name: 'Search start place' })).toHaveFocus();
+  });
+
   it('copies the complete current route URL with transient feedback', async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
@@ -355,6 +367,8 @@ describe('viewer controls', () => {
     fireEvent.click(screen.getByLabelText('Map settings'));
     expect(screen.getByRole('button', { name: /Show directions/i })).toBeInTheDocument();
     expect(screen.getByRole('group', { name: 'Display layers' })).toBeVisible();
+    fireEvent.keyDown(screen.getByRole('button', { name: 'Close map settings' }), { key: 'Escape' });
+    expect(screen.getByRole('button', { name: 'Map tools' })).toHaveFocus();
     Object.defineProperty(window, 'matchMedia', { configurable: true, value: originalMatchMedia });
   });
 

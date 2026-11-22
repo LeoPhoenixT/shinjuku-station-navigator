@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type RefObject } from 'react';
 import type { RoutePlan } from '../routing/routeService.js';
 import type { RouteStep } from '../routing/routeInstructions.js';
 import { floorDisplayName, publicPlaceName } from '../places/placePresentation.js';
@@ -9,6 +9,7 @@ import type { Locale } from '../i18n/types.js';
 import type { PlaceTranslationsDataset } from '../schema/placeTranslations.js';
 
 interface RouteSheetProps {
+  headingRef?: RefObject<HTMLHeadingElement | null>;
   route: RoutePlan;
   translations?: PlaceTranslationsDataset;
   selectedStepIndex?: number;
@@ -34,7 +35,7 @@ function floorBadge(step: RouteStep, locale: Locale): string {
   return from === to ? from : `${from} → ${to}`;
 }
 
-export function RouteSheet({ route, translations, selectedStepIndex, onStepSelect, onFitStep, expanded: controlledExpanded, onExpandedChange, onEditRoute }: RouteSheetProps) {
+export function RouteSheet({ headingRef, route, translations, selectedStepIndex, onStepSelect, onFitStep, expanded: controlledExpanded, onExpandedChange, onEditRoute }: RouteSheetProps) {
   const { locale, t } = useI18n();
   const [localExpanded, setLocalExpanded] = useState(false);
   const expanded = controlledExpanded ?? localExpanded;
@@ -52,7 +53,7 @@ export function RouteSheet({ route, translations, selectedStepIndex, onStepSelec
   const instruction = (step: RouteStep) => formatRouteInstruction(step, route.start, route.destination, locale, translations);
   return <section className={`route-sheet ${expanded ? 'route-sheet-expanded' : ''}`} aria-labelledby="route-summary-heading">
     <header className="route-sheet-header">
-      <h2 id="route-summary-heading" className="route-sheet-journey">
+      <h2 ref={headingRef} tabIndex={-1} id="route-summary-heading" className="route-sheet-journey">
         <span className="visually-hidden">{journeyLabel}</span>
         <span className="route-sheet-endpoint" aria-hidden="true"><b>A</b>{startName}</span>
         <span className="route-sheet-endpoint" aria-hidden="true"><b>B</b>{destinationName}</span>

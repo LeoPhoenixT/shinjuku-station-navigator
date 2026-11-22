@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { buildPlaceSearchIndex } from '../features/route-planner/placeSearch.js';
 import { publicPlaceName } from '../places/placePresentation.js';
 import type { RoutePlan } from '../routing/routeService.js';
@@ -49,6 +49,17 @@ export function ViewerControls(props: ViewerControlsProps) {
     return next;
   }), [narrow]);
   const plannerOpen = panelOpen('planner');
+  const startInputRef = useRef<HTMLInputElement>(null);
+  const summaryHeadingRef = useRef<HTMLHeadingElement>(null);
+  const focusAfterPanelChange = useRef<'start' | 'summary'>(undefined);
+  useLayoutEffect(() => {
+    const target = focusAfterPanelChange.current === 'start'
+      ? startInputRef.current
+      : focusAfterPanelChange.current === 'summary' ? summaryHeadingRef.current : null;
+    if (!target) return;
+    focusAfterPanelChange.current = undefined;
+    target.focus();
+  }, [plannerOpen, planner.displayedRoute]);
   useEffect(() => {
     if (!shareMessage) return;
     const timeout = window.setTimeout(() => setShareMessage(undefined), 2800);
@@ -56,6 +67,7 @@ export function ViewerControls(props: ViewerControlsProps) {
   }, [shareMessage]);
   useEffect(() => {
     if (planner.displayedRoute.status === 'ok') setPanelOpen('planner', false);
+    else if (focusAfterPanelChange.current === 'summary') focusAfterPanelChange.current = undefined;
   }, [planner.displayedRoute, setPanelOpen]);
   const copyRouteLink = async () => {
     try {
@@ -86,23 +98,26 @@ export function ViewerControls(props: ViewerControlsProps) {
         <header className="planner-header">
           <span><span className="planner-kicker">{t('planner.kicker')}</span><strong>{t('planner.title')}</strong></span>
           <span className="planner-summary" title={routeSummary}>{(planner.draft.startId || planner.draft.destinationId) ? routeSummary : ''}</span>
-          <button type="button" className="planner-toggle" aria-label={t(plannerOpen ? 'planner.actions.hideLabel' : 'planner.actions.edit')} aria-expanded={plannerOpen} aria-controls="planner-body" onClick={() => setPanelOpen('planner', !plannerOpen)}>{t(plannerOpen ? 'planner.actions.hide' : 'planner.actions.edit')}</button>
+          <button type="button" className="planner-toggle" aria-label={t(plannerOpen ? 'planner.actions.hideLabel' : 'planner.actions.edit')} aria-expanded={plannerOpen} aria-controls="planner-body" onClick={() => {
+            if (plannerOpen && planner.displayedRoute.status === 'ok') focusAfterPanelChange.current = 'summary';
+            setPanelOpen('planner', !plannerOpen);
+          }}>{t(plannerOpen ? 'planner.actions.hide' : 'planner.actions.edit')}</button>
         </header>
         {plannerOpen && <div className="planner-body" id="planner-body">
           <div className="place-row">
-            <PlaceSearchInput kind="start" searchIndex={placeSearchIndex} translations={planner.translations} value={planner.draft.startId} unconfirmedQuery={startQuery} onQueryChange={planner.draft.setStartQuery} onChange={planner.draft.setStartId} />
+            <PlaceSearchInput inputRef={startInputRef} kind="start" searchIndex={placeSearchIndex} translations={planner.translations} value={planner.draft.startId} unconfirmedQuery={startQuery} onQueryChange={planner.draft.setStartQuery} onChange={planner.draft.setStartId} />
             <button type="button" className="swap-places" onClick={planner.swapPlaces} aria-label={t('planner.actions.swap')} title={t('planner.actions.swap')}>⇄</button>
             <PlaceSearchInput kind="destination" searchIndex={placeSearchIndex} translations={planner.translations} value={planner.draft.destinationId} unconfirmedQuery={destinationQuery} onQueryChange={planner.draft.setDestinationQuery} onChange={planner.draft.setDestinationId} />
           </div>
           <div className="planner-actions">
             <label className="profile-control"><span>{t('planner.routeField')}</span><select aria-label={t('profile.label')} value={planner.draft.profile} onChange={(event) => planner.draft.setProfile(event.target.value as PlannerViewModel['draft']['profile'])}><option value="shortest">{t('profile.shortest')}</option><option value="accessible">{t('profile.accessible')}</option><option value="avoid-stairs">{t('profile.avoidStairs')}</option><option value="prefer-elevator">{t('profile.preferElevator')}</option><option value="fewest-floor-changes">{t('profile.fewestFloorChanges')}</option></select></label>
-            <button type="button" className="submit-route" onClick={planner.submitRoute} disabled={hasUnconfirmedEndpoint || !planner.draft.startId || !planner.draft.destinationId || !planner.draft.dirty}>{t(planner.displayedRoute.status === 'ok' ? 'planner.actions.update' : 'planner.actions.show')}</button>
+            <button type="button" className="submit-route" onClick={() => { focusAfterPanelChange.current = 'summary'; planner.submitRoute(); }} disabled={hasUnconfirmedEndpoint || !planner.draft.startId || !planner.draft.destinationId || !planner.draft.dirty}>{t(planner.displayedRoute.status === 'ok' ? 'planner.actions.update' : 'planner.actions.show')}</button>
             <button type="button" className="clear-route" onClick={planner.clearRoute} disabled={!hasUnconfirmedEndpoint && !planner.draft.startId && !planner.draft.destinationId && planner.displayedRoute.status !== 'ok'}>{t('planner.actions.clear')}</button>
             <button type="button" className="share-route" onClick={() => void copyRouteLink()} disabled={hasUnconfirmedEndpoint || planner.displayedRoute.status !== 'ok' || planner.draft.dirty}>{t('planner.actions.share')}</button>
           </div>
           <p className={`planner-status ${planner.displayedRoute.status === 'ok' || emptyRequest ? '' : 'planner-status-error'}`} role={planner.displayedRoute.status === 'ok' || emptyRequest ? 'status' : 'alert'}>{routeMessage(planner.displayedRoute, locale)}</p>
         </div>}
-      </section> : <RouteSheet route={planner.displayedRoute} translations={planner.translations} selectedStepIndex={camera.selectedStepIndex} onStepSelect={camera.selectStep} onFitStep={camera.fitStep} expanded={panelOpen('directions')} onExpandedChange={(open) => setPanelOpen('directions', open)} onEditRoute={() => setPanelOpen('planner', true)} />}
+      </section> : <RouteSheet headingRef={summaryHeadingRef} route={planner.displayedRoute} translations={planner.translations} selectedStepIndex={camera.selectedStepIndex} onStepSelect={camera.selectStep} onFitStep={camera.fitStep} expanded={panelOpen('directions')} onExpandedChange={(open) => setPanelOpen('directions', open)} onEditRoute={() => { focusAfterPanelChange.current = 'start'; setPanelOpen('planner', true); }} />}
     </div>
     {(shareMessage || feedback.interactionMessage) && <div className="app-toast" role="status">{shareMessage || feedback.interactionMessage}</div>}
   </div>;
