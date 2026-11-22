@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 import { useI18n } from '../i18n/context.js';
 import { floorDisplayName } from '../places/placePresentation.js';
+import { floorMapCode, floorPaletteFor } from '../map/viewerPresentation.js';
 import type { ViewerDisplayViewModel, ViewerNavigationViewModel } from './viewerViewModels.js';
 
 interface MapToolbarProps {
@@ -84,10 +85,11 @@ export function MapToolbar(props: MapToolbarProps) {
             route: floors.routeFloorIds.includes(floorId) ? t('map.onRoute') : '',
           })}
           data-floor-id={floorId}
+          style={{ '--floor-accent': floorPaletteFor(floorId).outline } as CSSProperties}
           aria-checked={focusedSelection && floors.activeFloor === floorId}
           className={`${focusedSelection && floors.activeFloor === floorId ? 'floor-active' : ''} ${floors.routeFloorIds.includes(floorId) ? 'floor-on-route' : ''}`}
           onClick={() => floors.selectFloor(floorId)}
-        ><span>{floorId === '0' ? 'G' : floorId}</span>{floors.routeFloorIds.includes(floorId) && <i aria-hidden="true" />}</button>)}
+        ><span>{floorMapCode(floorId)}</span>{floors.routeFloorIds.includes(floorId) && <i aria-hidden="true" />}</button>)}
         </div>
         <button type="button" className="floor-scroll-button floor-scroll-after" aria-label={t('map.nextFloors')} disabled={!floorOverflow.after} onClick={() => moveFloorList(1)}><span className="floor-arrow-desktop" aria-hidden="true">↓</span><span className="floor-arrow-mobile" aria-hidden="true">›</span></button>
       </div>

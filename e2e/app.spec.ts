@@ -83,7 +83,7 @@ test('keeps primary map controls usable on a mobile viewport', async ({ page }) 
   await expect(page.getByRole('radio', { name: 'Emphasize B1 floor' })).toBeVisible();
 });
 
-test('keeps surface landmarks available on B1 and allows hiding the layer', async ({ page, isMobile }) => {
+test('identifies floors in the overview and keeps gate detail tied to the emphasized floor', async ({ page, isMobile }) => {
   const landmarks = page.locator('.surface-landmark');
   await expect(landmarks).toHaveCount(3);
   await expect(page.getByText('East Exit Plaza', { exact: true })).toBeVisible();
@@ -91,16 +91,26 @@ test('keeps surface landmarks available on B1 and allows hiding the layer', asyn
   await expect(page.getByText('Busta Shinjuku', { exact: true })).toBeVisible();
   await expect(page.locator('.place-label')).toHaveCount(0);
   await expect(page.locator('.gate-badge').first()).toHaveText('GT');
+  const floorCallouts = page.locator('[data-map-floor]');
+  await expect(floorCallouts).toHaveCount(8);
+  for (const [floorId, code] of [['0', 'G'], ['B1', 'B1'], ['B2', 'B2']]) {
+    const label = floorCallouts.and(page.locator(`[data-map-floor="${floorId}"]`));
+    await expect(label).toHaveText(code);
+    await expect(label).toBeInViewport();
+  }
 
   await page.getByRole('radio', { name: 'Emphasize B1 floor' }).click();
   await expect(landmarks).toHaveCount(3);
+  await expect(floorCallouts).toHaveText(['B1']);
+  await expect(page.locator('.place-label')).toHaveCount(0);
   if (isMobile) {
-    await expect(page.locator('.place-label')).toHaveCount(0);
     await page.getByRole('button', { name: 'Map tools' }).click();
-    for (let clicks = 0; clicks < 3; clicks += 1) await page.getByRole('button', { name: 'Zoom in' }).click();
   }
+  for (let clicks = 0; clicks < 3; clicks += 1) await page.getByRole('button', { name: 'Zoom in' }).click();
   await expect(page.locator('.place-label').first()).toBeVisible();
-  await expect(page.locator('.gate-badge')).toHaveCount(0);
+  await expect(page.locator('[data-floor-id="B1"] .gate-badge')).toHaveCount(0);
+  await expect(page.locator('[data-floor-id]:not([data-floor-id="B1"]) .place-label')).toHaveCount(0);
+  await expect(page.locator('.gate-badge-context').first()).toBeVisible();
 
   await page.getByLabel('Map settings').click();
   const roads = page.getByRole('checkbox', { name: /Surface roads/ });

@@ -19,7 +19,7 @@ import type { FacilityMarkerCandidate } from './facilityMarkers.js';
 import type { FloorViewMode } from './displayPreferences.js';
 import { partitionVisibleFloors } from './viewerPresentation.js';
 import { emphasizedSpaceSegments, featureSegments, highlightedPolylines, outdoorFeatureSegments, sceneCenter } from './sceneGeometry.js';
-import { ExtrudedLayer, SemanticFixtureLayer, SemanticSpaceLayer } from './sceneLayers.js';
+import { FloorStructure, SemanticFixtureLayer, SemanticSpaceLayer } from './sceneLayers.js';
 import { NetworkDirectionArrows, RouteLines, Segments, StructuralOverlay, WideSegments } from './sceneLinePrimitives.js';
 import { DrawingLayer, OfficialNetworkLayer, SourceLinksLayer, TwsiLayer } from './sceneOptionalLayers.js';
 import { FacilityMarkerLayer, PlaceLayer } from './sceneMarkerLayers.js';
@@ -65,22 +65,18 @@ function TransitionMarker({ marker }: { marker: RouteTransitionMarker }) {
 
 export function MapScene(props: MapSceneProps) {
   const stacked = props.visibleFloors.length > 1;
-  const narrow = useThree(({ size }) => size.width <= 640);
-  const compactGates = Boolean(props.surfaceContext) && (props.floorViewMode === 'stack' || narrow) && !props.debug;
+  const overview = props.floorViewMode === 'stack' && !props.debug;
   const center = sceneCenter(props.floor);
   const { activeFloors, contextFloors } = useMemo(
     () => partitionVisibleFloors(props.visibleFloors, props.activeFloor, props.routeFloorIds, props.floorViewMode),
     [props.activeFloor, props.floorViewMode, props.routeFloorIds, props.visibleFloors],
   );
-  const floorSegments = useMemo(() => featureSegments(props.floor.features, 'Floor', activeFloors, stacked), [activeFloors, props.floor, stacked]);
-  const spaceSegments = useMemo(() => featureSegments(props.floor.features, 'Space', activeFloors, stacked), [activeFloors, props.floor, stacked]);
   const verticalSpaceSegments = useMemo(() => emphasizedSpaceSegments(props.floor.features, 'vertical', activeFloors, stacked), [activeFloors, props.floor.features, stacked]);
   const restrictedSpaceSegments = useMemo(() => emphasizedSpaceSegments(props.floor.features, 'restricted', activeFloors, stacked), [activeFloors, props.floor.features, stacked]);
   const openingSegments = useMemo(() => featureSegments(props.floor.features, 'Opening', activeFloors, stacked), [activeFloors, props.floor, stacked]);
   const contextFloorSegments = useMemo(() => featureSegments(props.floor.features, 'Floor', contextFloors, stacked), [contextFloors, props.floor, stacked]);
   const contextSpaceSegments = useMemo(() => featureSegments(props.floor.features, 'Space', contextFloors, stacked), [contextFloors, props.floor, stacked]);
   const contextOpeningSegments = useMemo(() => featureSegments(props.floor.features, 'Opening', contextFloors, stacked), [contextFloors, props.floor, stacked]);
-  const floorEnvelopes = useMemo(() => wallEnvelopeSegments(props.floor.features, activeFloors, stacked), [activeFloors, props.floor, stacked]);
   const contextFloorEnvelopes = useMemo(() => wallEnvelopeSegments(props.floor.features, contextFloors, stacked), [contextFloors, props.floor, stacked]);
   const activeOutdoorSegments = useMemo(() => outdoorFeatureSegments(props.floor.features, activeFloors, stacked), [activeFloors, props.floor.features, stacked]);
   const contextOutdoorSegments = useMemo(() => outdoorFeatureSegments(props.floor.features, contextFloors, stacked), [contextFloors, props.floor.features, stacked]);
@@ -95,24 +91,20 @@ export function MapScene(props: MapSceneProps) {
     <hemisphereLight args={['#dbeafe', '#111827', 0.7]} />
     <directionalLight position={[80, 120, 80]} intensity={1.25} />
     <SemanticFixtureLayer features={props.floor.features} floors={contextFloors} stacked={stacked} context />
-    <ExtrudedLayer features={props.floor.features} layer="Floor" floors={activeFloors} stacked={stacked} color="#172554" />
-    <SemanticSpaceLayer features={props.floor.features} floors={activeFloors} stacked={stacked} />
+    {activeFloors.map((floorId, floorIndex) => <FloorStructure key={floorId} features={props.floor.features} floorId={floorId} floorIndex={floorIndex} stacked={stacked} focused={props.floorViewMode === 'focused'} />)}
+    <SemanticSpaceLayer features={props.floor.features} floors={activeFloors} stacked={stacked} overview={overview} />
     <SemanticFixtureLayer features={props.floor.features} floors={activeFloors} stacked={stacked} />
     <WideSegments segments={contextFloorSegments} color="#94a3b8" yOffset={0.32} lineWidth={1} opacity={0.12} depthTest={false} renderOrder={2000} />
     <WideSegments segments={contextFloorSegments} color="#94a3b8" yOffset={0.32} lineWidth={1.6} opacity={0.46} depthTest renderOrder={2001} />
     <Segments segments={contextFloorEnvelopes} color="#64748b" yOffset={0.32} opacity={0.18} />
     <Segments segments={contextSpaceSegments} color="#94a3b8" yOffset={0.44} opacity={0.32} />
     <StructuralOverlay segments={contextOpeningSegments} style={STRUCTURAL_LINE_STYLES.openingContext} />
-    <WideSegments segments={floorSegments} color="#38bdf8" yOffset={0.32} lineWidth={1.2} opacity={0.16} depthTest={false} renderOrder={2010} />
-    <WideSegments segments={floorSegments} color="#67e8f9" yOffset={0.32} lineWidth={2.4} opacity={0.9} depthTest renderOrder={2011} />
-    <Segments segments={floorEnvelopes} color="#38bdf8" yOffset={0.32} opacity={0.42} />
-    <Segments segments={spaceSegments} color="#bae6fd" yOffset={0.45} opacity={0.62} />
-    <WideSegments segments={verticalSpaceSegments} color="#e0f2fe" yOffset={0.7} lineWidth={1.8} opacity={0.86} depthTest renderOrder={2020} />
-    <WideSegments segments={restrictedSpaceSegments} color="#fb7185" yOffset={0.7} lineWidth={2.5} opacity={0.94} depthTest renderOrder={2021} />
+    <WideSegments segments={verticalSpaceSegments} color="#e0f2fe" yOffset={0.7} lineWidth={1.8} opacity={overview ? 0.45 : 0.86} depthTest renderOrder={2020} />
+    <WideSegments segments={restrictedSpaceSegments} color="#fb7185" yOffset={0.7} lineWidth={2.5} opacity={overview ? 0.65 : 0.94} depthTest renderOrder={2021} />
     {props.showStructuralDetails && <DrawingLayer features={props.floor.features} activeFloors={activeFloors} contextFloors={contextFloors} stacked={stacked} />}
     <StructuralOverlay segments={contextOutdoorSegments} style={STRUCTURAL_LINE_STYLES.outdoorContext} />
-    <StructuralOverlay segments={activeOutdoorSegments} style={STRUCTURAL_LINE_STYLES.outdoorActive} />
-    <StructuralOverlay segments={openingSegments} style={STRUCTURAL_LINE_STYLES.openingActive} />
+    <StructuralOverlay segments={activeOutdoorSegments} style={overview ? STRUCTURAL_LINE_STYLES.outdoorContext : STRUCTURAL_LINE_STYLES.outdoorActive} />
+    <StructuralOverlay segments={openingSegments} style={overview ? STRUCTURAL_LINE_STYLES.openingContext : STRUCTURAL_LINE_STYLES.openingActive} />
     {props.showOfficialNetwork && <OfficialNetworkLayer graph={props.routingGraph} floors={props.visibleFloors} stacked={stacked} />}
     {props.debug && props.showAllSourceLinks && <SourceLinksLayer network={props.officialNetwork} floors={props.visibleFloors} stacked={stacked} />}
     {props.debug && props.showTwsi && <TwsiLayer graph={props.twsiGraph} floors={props.visibleFloors} stacked={stacked} />}
@@ -123,6 +115,6 @@ export function MapScene(props: MapSceneProps) {
     <RouteLines lines={highlightedRouteLines} color="#fef08a" lineWidth={10} yOffset={4.12} />
     {props.debug && props.showOfficialNodes && props.routingGraph.nodes.filter((node) => props.visibleFloors.includes(node.floorId)).map((node) => <group key={node.id} position={[node.x, displayElevation(node.y, stacked) + 0.48, node.z]}><mesh><sphereGeometry args={[node.sourceId?.startsWith('reviewed:') ? 0.38 : 0.24, 8, 8]} /><meshStandardMaterial color={node.sourceId?.startsWith('reviewed:') ? '#f472b6' : '#bae6fd'} /></mesh><Html position={[0, 0.8, 0]} center zIndexRange={[3, 0]}><span className="node-label" title={node.id}>{node.sourceId?.startsWith('reviewed:') ? node.name : node.id.slice(0, 8)}</span></Html></group>)}
     {props.showFacilities && <FacilityMarkerLayer candidates={props.facilityMarkerCandidates} floors={props.visibleFloors} stacked={stacked} places={props.places} translations={props.translations} enabledCategories={props.enabledFacilityCategories} onRouteAction={props.onFacilityRouteAction} />}
-    <PlaceLayer places={props.places.filter((place) => props.visibleFloors.includes(place.floorId))} translations={props.translations} startId={props.startId} destinationId={props.destinationId} debug={props.debug} stacked={stacked} showGates={props.showGateMarkers} compactGates={compactGates} fittedZoomRef={props.fittedZoomRef} onRouteAction={props.onFacilityRouteAction} />
+    <PlaceLayer places={props.places.filter((place) => props.visibleFloors.includes(place.floorId))} translations={props.translations} startId={props.startId} destinationId={props.destinationId} debug={props.debug} stacked={stacked} showGates={props.showGateMarkers} detailedGateFloors={activeFloors} fittedZoomRef={props.fittedZoomRef} onRouteAction={props.onFacilityRouteAction} />
   </group>;
 }
