@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useRef, useState, type ChangeEvent, type FocusEvent, type KeyboardEvent } from 'react';
+import { useId, useLayoutEffect, useMemo, useRef, useState, type ChangeEvent, type FocusEvent, type KeyboardEvent, type RefObject } from 'react';
 import { buildPlaceIdIndex, groupPlacesByFloorArea, placeDisplayName, type PlaceSearchIndex } from '../features/route-planner/placeSearch.js';
 import { categoryDisplayName, floorLongName, placeSecondaryText, publicPlaceName } from '../places/placePresentation.js';
 import type { NamedPlaceRecord } from '../schema/processed.js';
@@ -6,26 +6,32 @@ import type { PlaceTranslationsDataset } from '../schema/placeTranslations.js';
 import { useI18n } from '../i18n/context.js';
 
 interface PlaceSearchInputProps {
+  readonly inputRef?: RefObject<HTMLInputElement | null>;
   readonly kind: 'start' | 'destination';
   readonly searchIndex: PlaceSearchIndex;
   readonly translations?: PlaceTranslationsDataset;
   readonly value: string;
+  readonly onQueryChange: (query: string | undefined) => void;
+  readonly unconfirmedQuery?: string;
   readonly onChange: (id: string) => void;
 }
 
-export function PlaceSearchInput({ kind, searchIndex, translations, value, onChange }: PlaceSearchInputProps) {
+export function PlaceSearchInput({ kind, searchIndex, translations, value, unconfirmedQuery, onQueryChange, onChange, inputRef: providedInputRef }: PlaceSearchInputProps) {
   const { locale, t } = useI18n();
   const label = t(kind === 'start' ? 'planner.start' : 'planner.destination');
   const searchLabel = locale === 'en' ? label.toLocaleLowerCase('en') : label;
   const listId = useId();
   const inputId = useId();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const localInputRef = useRef<HTMLInputElement>(null);
+  const inputRef = providedInputRef ?? localInputRef;
   const selected = searchIndex.findById(value);
-  const [query, setQuery] = useState(selected ? placeDisplayName(selected, locale, translations) : value);
   const [open, setOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeOption, setActiveOption] = useState({ index: 0, reveal: false });
+  const { index: activeIndex } = activeOption;
+  const activeOptionRef = useRef<HTMLDivElement>(null);
   const [category, setCategory] = useState<NamedPlaceRecord['category'] | 'all'>('all');
   const selectedText = selected ? placeDisplayName(selected, locale, translations) : value;
+  const query = unconfirmedQuery ?? selectedText;
   const searchTerm = open && query === selectedText ? '' : query;
   const allResults = useMemo(
     () => searchIndex.search(searchTerm, locale).filter((place) => category === 'all' || place.category === category),
@@ -36,25 +42,26 @@ export function PlaceSearchInput({ kind, searchIndex, translations, value, onCha
   const matches = useMemo(() => groups.flatMap((group) => group.places), [groups]);
   const matchIndexById = useMemo(() => buildPlaceIdIndex(matches), [matches]);
 
-  useEffect(() => setQuery(selected ? placeDisplayName(selected, locale, translations) : value), [locale, selected, translations, value]);
+  useLayoutEffect(() => {
+    if (open && activeOption.reveal) activeOptionRef.current?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+  }, [activeOption, open]);
 
   const close = () => {
     setOpen(false);
-    setQuery(selectedText);
+    setActiveOption({ index: 0, reveal: false });
   };
   const choose = (place: NamedPlaceRecord) => {
     onChange(place.id);
-    setQuery(placeDisplayName(place, locale, translations));
-    setOpen(false);
+    onQueryChange(undefined);
+    close();
   };
   const handleQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
     const next = event.target.value;
-    setQuery(next);
     setOpen(true);
-    setActiveIndex(0);
-    if (next.length === 0) onChange('');
+    setActiveOption({ index: 0, reveal: false });
     const exact = searchIndex.findByDisplayName(next, locale);
-    if (exact) onChange(exact.id);
+    onQueryChange(next && !exact && next !== selectedText ? next : undefined);
+    if (!next || exact) onChange(exact?.id ?? '');
   };
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
     if (event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)) return;
@@ -63,16 +70,18 @@ export function PlaceSearchInput({ kind, searchIndex, translations, value, onCha
   const handleContainerKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== 'Escape') return;
     inputRef.current?.focus();
+    onQueryChange(undefined);
     close();
   };
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'ArrowDown') {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();
       setOpen(true);
-      setActiveIndex((index) => Math.min(index + 1, Math.max(0, matches.length - 1)));
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault();
-      setActiveIndex((index) => Math.max(0, index - 1));
+      setActiveOption(({ index }) => {
+        const lastIndex = Math.max(0, matches.length - 1);
+        const offset = event.key === 'ArrowDown' ? 1 : -1;
+        return { index: open ? Math.min(lastIndex, Math.max(0, index + offset)) : 0, reveal: true };
+      });
     } else if (event.key === 'Enter' && open && matches[activeIndex]) {
       event.preventDefault();
       choose(matches[activeIndex]);
@@ -83,6 +92,8 @@ export function PlaceSearchInput({ kind, searchIndex, translations, value, onCha
     ['gate', t('search.gates')], ['exit', t('search.exits')], ['toilet', t('search.toilets')], ['elevator', t('search.elevators')], ['locker', t('search.lockers')],
   ] as const).filter(([candidate]) => searchIndex.categories.includes(candidate));
 
+  const noResults = unconfirmedQuery !== undefined && matches.length === 0;
+
   return <div className="place-search" onBlur={handleBlur} onKeyDown={handleContainerKeyDown}><label htmlFor={inputId}>{label}</label>
     <input
       ref={inputRef}
@@ -91,8 +102,9 @@ export function PlaceSearchInput({ kind, searchIndex, translations, value, onCha
       role="combobox"
       aria-label={t('search.inputLabel', { label: searchLabel })}
       aria-autocomplete="list"
-      aria-controls={listId}
-      aria-expanded={open}
+      aria-controls={open && matches.length > 0 ? listId : undefined}
+      aria-describedby={noResults ? `${inputId}-status` : undefined}
+      aria-expanded={open && matches.length > 0}
       aria-activedescendant={open && matches[activeIndex] ? `${listId}-${activeIndex}` : undefined}
       value={query}
       placeholder={t('search.placeholder')}
@@ -102,9 +114,10 @@ export function PlaceSearchInput({ kind, searchIndex, translations, value, onCha
       autoComplete="off"
     />
     {open && categoryShortcuts.length > 1 && <div className="place-shortcuts" role="group" aria-label={t('search.categories', { label })}>
-      <button type="button" aria-pressed={category === 'all'} onMouseDown={(event) => event.preventDefault()} onClick={() => { setCategory('all'); setActiveIndex(0); }}>{t('search.all')}</button>
-      {categoryShortcuts.map(([candidate, text]) => <button type="button" key={candidate} aria-pressed={category === candidate} onMouseDown={(event) => event.preventDefault()} onClick={() => { setCategory(candidate); setActiveIndex(0); }}>{text}</button>)}
+      <button type="button" aria-pressed={category === 'all'} onMouseDown={(event) => event.preventDefault()} onClick={() => { setCategory('all'); setActiveOption({ index: 0, reveal: false }); }}>{t('search.all')}</button>
+      {categoryShortcuts.map(([candidate, text]) => <button type="button" key={candidate} aria-pressed={category === candidate} onMouseDown={(event) => event.preventDefault()} onClick={() => { setCategory(candidate); setActiveOption({ index: 0, reveal: false }); }}>{text}</button>)}
     </div>}
+    <div className="place-search-status" id={`${inputId}-status`} aria-live="polite">{noResults ? t('search.noResults') : ''}</div>
     {open && matches.length > 0 && <ul className="place-options" id={listId} role="listbox">
       {allResults.length > visibleResults.length && <li className="place-option-limit" role="status">{t('search.limit', { count: allResults.length })}</li>}
       {groups.map((group) => {
@@ -115,6 +128,7 @@ export function PlaceSearchInput({ kind, searchIndex, translations, value, onCha
         {group.places.map((place) => {
           const index = matchIndexById.indexOf(place.id)!;
           return <div
+            ref={index === activeIndex ? activeOptionRef : undefined}
             className="place-option"
             id={`${listId}-${index}`}
             key={place.id}

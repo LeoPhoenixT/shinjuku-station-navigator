@@ -37,6 +37,7 @@ export interface ViewerNavigationViewModel {
     readonly showAngledView: () => void;
     readonly cameraHeading: number;
     readonly selectedStepIndex?: number;
+    readonly fitStep: (index: number) => void;
     readonly selectStep: (index: number) => void;
   };
 }

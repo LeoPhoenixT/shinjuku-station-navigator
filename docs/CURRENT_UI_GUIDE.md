@@ -56,6 +56,7 @@ Camera controls include:
 - North-up view
 - Angled 3D view
 - Optional free rotation
+- Arrow-key panning when the interactive map has keyboard focus
 
 Map settings include:
 
@@ -67,7 +68,7 @@ Map settings include:
 - Free rotation
 - Developer diagnostics
 
-The settings surface is a non-modal dialog (`aria-modal="false"`). Opening it moves focus to its Done/close button; Escape closes it; closing restores focus to the settings summary when that trigger still exists. It deliberately has no focus trap, so native keyboard use of its disclosures and checkboxes remains unchanged.
+The settings surface is a non-modal dialog (`aria-modal="false"`). Opening it moves focus to its Done/close button; Escape closes it; closing restores focus to the desktop settings trigger or the mobile Map tools button. It deliberately has no focus trap, so native keyboard use of its disclosures and checkboxes remains unchanged.
 
 ### Interface language
 
@@ -89,7 +90,7 @@ The route sheet displays:
 - Expand/collapse controls
 - Previous and next step controls
 
-Selecting an instruction highlights its official-network geometry in yellow, reveals its destination floor if necessary, and fits the camera around that step.
+Selecting an instruction highlights its official-network geometry in yellow and reveals any missing floors for the step. The map preserves its angle and zoom, panning when the step is outside the view. **Locate step** explicitly fits the camera around the current instruction.
 
 Semantic instruction generation is implemented in `src/routing/routeInstructions.ts`. Locale-specific sentence formatting is implemented in `src/i18n/formatters.ts`, and the directions interface is implemented in `src/components/RouteSheet.tsx`.
 

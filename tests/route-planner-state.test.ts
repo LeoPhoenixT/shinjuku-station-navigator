@@ -51,6 +51,20 @@ describe('route planner submitted state', () => {
     expect(result.current.displayedRoute.status).toBe('unreachable');
   });
 
+
+  it('does not submit from the planner or the map while the start search is unconfirmed', () => {
+    const { result } = renderHook(() => useRoutePlanner(network, graph, places));
+    act(() => result.current.draft.setDestinationId(candidates[2].id));
+    act(() => result.current.draft.setStartQuery('Unconfirmed start'));
+    act(() => result.current.submitRoute());
+    act(() => result.current.routeToDestination(candidates[2].id));
+    expect(new URLSearchParams(window.location.search).get('destination')).toBe(candidates[1].id);
+    act(() => result.current.draft.setStartId(candidates[0].id));
+    expect(result.current.draft.startQuery).toBeUndefined();
+    act(() => result.current.submitRoute());
+    expect(new URLSearchParams(window.location.search).get('destination')).toBe(candidates[2].id);
+  });
+
   it('starts without an invented demo route when the URL has no endpoints', () => {
     window.history.replaceState(null, '', '/');
     const { result } = renderHook(() => useRoutePlanner(network, graph, places));

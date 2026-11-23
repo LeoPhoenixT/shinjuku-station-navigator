@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { ViewerControls } from '../src/components/ViewerControls';
@@ -32,6 +33,7 @@ function viewerControlsProps(props: ReturnType<typeof renderProps>): ViewerContr
       places: props.places,
       draft: {
         startId: props.startId, destinationId: props.destinationId, profile: props.profile, dirty: props.routeDirty,
+        setStartQuery: vi.fn(), setDestinationQuery: vi.fn(),
         setStartId: props.setStartId, setDestinationId: props.setDestinationId, setProfile: props.setProfile,
       },
       displayedRoute: props.route,
@@ -39,7 +41,7 @@ function viewerControlsProps(props: ReturnType<typeof renderProps>): ViewerContr
     },
     navigation: {
       floors: { floorIds: props.floorIds, visibleFloors: props.visibleFloors, routeFloorIds: props.routeFloorIds, activeFloor: props.activeFloor, floorViewMode: props.floorViewMode, selectFloor: props.selectFloor, showStack: props.showStack, showRouteFloors: props.showRouteFloors, toggleCustomFloor: props.toggleCustomFloor },
-      camera: { rotationEnabled: props.rotationEnabled, setRotationEnabled: props.setRotationEnabled, fitRoute: props.fitRoute, fitStation: props.fitStation, zoomIn: props.zoomIn, zoomOut: props.zoomOut, showNorthView: props.showNorthView, showAngledView: props.showAngledView, cameraHeading: props.cameraHeading, selectedStepIndex: props.selectedStepIndex, selectStep: props.onStepSelect },
+      camera: { rotationEnabled: props.rotationEnabled, setRotationEnabled: props.setRotationEnabled, fitRoute: props.fitRoute, fitStation: props.fitStation, zoomIn: props.zoomIn, zoomOut: props.zoomOut, showNorthView: props.showNorthView, showAngledView: props.showAngledView, cameraHeading: props.cameraHeading, selectedStepIndex: props.selectedStepIndex, selectStep: props.onStepSelect, fitStep: vi.fn() },
     },
     display: {
       layers: { showOfficialNetwork: props.showOfficialNetwork, setShowOfficialNetwork: props.setShowOfficialNetwork, showFacilities: props.showFacilities, setShowFacilities: props.setShowFacilities, facilityCategories: props.facilityCategories, enabledFacilityCategories: props.enabledFacilityCategories, toggleFacilityCategory: props.toggleFacilityCategory, showAllFacilityCategories: props.showAllFacilityCategories, clearAllFacilityCategories: props.clearAllFacilityCategories, resetFacilityCategories: props.resetFacilityCategories, showStructuralDetails: props.showStructuralDetails, setShowStructuralDetails: props.setShowStructuralDetails, showSurfaceContext: props.showSurfaceContext, setShowSurfaceContext: props.setShowSurfaceContext },
@@ -57,6 +59,19 @@ function renderControls(overrides = {}) {
 }
 
 describe('viewer controls', () => {
+  it('uses one tab stop and wraps keyboard selection in the floor radio group', () => {
+    const props = renderControls({ activeFloor: '4', floorViewMode: 'focused' });
+    const radios = within(screen.getByRole('radiogroup', { name: 'Emphasized floor' })).getAllByRole('radio');
+    expect(radios.filter((radio) => radio.tabIndex === 0)).toEqual([radios[0]]);
+    radios[0].focus();
+    fireEvent.keyDown(radios[0], { key: 'ArrowUp' });
+    expect(radios.at(-1)).toHaveFocus();
+    expect(props.selectFloor).toHaveBeenCalledWith('B3');
+    fireEvent.keyDown(radios.at(-1)!, { key: 'ArrowRight' });
+    expect(radios[0]).toHaveFocus();
+    expect(props.selectFloor).toHaveBeenLastCalledWith('4');
+  });
+
   it('exposes named route selectors and reports bounded coverage clearly', () => {
     const props = renderControls();
     fireEvent.change(screen.getByLabelText('Search destination place'), { target: { value: placeDisplayName(places[0]) } });
@@ -101,12 +116,34 @@ describe('viewer controls', () => {
     expect(screen.getByRole('button', { name: 'Share route' })).toBeDisabled();
   });
 
+  it('blocks submission while an endpoint search is unconfirmed', () => {
+    const props = renderProps(false, { routeDirty: true });
+    function Controls() {
+      const [startQuery, setStartQuery] = useState<string>();
+      const view = viewerControlsProps(props);
+      return <ViewerControls {...view} planner={{ ...view.planner, draft: { ...view.planner.draft, startQuery, setStartQuery } }} />;
+    }
+    render(<Controls />);
+    const start = screen.getByRole('combobox', { name: 'Search start place' });
+    const submit = screen.getByRole('button', { name: 'Show route' });
+    expect(submit).toBeEnabled();
+    fireEvent.change(start, { target: { value: 'no matching station place' } });
+    fireEvent.blur(start, { relatedTarget: submit });
+    expect(start).toHaveValue('no matching station place');
+    expect(submit).toBeDisabled();
+    expect(props.submitRoute).not.toHaveBeenCalled();
+    fireEvent.keyDown(start, { key: 'Escape' });
+    expect(submit).toBeEnabled();
+  });
+
   it('uses the compact planner shell when a narrow viewport has no route request', () => {
     const originalMatchMedia = window.matchMedia;
     Object.defineProperty(window, 'matchMedia', { configurable: true, value: vi.fn().mockReturnValue({ matches: true }) });
     renderControls({ startId: '', destinationId: '', route: { status: 'invalid-place', placeId: '', reason: 'not-found' } });
-    expect(screen.getByRole('region', { name: 'Route planner' })).toHaveClass('planner-card-empty');
-    expect(screen.getByRole('button', { name: 'Edit route' })).toBeVisible();
+    const planner = screen.getByRole('region', { name: 'Route planner' });
+    expect(planner).toHaveClass('planner-card-empty');
+    expect(within(planner).getByText('Shinjuku Station')).toBeVisible();
+    expect(within(planner).getByRole('button', { name: 'Plan a route' })).toBeVisible();
     Object.defineProperty(window, 'matchMedia', { configurable: true, value: originalMatchMedia });
   });
 
@@ -277,7 +314,9 @@ describe('viewer controls', () => {
     renderControls({ route: okRoute });
     expect(screen.getAllByText(/Start gate.*End gate/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/About 1 min/)).toHaveLength(1);
-    expect(screen.getByText(/4.0 m.*0 floor changes.*Wheelchair accessible/)).toBeInTheDocument();
+    for (const detail of ['4.0 m', '0 floor changes', 'Wheelchair accessible']) {
+      expect(screen.getByText(detail, { exact: true })).toBeInTheDocument();
+    }
     expect(screen.getByRole('alert')).toHaveTextContent('Accessibility data is incomplete');
     expect(screen.getByText(/Elevator operation, congestion, and temporary closures are not live/)).toBeInTheDocument();
     expect(screen.getByText(/Movement types: walking/)).toBeInTheDocument();
@@ -293,6 +332,18 @@ describe('viewer controls', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Hide planner' }));
     expect(screen.queryByLabelText('Search start place')).not.toBeInTheDocument();
     expect(screen.getByRole('region', { name: 'Start gate to End gate' })).toBeInTheDocument();
+  });
+
+  it('moves keyboard focus to the summary on submit and back to the start field when editing', () => {
+    const before = renderProps(false, { routeDirty: true });
+    const view = render(<ViewerControls {...viewerControlsProps(before)} />);
+    const submit = screen.getByRole('button', { name: 'Show route' });
+    submit.focus();
+    fireEvent.click(submit);
+    view.rerender(<ViewerControls {...viewerControlsProps(renderProps(false, { route: okRoute }))} />);
+    expect(screen.getByRole('heading', { name: 'Start gate to End gate' })).toHaveFocus();
+    fireEvent.click(screen.getByRole('button', { name: 'Edit route' }));
+    expect(screen.getByRole('combobox', { name: 'Search start place' })).toHaveFocus();
   });
 
   it('copies the complete current route URL with transient feedback', async () => {
@@ -331,6 +382,8 @@ describe('viewer controls', () => {
     fireEvent.click(screen.getByLabelText('Map settings'));
     expect(screen.getByRole('button', { name: /Show directions/i })).toBeInTheDocument();
     expect(screen.getByRole('group', { name: 'Display layers' })).toBeVisible();
+    fireEvent.keyDown(screen.getByRole('button', { name: 'Close map settings' }), { key: 'Escape' });
+    expect(screen.getByRole('button', { name: 'Map tools' })).toHaveFocus();
     Object.defineProperty(window, 'matchMedia', { configurable: true, value: originalMatchMedia });
   });
 

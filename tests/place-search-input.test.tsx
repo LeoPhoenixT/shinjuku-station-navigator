@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { PlaceSearchInput } from '../src/components/PlaceSearchInput';
@@ -8,7 +9,11 @@ const searchIndex = buildPlaceSearchIndex(places);
 
 function renderSearch(kind: 'start' | 'destination' = 'start') {
   const onChange = vi.fn();
-  render(<PlaceSearchInput kind={kind} searchIndex={searchIndex} value="start" onChange={onChange} />);
+  function Search() {
+    const [query, setQuery] = useState<string>();
+    return <PlaceSearchInput kind={kind} searchIndex={searchIndex} value="start" unconfirmedQuery={query} onQueryChange={setQuery} onChange={onChange} />;
+  }
+  render(<Search />);
   return { onChange, input: screen.getByRole('combobox') };
 }
 
@@ -35,12 +40,14 @@ describe('place search input', () => {
     expect(within(screen.getByRole('listbox')).getAllByRole('option')).toHaveLength(4);
   });
 
-  it('discards an unfinished query when focus leaves the search', () => {
+  it('retains an unfinished query on blur and restores the selected name on Escape', () => {
     const { input, onChange } = renderSearch();
     fireEvent.focus(input);
     fireEvent.change(input, { target: { value: 'unknown destination' } });
-    expect(input).toHaveValue('unknown destination');
+    expect(screen.getByText(/No matching places./)).toHaveAttribute('aria-live', 'polite');
     fireEvent.blur(input, { relatedTarget: document.body });
+    expect(input).toHaveValue('unknown destination');
+    fireEvent.keyDown(input, { key: 'Escape' });
     expect(input).toHaveValue(placeDisplayName(places[0]));
     expect(input).toHaveAttribute('aria-expanded', 'false');
     expect(onChange).not.toHaveBeenCalled();
@@ -48,10 +55,10 @@ describe('place search input', () => {
 
   it('syncs the displayed name when the selected endpoint changes externally', () => {
     const onChange = vi.fn();
-    const view = render(<PlaceSearchInput kind="start" searchIndex={searchIndex} value="start" onChange={onChange} />);
+    const view = render(<PlaceSearchInput kind="start" searchIndex={searchIndex} value="start" onQueryChange={vi.fn()} onChange={onChange} />);
     const input = screen.getByRole('combobox');
     expect(input).toHaveValue(placeDisplayName(places[0]));
-    view.rerender(<PlaceSearchInput kind="start" searchIndex={searchIndex} value="end" onChange={onChange} />);
+    view.rerender(<PlaceSearchInput kind="start" searchIndex={searchIndex} value="end" onQueryChange={vi.fn()} onChange={onChange} />);
     expect(input).toHaveValue(placeDisplayName(places[1]));
     expect(onChange).not.toHaveBeenCalled();
   });

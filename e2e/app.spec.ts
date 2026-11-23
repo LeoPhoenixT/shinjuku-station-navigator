@@ -61,6 +61,10 @@ test('projects floor transitions as an unbroken green screen-space route', async
   const marker = page.locator('.route-transition-marker');
   await expect(marker).toBeVisible();
   await expect(marker).toHaveCSS('transform', /matrix/);
+  const map = page.getByRole('group', { name: 'Interactive station map' });
+  const previousPath = await transition.getAttribute('d');
+  await map.press('ArrowRight');
+  await expect.poll(() => transition.getAttribute('d')).not.toBe(previousPath);
   await page.getByRole('button', { name: 'North-up view' }).click();
   await expect(marker).toBeVisible();
   await page.reload();
@@ -70,15 +74,17 @@ test('projects floor transitions as an unbroken green screen-space route', async
 test('keeps primary map controls usable on a mobile viewport', async ({ page }) => {
   test.skip(test.info().project.name !== 'mobile-chromium', 'Mobile control journey.');
   const planner = page.getByRole('region', { name: 'Route planner' });
-  const editRoute = page.getByRole('button', { name: 'Edit route' });
+  const planRoute = page.getByRole('button', { name: 'Plan a route' });
+  await expect(planner.getByText('Shinjuku Station', { exact: true })).toBeVisible();
+  await expect(planRoute).toBeVisible();
   const plannerBox = await planner.boundingBox();
-  const editRouteBox = await editRoute.boundingBox();
-  expect(plannerBox).not.toBeNull();
-  expect(editRouteBox).not.toBeNull();
-  expect(plannerBox!.width).toBeLessThanOrEqual(editRouteBox!.width + 20);
+  expect(plannerBox?.width).toBeLessThan(page.viewportSize()!.width - 20);
 
   await page.getByRole('button', { name: 'Map tools' }).click();
   await expect(page.getByRole('button', { name: 'North-up view' })).toBeVisible();
+  for (const name of ['Fit route', 'Fit station', 'Zoom out', 'Zoom in']) {
+    await expect(page.getByRole('button', { name })).toBeVisible();
+  }
   await page.getByRole('button', { name: 'All floors' }).click();
   await expect(page.getByRole('radio', { name: 'Emphasize B1 floor' })).toBeVisible();
 });
@@ -160,8 +166,8 @@ test('continues showing a route if the optional surface data is unavailable', as
 });
 
 test('finds destinations in either language on desktop and mobile', async ({ page }) => {
-  const editRoute = page.getByRole('button', { name: 'Edit route' });
-  if (await editRoute.isVisible()) await editRoute.click();
+  const planRoute = page.getByRole('button', { name: 'Plan a route' });
+  if (await planRoute.isVisible()) await planRoute.click();
   const start = page.getByRole('combobox', { name: 'Search start place' });
   await start.fill('中央改札');
   await expect(page.getByRole('option', { name: /Central Gate/ }).first()).toBeVisible();
@@ -175,6 +181,41 @@ test('finds destinations in either language on desktop and mobile', async ({ pag
   expect(fallbackBox).not.toBeNull();
   expect(viewport).not.toBeNull();
   expect(fallbackBox!.x + fallbackBox!.width).toBeLessThanOrEqual(viewport!.width);
+});
+
+test('allows selecting both endpoints and submitting on a short mobile screen', async ({ page }) => {
+  test.skip(test.info().project.name !== 'mobile-chromium', 'Short mobile route-planner journey.');
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.getByRole('button', { name: 'Plan a route' }).click();
+  await page.getByRole('combobox', { name: 'Search start place' }).fill('中央改札');
+  await page.getByRole('option', { name: /Central Gate/ }).first().click();
+  await page.getByRole('combobox', { name: 'Search destination place' }).fill('Central West');
+  await page.getByRole('option', { name: /^Central West Gate\b/ }).click();
+  await page.getByRole('button', { name: 'Show route' }).click();
+  await expect(page.getByRole('region', { name: /Central Gate.*Central West Gate/ })).toBeVisible();
+});
+
+test('keeps the legend within a short desktop viewer while the planner is open', async ({ page }) => {
+  test.skip(test.info().project.name !== 'desktop-chromium', 'Short desktop legend.');
+  await page.setViewportSize({ width: 1280, height: 520 });
+  await expect(page.getByRole('combobox', { name: 'Search start place' })).toBeVisible();
+  await page.getByLabel('Expand map legend').click();
+  const legend = page.getByRole('region', { name: 'Visible map layers' });
+  await expect(legend).toBeInViewport({ ratio: 0.99 });
+  await legend.press('End');
+  await expect.poll(() => legend.evaluate((panel) => panel.scrollTop)).toBeGreaterThan(0);
+});
+
+test('keeps the keyboard-active search option visible', async ({ page }) => {
+  const planRoute = page.getByRole('button', { name: 'Plan a route' });
+  if (await planRoute.isVisible()) await planRoute.click();
+  const start = page.getByRole('combobox', { name: 'Search start place' });
+  await start.focus();
+  for (let index = 0; index < 18; index += 1) await start.press('ArrowDown');
+  const active = page.getByRole('listbox').getByRole('option', { selected: true });
+  await expect(active).toBeInViewport({ ratio: 0.9 });
+  await start.press('Enter');
+  await expect(start).toHaveAttribute('aria-expanded', 'false');
 });
 
 test('switches the interface language and restores it after reload', async ({ page }) => {
