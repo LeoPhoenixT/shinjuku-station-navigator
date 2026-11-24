@@ -61,7 +61,7 @@
     "@vitest/coverage-v8": "^4.1.12",
     "eslint": "^9.0.0",
     "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.5.7",
+    "eslint-plugin-react-refresh": "^0.5.8",
     "globals": "^16.0.0",
     "jsdom": "^26.0.0",
     "pbf": "5.2.0",
